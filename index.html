@@ -24,6 +24,9 @@
 
         <!-- FontAwesome -->
         <script src="https://kit.fontawesome.com/227f49c19f.js" crossorigin="anonymous"></script>
+
+        <!-- Game JS -->
+        <script src="game.js"></script>
     </head>
     <body>
         <!-- Header -->
@@ -31,11 +34,82 @@
             <div class="row">
                 <!-- Heading -->
                 <h1 class="col">SatelliteImageQuiz</h1>
-          </div>
+            </div>
         </header>
 
         <!-- Main section -->
         <div class="container card bg-dark mt-5 p-3 rounded" style="min-height: 80vh;">
+            
+            <!-- Info page -->
+            <div id="page-0" style="display: none;">
+                Info info<br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. At a ex, aliquid, necessitatibus voluptates quod neque doloribus cupiditate beatae deserunt cum obcaecati incidunt aspernatur distinctio corrupti, repellendus illum laboriosam culpa!
+            </div>
+
+            <!-- Game page -->
+            <div id="page-1">
+                <!-- Headings and scores -->
+                <h2 class="text-center">Game description</h2>
+                <h3 class="d-flex justify-content-between p-5">
+                    <span>Current round: <span id="currentround"></span> of <span id="roundcount"></span>.</span>
+                    <span>Points: <span id="points">&nbsp;&nbsp;&nbsp;</span></span>
+                </h3>
+
+                <!-- Image -->
+                <img class="img-fluid" alt="Question image" id="questionimage" src="https://maps.googleapis.com/maps/api/staticmap?center=Sandnes,Rogaland,Norway&zoom=14&size=640x400&scale=2&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA">
+
+                <!-- Inputs -->
+                <!-- Text -->
+                <div id="textinput">
+                    <!-- Attempt counter -->
+                    <h5>Attempt <span id="attempt"></span> of <span id="attempts"></span>.</h5>
+
+                    <!-- Text field -->
+                    <div class="form-group">
+                        <label for="cityinput" id="cityinput-label">Type the name of the city.</label>
+                        <input class="form-control" type="text" placeholder="City name" id="cityinput" aria-labelledby="cityinput-label" onchange="ActiveQuiz.SubmitAnswer(this.value)">
+                    </div>
+                </div>
+
+                <!-- Multiple choice -->
+                <div id="mcinput" class="container p-5 text-center">
+                    <!-- Label -->
+                    <p>Please select the correct city.</p>
+                    
+                    <!-- Radios -->
+                    <form class="d-flex justify-content-between" id="mcform">
+                        <!-- Radio 0 -->
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio0" name="mc">
+                            <label class="form-check-label" for="radio0" id="radio0-label">Radio 0</label>
+                        </div>
+
+                        <!-- Radio 1 -->
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio1" name="mc">
+                            <label class="form-check-label" for="radio1" id="radio1-label">Radio 1</label>
+                        </div>
+
+                        <!-- Radio 2 -->
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio2" name="mc">
+                            <label class="form-check-label" for="radio2" id="radio2-label">Radio 2</label>
+                        </div>
+
+                        <!-- Radio 3 -->
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio3" name="mc">
+                            <label class="form-check-label" for="radio3" id="radio3-label">Radio 3</label>
+                        </div>
+                    </form>
+                    <br>
+
+                    <!-- Submit button -->
+                    <div class="text-right">
+                        <button class="btn btn-primary" onclick="ActiveQuiz.SubmitAnswer(document.getElementById('mcform').elements['mc'].value)">Answer</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
