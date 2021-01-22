@@ -226,7 +226,7 @@ class Quiz {
         if (this.Attempt + 1 < this.Attempts) {
             // Make text field invalid
             // TODO CLEANUP THIS IN NEXT QUESTION
-            document.getElementById("cityinput").className = "form-contol is-invalid";
+            document.getElementById("cityinput").className = "form-control is-invalid";
 
             // Increment attempt count and print
             document.getElementById("attempt").textContent = ++this.Attempt + 1;
@@ -353,5 +353,5 @@ function shuffle(array) {
 }
 
 window.onload = function() {
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true, 5);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 3, false, 5);
 };
