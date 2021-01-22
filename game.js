@@ -37,11 +37,11 @@ let Cities = {
 // City groups
 let CityGroups = {
     Norway: [
-        NO11_Sandnes,
-        NO11_Stavanger,
-        NO11_Egersund,
-        NO11_Haugesund,
-        NO46_Bergen
+        Cities.NO11_Sandnes,
+        Cities.NO11_Stavanger,
+        Cities.NO11_Egersund,
+        Cities.NO11_Haugesund,
+        Cities.NO46_Bergen
     ]
 };
 
@@ -79,7 +79,7 @@ class Quiz {
         }
         else {
             // Shuffle array and slice
-            this.QuestionsToAsk = shuffle(questions).slice(0, questionCount - 1);
+            this.QuestionsToAsk = shuffle(questions).slice(0, questionCount);
         }
 
         // Start the quiz
@@ -117,7 +117,7 @@ class Quiz {
         document.getElementById("cityinput").className = "form-control";
 
         // Ask first question
-        AskQuestion(0);
+        this.AskQuestion(0);
     }
 
     // Ask question
@@ -170,19 +170,19 @@ class Quiz {
         if (this.IsMultipleChoice) {
             // Check that answer matches the one stored
             if (Answer == "radio" + this.CorrectAlternative) {
-                RunCorrectAnswerScenario();
+                this.RunCorrectAnswerScenario();
             }
             else {
-                RunWrongAnswerScenario(Answer);
+                this.RunWrongAnswerScenario(Answer);
             }
         }
         else {
             // Check if answer is right
-            if (this.QuestionsToAsk[Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
-                RunCorrectAnswerScenario();
+            if (this.QuestionsToAsk[this.Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
+                this.RunCorrectAnswerScenario();
             }
             else {
-                RunWrongAnswerScenario(Answer);
+                this.RunWrongAnswerScenario(Answer);
             }
         }
     }
@@ -194,7 +194,7 @@ class Quiz {
 
         // Update modal data
         document.getElementById("CorrectModalPoints").textContent = this.Points;
-        document.getElementById("CorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[Round].FormatName;
+        document.getElementById("CorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[this.Round].FormatName;
 
         // Display attempt info if allowed attempts is greater than 1
         if (this.Attempts == 1 || this.IsMultipleChoice) {
@@ -237,7 +237,7 @@ class Quiz {
         else {
             // Update modal data
             document.getElementById("IncorrectModalPoints").textContent = this.Points;
-            document.getElementById("IncorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[Round].FormatName;
+            document.getElementById("IncorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[this.Round].FormatName;
             document.getElementById("IncorrectModalUserAnswer").textContent = UserAnswer;
 
             // Rename button if this is last round
@@ -277,7 +277,7 @@ class Quiz {
             document.getElementById("currentround").textContent = ++this.Round + 1;
 
             // Ask next question
-            this.AskQuestion(Round);
+            this.AskQuestion(this.Round);
         }
     }
 }
@@ -301,3 +301,7 @@ function shuffle(array) {
 
     return array;
 }
+
+window.onload = function() {
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 5);
+};
