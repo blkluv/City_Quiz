@@ -238,7 +238,6 @@ class Quiz {
         // Handle with form error message if attempt is less than allowed attempts
         if (this.Attempt + 1 < this.Attempts) {
             // Make text field invalid
-            // TODO CLEANUP THIS IN NEXT QUESTION
             document.getElementById("cityinput").className = "form-control is-invalid";
 
             // Increment attempt count and print
