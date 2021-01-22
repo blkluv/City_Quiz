@@ -32,6 +32,9 @@ let Cities = {
     NO11_Egersund: new Question("Egersund,Rogaland,Norway", 14, "Egersund", ["egersund", "eigersund"]),
     NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
     NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
+    NO03_Oslo: new Question("Barcode%20Project,Norway", 13, "Oslo", ["oslo"]),
+    NO50_Trondheim: new Question("Trondheim,Norway", 13, "Trondheim", ["trondheim", "trondhjem"]),
+
 };
 
 // City groups
@@ -41,7 +44,9 @@ let CityGroups = {
         Cities.NO11_Stavanger,
         Cities.NO11_Egersund,
         Cities.NO11_Haugesund,
-        Cities.NO46_Bergen
+        Cities.NO46_Bergen,
+        Cities.NO03_Oslo,
+        Cities.NO50_Trondheim
     ]
 };
 
@@ -361,5 +366,5 @@ function shuffle(array) {
 }
 
 window.onload = function() {
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 5);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 7);
 };
