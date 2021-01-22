@@ -104,6 +104,9 @@ class Quiz {
         document.getElementById("roundcount").textContent = this.QuestionCount;
         document.getElementById("points").textContent = 0;
 
+        // Clean validation
+        document.getElementById("cityinput").className = "form-control";
+
         // Ask first question
         AskQuestion(0);
     }
@@ -174,8 +177,100 @@ class Quiz {
             }
         }
     }
+    
+    // Right answer handler
+    RunCorrectAnswerScenario() {
+        // Update other variables
+        document.getElementById("points").textContent = ++this.Points;
 
+        // Update modal data
+        document.getElementById("CorrectModalPoints").textContent = this.Points;
+        document.getElementById("CorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[Round].FormatName;
 
+        // Display attempt info if allowed attempts is greater than 1
+        if (this.Attempts == 1 || this.IsMultipleChoice) {
+            document.getElementById("CorrectModalAttemptCountInfo").style.display = "none";
+        }
+        else {
+            document.getElementById("CorrectModalAttemptCountInfo").style.display = "initial";
+            document.getElementById("CorrectModalAttempt").textContent = this.Attempt + 1;
+            document.getElementById("CorrectModalAttempts").textContent = this.Attempts;
+        }
+
+        // Rename button if this is last round
+        if (this.Round + 1 == this.QuestionCount) {
+            document.getElementById("CorrectModalNextQuestionButton").textContent = "View summary";
+        }
+        else {
+            document.getElementById("CorrectModalNextQuestionButton").textContent = "Next round";
+        }
+
+        // Display modal
+        let Modal = new bootstrap.Modal(document.getElementById("CorrectModal"), {
+            keyboard: false,
+            backdrop: "static"
+        });
+        Modal.show();
+    }
+
+    // Wrong answer handler
+    RunWrongAnswerScenario(UserAnswer) {
+        // Handle with form error message if attempt is less than allowed attempts
+        if (this.Attempt + 1 < this.Attempts) {
+            // Make text field invalid
+            // TODO CLEANUP THIS IN NEXT QUESTION
+            document.getElementById("cityinput").className = "form-contol is-invalid";
+
+            // Increment attempt count and print
+            document.getElementById("attempt").textContent = ++this.Attempt + 1;
+        }
+        // Handle with modal in all other cases
+        else {
+            // Update modal data
+            document.getElementById("IncorrectModalPoints").textContent = this.Points;
+            document.getElementById("IncorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[Round].FormatName;
+            document.getElementById("IncorrectModalUserAnswer").textContent = UserAnswer;
+
+            // Rename button if this is last round
+            if (this.Round + 1 == this.QuestionCount) {
+                document.getElementById("IncorrectModalNextQuestionButton").textContent = "View summary";
+            }
+            else {
+                document.getElementById("IncorrectModalNextQuestionButton").textContent = "Next round";
+            }
+
+            // Display modal
+            let Modal = new bootstrap.Modal(document.getElementById("IncorrectModal"), {
+                keyboard: false,
+                backdrop: "static"
+            });
+            Modal.show();
+            }
+    }
+
+    // Progress to next question or summary screen
+    NextQuestion() {
+        // Check if this round is the last
+        if (this.Round + 1 == this.QuestionCount) {
+            // TODO GO TO SUMMARY SCREEN
+        }
+        // Else progress to next question
+        else {
+            // Cleanup
+            // Reset attempts
+            this.Attempt = 0;
+            document.getElementById("attempt").textContent = 1;
+
+            // Clean validation
+            document.getElementById("cityinput").className = "form-control";
+
+            // Increment round counter
+            document.getElementById("currentround").textContent = ++this.Round + 1;
+
+            // Ask next question
+            this.AskQuestion(Round);
+        }
+    }
 }
 
 // Array shufler
