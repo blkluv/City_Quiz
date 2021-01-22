@@ -100,6 +100,14 @@ class Quiz {
             document.getElementById("attempts").textContent = this.Attempts;
         }
 
+        // Toggle attempt counter based on attempt allowance
+        if (this.Attempts == 1 || this.IsMultipleChoice) {
+            document.getElementById("attemptcounter").style.display = "none";
+        }
+        else {
+            document.getElementById("attemptcounter").style.display = "initial";
+        }
+
         // Save the current time
         this.StartTime = new Date();
 
