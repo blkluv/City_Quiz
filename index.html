@@ -37,6 +37,47 @@
             </div>
         </header>
 
+        <!-- Modals -->
+        <!-- Correct modal -->
+        <div class="modal fade" id="CorrectModal" tabindex="-1" aria-labelledby="CorrectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="CorrectModalLabel">Correct!</h5>
+                </div>
+                <div class="modal-body">
+                    Correct answer: <span id="CorrectModalCorrectAnswer"></span>.
+                    You now have: <span id="CorrectModalPoints"></span> points.
+                    <span id="CorrectModalAttemptCountInfo">
+                        You used: <span id="CorrectModalAttempt"></span> of <span id="CorrectModalAttempts"></span> attempts.
+                    </span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="CorrectModalNextQuestionButton" onclick="ActiveQuiz.NextQuestion()">Next question</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Incorrect modal -->
+        <div class="modal fade" id="IncorrectModal" tabindex="-1" aria-labelledby="IncorrectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="IncorrectModalLabel">Incorrect!</h5>
+                </div>
+                <div class="modal-body">
+                    Your answer: <span id="IncorrectModalUserAnswer"></span>.
+                    Correct answer: <span id="IncorrectModalCorrectAnswer"></span>.
+                    You now have: <span id="CorrectModalPoints"></span> points.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="IncorrectModalNextQuestionButton" onclick="ActiveQuiz.NextQuestion()">Next question</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
         <!-- Main section -->
         <div class="container card bg-dark mt-5 p-3 rounded" style="min-height: 80vh;">
             
