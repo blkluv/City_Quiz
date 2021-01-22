@@ -259,7 +259,7 @@ class Quiz {
     NextQuestion() {
         // Check if this round is the last
         if (this.Round + 1 == this.QuestionCount) {
-            // TODO GO TO SUMMARY SCREEN
+            this.GoToSummary();
         }
         // Else progress to next question
         else {
@@ -283,6 +283,52 @@ class Quiz {
             // Ask next question
             this.AskQuestion(this.Round);
         }
+    }
+
+    // Go to summary
+    GoToSummary() {
+        // Calculate time spent
+        let TotalSeconds = Math.floor(new Date().getTime() / 1000 - this.StartTime.getTime() / 1000);
+        let Minutes = Math.floor(TotalSeconds / 60);
+        let Seconds = TotalSeconds % 60;
+        let FormatTime = "";
+
+        // Append minutes if greater than 0
+        // Singular form
+        if (Minutes == 1) {
+            FormatTime += "1 minute"
+        }
+        // Plural
+        else if (Minutes > 1) {
+            FormatTime += `${Minutes} minutes`
+        }
+
+        // Append seconds if greater than 0
+        // Singular
+        if (Seconds == 1) {
+            // Check if minutes are present in formattime
+            if (Minutes > 0) {
+                FormatTime += " and ";
+            }
+            FormatTime += `${Seconds} second`;
+        } 
+        // Plural
+        else if (Seconds > 1) {
+            // Check if minutes are present in formattime
+            if (Minutes > 0) {
+                FormatTime += " and ";
+            }
+            FormatTime += `${Seconds} seconds`;
+        } 
+
+        // Print info
+        document.getElementById("SummaryTime").textContent = FormatTime;
+        document.getElementById("SummaryPoints").textContent = this.Points;
+        document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
+
+        // Cycle pages
+        document.getElementById("game-page").style.display = "none";
+        document.getElementById("summary-page").style.display = "block";
     }
 }
 
