@@ -105,6 +105,9 @@
                     <div class="form-group">
                         <label for="cityinput" id="cityinput-label">Type the name of the city.</label>
                         <input class="form-control" type="text" placeholder="City name" id="cityinput" aria-labelledby="cityinput-label" onchange="ActiveQuiz.SubmitAnswer(this.value)">
+                        <div class="invalid-feedback">
+                            Wrong answer. Please try again.
+                        </div>
                     </div>
                 </div>
 
