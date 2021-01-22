@@ -26,14 +26,23 @@ class Question {
 
 // All cities
 let Cities = {
-    AllCities: {
-        // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
-        NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
-        NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
-        NO11_Egersund: new Question("Egersund,Rogaland,Norway", 14, "Egersund", ["egersund", "eigersund"]),
-        NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
-        NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
-    }
+    // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
+    NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
+    NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
+    NO11_Egersund: new Question("Egersund,Rogaland,Norway", 14, "Egersund", ["egersund", "eigersund"]),
+    NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
+    NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
+};
+
+// City groups
+let CityGroups = {
+    Norway: [
+        NO11_Sandnes,
+        NO11_Stavanger,
+        NO11_Egersund,
+        NO11_Haugesund,
+        NO46_Bergen
+    ]
 };
 
 // Quiz class
