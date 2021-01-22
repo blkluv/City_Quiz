@@ -353,5 +353,5 @@ function shuffle(array) {
 }
 
 window.onload = function() {
-    ActiveQuiz = new Quiz(CityGroups.Norway, 3, false, 5);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 5);
 };
