@@ -23,3 +23,177 @@ class Question {
         }
     }
 }
+
+// All cities
+let Cities = {
+    AllCities: {
+        // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
+        NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
+        NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
+        NO11_Egersund: new Question("Egersund,Rogaland,Norway", 14, "Egersund", ["egersund", "eigersund"]),
+        NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
+        NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
+    }
+};
+
+// Quiz class
+class Quiz {
+    // Constructor
+    constructor (questions, attempts, isMultipleChoice, questionCount) {
+        // Set parent variables
+        this.Questions = questions;
+        this.IsMultipleChoice = isMultipleChoice;
+
+        // Check that attempts is in range
+        if (attempts > 0) {
+            this.Attempts = attempts;
+        }
+        else {
+            throw new Error(`Attempts is out of range (${attempts}), must be greater than 0.`)
+        }
+
+        // Check that questioncount is in range
+        if (questionCount <= 0) {
+            throw new Error(`QuestionCount is out of range (${questionCount}), must be greater than 0.`)
+        }
+        else if (questionCount > questions.lenght) {
+            throw new Error(`QuestionCount is out of range (${questionCount}), must be less than or equal to the amount of questions.`)
+        }
+        else {
+            this.QuestionCount = questionCount
+        }
+
+        // Decide which questions are to be asked
+        if (questionCount == questions.lenght) {
+            // Copy questions array if going to ask all questions
+            this.QuestionsToAsk = [...questions];
+        }
+        else {
+            // Shuffle array and slice
+            this.QuestionsToAsk = shuffle(questions).slice(0, questionCount - 1);
+        }
+
+        // Start the quiz
+        this.StartQuiz();
+    }
+    
+    // Start quiz
+    StartQuiz() {
+        // Show the correct inputs for the selected input type
+        if (this.IsMultipleChoice) {
+            document.getElementById("mcinput").style.display = "block";
+            document.getElementById("textinput").style.display = "none";
+        }
+        else {
+            document.getElementById("mcinput").style.display = "none";
+            document.getElementById("textinput").style.display = "block";
+            document.getElementById("attempt").textContent = 1;
+            document.getElementById("attempts").textContent = this.Attempts;
+        }
+
+        // Save the current time
+        this.StartTime = new Date();
+
+        // Initialize variables
+        this.Points = 0;
+        this.Round = 0;
+        this.Attempt = 0;
+
+        // Print counters
+        document.getElementById("currentround").textContent = 1;
+        document.getElementById("roundcount").textContent = this.QuestionCount;
+        document.getElementById("points").textContent = 0;
+
+        // Ask first question
+        AskQuestion(0);
+    }
+
+    // Ask question
+    AskQuestion(Index) {
+        // Check that index is within bounds
+        if (Index < 0) {
+            throw new Error(`Index is out of bounds (${Index}), must be greater than or equal to 0.`);
+        }
+        else if (Index >= this.QuestionCount || Index >= this.QuestionsToAsk.lenght) {
+            throw new Error(`Index is out of bounds (${Index}), must be less than questions to ask.`);
+        }
+
+        // Print applicable image
+        document.getElementById("questionimage").src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[Index].Query}&zoom=${this.QuestionsToAsk[Index].Zoom}&size=640x400&scale=2&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA`;
+
+        // Check what input method is beeing used
+        if (!this.IsMultipleChoice) {
+            // Clear input field
+            document.getElementById("cityinput").value = "";
+        }
+        else {
+            // Create alternatives
+            let Alternatives = [this.QuestionsToAsk[Index].FormatName];
+
+            // Randomize array of all questions
+            let Randomized = shuffle(this.Questions);
+
+            // Apend 3 first elements
+            Alternatives.push(Randomized[0]);
+            Alternatives.push(Randomized[1]);
+            Alternatives.push(Randomized[2]);
+
+            // Randomize order of alternatives
+            Alternatives = shuffle(Alternatives);
+
+            // Print alternatives
+            document.getElementById("radio0-label").textContent = Alternatives[0];
+            document.getElementById("radio1-label").textContent = Alternatives[1];
+            document.getElementById("radio2-label").textContent = Alternatives[2];
+            document.getElementById("radio3-label").textContent = Alternatives[3];
+
+            // Store the correct alternative index
+            this.CorrectAlternative = Alternatives.indexOf(this.QuestionsToAsk[Index].FormatName)
+        }
+    }
+
+    // Submit answer
+    SubmitAnswer(Answer) {
+        // Check which answer mode is in use
+        if (this.IsMultipleChoice) {
+            // Check that answer matches the one stored
+            if (Answer == "radio" + this.CorrectAlternative) {
+                RunCorrectAnswerScenario();
+            }
+            else {
+                RunWrongAnswerScenario(Answer);
+            }
+        }
+        else {
+            // Check if answer is right
+            if (this.QuestionsToAsk[Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
+                RunCorrectAnswerScenario();
+            }
+            else {
+                RunWrongAnswerScenario(Answer);
+            }
+        }
+    }
+
+
+}
+
+// Array shufler
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
