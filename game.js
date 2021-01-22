@@ -116,6 +116,12 @@ class Quiz {
         // Clean validation
         document.getElementById("cityinput").className = "form-control";
 
+        // Deselect all radios
+        document.getElementById("radio0").checked = false;
+        document.getElementById("radio1").checked = false;
+        document.getElementById("radio2").checked = false;
+        document.getElementById("radio3").checked = false;
+
         // Ask first question
         this.AskQuestion(0);
     }
@@ -143,12 +149,13 @@ class Quiz {
             let Alternatives = [this.QuestionsToAsk[Index].FormatName];
 
             // Randomize array of all questions
-            let Randomized = shuffle(this.Questions);
+            let Randomized = shuffle([...this.Questions]);
+            Randomized.splice(Randomized.indexOf(this.QuestionsToAsk[Index]), 1);
 
             // Apend 3 first elements
-            Alternatives.push(Randomized[0]);
-            Alternatives.push(Randomized[1]);
-            Alternatives.push(Randomized[2]);
+            Alternatives.push(Randomized[0].FormatName);
+            Alternatives.push(Randomized[1].FormatName);
+            Alternatives.push(Randomized[2].FormatName);
 
             // Randomize order of alternatives
             Alternatives = shuffle(Alternatives);
@@ -159,31 +166,22 @@ class Quiz {
             document.getElementById("radio2-label").textContent = Alternatives[2];
             document.getElementById("radio3-label").textContent = Alternatives[3];
 
-            // Store the correct alternative index
-            this.CorrectAlternative = Alternatives.indexOf(this.QuestionsToAsk[Index].FormatName)
+            // Set values
+            document.getElementById("radio0").value = Alternatives[0];
+            document.getElementById("radio1").value = Alternatives[1];
+            document.getElementById("radio2").value = Alternatives[2];
+            document.getElementById("radio3").value = Alternatives[3];
         }
     }
 
     // Submit answer
     SubmitAnswer(Answer) {
-        // Check which answer mode is in use
-        if (this.IsMultipleChoice) {
-            // Check that answer matches the one stored
-            if (Answer == "radio" + this.CorrectAlternative) {
-                this.RunCorrectAnswerScenario();
-            }
-            else {
-                this.RunWrongAnswerScenario(Answer);
-            }
+        // Check if answer is right
+        if (this.QuestionsToAsk[this.Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
+            this.RunCorrectAnswerScenario();
         }
         else {
-            // Check if answer is right
-            if (this.QuestionsToAsk[this.Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
-                this.RunCorrectAnswerScenario();
-            }
-            else {
-                this.RunWrongAnswerScenario(Answer);
-            }
+            this.RunWrongAnswerScenario(Answer);
         }
     }
     
@@ -276,6 +274,12 @@ class Quiz {
             // Increment round counter
             document.getElementById("currentround").textContent = ++this.Round + 1;
 
+            // Deselect all radios
+            document.getElementById("radio0").checked = false;
+            document.getElementById("radio1").checked = false;
+            document.getElementById("radio2").checked = false;
+            document.getElementById("radio3").checked = false;
+
             // Ask next question
             this.AskQuestion(this.Round);
         }
@@ -303,5 +307,5 @@ function shuffle(array) {
 }
 
 window.onload = function() {
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 5);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true, 5);
 };
