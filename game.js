@@ -61,7 +61,7 @@ class Quiz {
         if (questionCount <= 0) {
             throw new Error(`QuestionCount is out of range (${questionCount}), must be greater than 0.`)
         }
-        else if (questionCount > questions.lenght) {
+        else if (questionCount > questions.length) {
             throw new Error(`QuestionCount is out of range (${questionCount}), must be less than or equal to the amount of questions.`)
         }
         else {
@@ -69,7 +69,7 @@ class Quiz {
         }
 
         // Decide which questions are to be asked
-        if (questionCount == questions.lenght) {
+        if (questionCount == questions.length) {
             // Copy questions array if going to ask all questions
             this.QuestionsToAsk = [...questions];
         }
@@ -111,6 +111,7 @@ class Quiz {
         this.Points = 0;
         this.Round = 0;
         this.Attempt = 0;
+        this.Log = [];
 
         // Print counters
         document.getElementById("currentround").textContent = 1;
@@ -137,7 +138,7 @@ class Quiz {
         if (Index < 0) {
             throw new Error(`Index is out of bounds (${Index}), must be greater than or equal to 0.`);
         }
-        else if (Index >= this.QuestionCount || Index >= this.QuestionsToAsk.lenght) {
+        else if (Index >= this.QuestionCount || Index >= this.QuestionsToAsk.length) {
             throw new Error(`Index is out of bounds (${Index}), must be less than questions to ask.`);
         }
 
@@ -183,6 +184,12 @@ class Quiz {
             // Register a keydown event
             document.addEventListener("keydown", EnterEventSubmit);
         }
+
+        // Logging for summary
+        this.Log.push({
+            StartTime: new Date(),
+            Answers: []
+        });
     }
 
     // Submit answer
@@ -192,12 +199,20 @@ class Quiz {
             // Set the notselectederror to be visible
             document.getElementById("noneselectederror").style.display = "block";
 
+            // Logging for summary
+            this.Log[this.Round].Answers.push(Answer);
+
             // Exit method
             return;
         }
 
         // Destroy the keydown event
         document.removeEventListener("keydown", EnterEventSubmit);
+
+        // Logging for summary
+        this.Log[this.Round].Answers.push(Answer);
+        this.Log[this.Round].EndTime = new Date();
+        this.Log[this.Round].AttemptsUsed = this.Attempt + 1;
 
         // Check if answer is right
         if (this.QuestionsToAsk[this.Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
@@ -316,12 +331,25 @@ class Quiz {
         document.getElementById("SummaryPoints").textContent = this.Points;
         document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
 
+        // Print round info
+        for (let i = 0; i < this.Log.length; i++) {
+            // Attempt count if applicable
+            let AttemptCounter = "";
+            if (!this.IsMultipleChoice && this.Attempts > 1) {
+                AttemptCounter = `<br>Attempts: ${this.Log[i].AttemptsUsed} out of ${this.Attempts}`;
+            }
+            document.getElementById("SummaryPerRound").innerHTML += `<div class="col-12 col-sm-4"><h5>Round ${i + 1}</h5><div class="d-flex justify-content-between"><p>Time spent: ${FormatDateDifference(this.Log[i].EndTime, this.Log[i].StartTime)}<br>Your answer: ${FormatArray(this.Log[i].Answers)}<br>Correct answer: ${this.QuestionsToAsk[i].FormatName}${AttemptCounter}</p><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[i].Query}&zoom=${this.QuestionsToAsk[i].Zoom}&size=150x150&scale=1&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA"></div></div>`;
+        }
+
+        // Set href of sharer buttons
+        let ShareText = `I just played GAME DESCRIPTION on GAME NAME and got ${this.Points} out of ${this.QuestionCount} point in ${FormatDateDifference(new Date(), this.StartTime)}.`;
+        document.getElementById("facebook-sharer").href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&quote=${ShareText}`;
+        document.getElementById("twitter-sharer").href = `https://twitter.com/compose/tweet?url=${window.location.href}&text=${ShareText}`;
+
         // Cycle pages
         document.getElementById("game-page").style.display = "none";
         document.getElementById("summary-page").style.display = "block";
     }
-
-
 }
 
 // NextQuestion on enter
@@ -401,6 +429,38 @@ function FormatDateDifference(date0, date1) {
 
     // Return
     return FormatTime;
+}
+
+// Format string array
+function FormatArray(Array) {
+    let FormatText = "";
+
+    // 1 element
+    if(Array.length == 1) {
+        FormatText = Array[0];
+    }
+    // 2 elements
+    else if(Array.length == 2) {
+        FormatText = `${Array[0]} and ${Array[1]}`;
+    }
+    // More than 2 elements
+    else {
+        for (let i = 0; i < Array.length; i++) {
+            FormatText += Array[i];
+
+            // Add correct separator
+            // If second last element
+            if (i == Array.length - 2) {
+                FormatText += " and ";
+            }
+            // If not second last or last
+            else if (i < Array.length - 1) {
+                FormatText += ", ";
+            }
+        }
+    }
+
+    return FormatText;
 }
 
 window.onload = function() {
