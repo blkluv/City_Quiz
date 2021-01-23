@@ -4,6 +4,7 @@ let IncorrectModal;
 let ActiveQuiz;
 let Difficulty = 1;
 let SetToPlay;
+let SetName;
 let PlayEntireSet = false; 
 
 // Question class
@@ -33,15 +34,18 @@ let Cities = {
 
 // City groups
 let CityGroups = {
-    Norway: [
-        Cities.NO11_Sandnes,
-        Cities.NO11_Stavanger,
-        Cities.NO11_Egersund,
-        Cities.NO11_Haugesund,
-        Cities.NO46_Bergen,
-        Cities.NO03_Oslo,
-        Cities.NO50_Trondheim
-    ]
+    "norway": {
+        FormatName: "Norway",
+        Cities: [
+            Cities.NO11_Sandnes,
+            Cities.NO11_Stavanger,
+            Cities.NO11_Egersund,
+            Cities.NO11_Haugesund,
+            Cities.NO46_Bergen,
+            Cities.NO03_Oslo,
+            Cities.NO50_Trondheim
+        ]
+    }
 };
 
 // Quiz class
@@ -501,5 +505,24 @@ window.onload = function() {
         keyboard: false,
         backdrop: "static"
     });
-    SetToPlay = CityGroups.Norway;
+
+    // Check if a game ID is provided in query string
+    const URLParams = new URLSearchParams(window.location.search);
+    const GameID = URLParams.get("game");
+
+    if (GameID && CityGroups[GameID]) {
+        // Assign to global variables
+        SetToPlay = CityGroups[GameID].Cities;
+        SetName = CityGroups[GameID].FormatName;
+
+        // Assign to game description headers
+        const Headings = document.querySelectorAll(".header-game-description");
+        for (let i = 0; i < Headings.length; i++) {
+            Headings[i].textContent = SetName;
+        }
+
+        document.getElementById("info-page").style.display = "none";
+        document.getElementById("options-page").style.display = "block";
+    }
+
 };
