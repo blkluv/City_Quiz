@@ -311,42 +311,8 @@ class Quiz {
 
     // Go to summary
     GoToSummary() {
-        // Calculate time spent
-        let TotalSeconds = Math.floor(new Date().getTime() / 1000 - this.StartTime.getTime() / 1000);
-        let Minutes = Math.floor(TotalSeconds / 60);
-        let Seconds = TotalSeconds % 60;
-        let FormatTime = "";
-
-        // Append minutes if greater than 0
-        // Singular form
-        if (Minutes == 1) {
-            FormatTime += "1 minute"
-        }
-        // Plural
-        else if (Minutes > 1) {
-            FormatTime += `${Minutes} minutes`
-        }
-
-        // Append seconds if greater than 0
-        // Singular
-        if (Seconds == 1) {
-            // Check if minutes are present in formattime
-            if (Minutes > 0) {
-                FormatTime += " and ";
-            }
-            FormatTime += `${Seconds} second`;
-        } 
-        // Plural
-        else if (Seconds > 1) {
-            // Check if minutes are present in formattime
-            if (Minutes > 0) {
-                FormatTime += " and ";
-            }
-            FormatTime += `${Seconds} seconds`;
-        } 
-
         // Print info
-        document.getElementById("SummaryTime").textContent = FormatTime;
+        document.getElementById("SummaryTime").textContent = FormatDateDifference(new Date(), this.StartTime);
         document.getElementById("SummaryPoints").textContent = this.Points;
         document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
 
@@ -396,6 +362,45 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+// Calculate difference between 2 date objects and return formatted text
+function FormatDateDifference(date0, date1) {
+    let TotalSeconds = Math.floor(date0.getTime() / 1000 - date1.getTime() / 1000);
+    let Minutes = Math.floor(TotalSeconds / 60);
+    let Seconds = TotalSeconds % 60;
+    let FormatTime = "";
+
+    // Append minutes if greater than 0
+    // Singular form
+    if (Minutes == 1) {
+        FormatTime += "1 minute"
+    }
+    // Plural
+    else if (Minutes > 1) {
+        FormatTime += `${Minutes} minutes`
+    }
+
+    // Append seconds if greater than 0
+    // Singular
+    if (Seconds == 1) {
+        // Check if minutes are present in formattime
+        if (Minutes > 0) {
+            FormatTime += " and ";
+        }
+        FormatTime += `${Seconds} second`;
+    } 
+    // Plural
+    else if (Seconds > 1) {
+        // Check if minutes are present in formattime
+        if (Minutes > 0) {
+            FormatTime += " and ";
+        }
+        FormatTime += `${Seconds} seconds`;
+    } 
+
+    // Return
+    return FormatTime;
 }
 
 window.onload = function() {
