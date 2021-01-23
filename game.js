@@ -3,6 +3,7 @@ let CorrectModal;
 let IncorrectModal;
 let ActiveQuiz;
 let Difficulty = 1;
+let SetToPlay;
 let PlayEntireSet = false; 
 
 // Question class
@@ -124,6 +125,10 @@ class Quiz {
         document.getElementById("radio1").checked = false;
         document.getElementById("radio2").checked = false;
         document.getElementById("radio3").checked = false;
+
+        // Cycle pages
+        document.getElementById("options-page").style.display = "none";
+        document.getElementById("game-page").style.display = "block";
 
         // Ask first question
         this.AskQuestion(0);
@@ -460,6 +465,32 @@ function FormatArray(Array) {
     return FormatText;
 }
 
+// Start a quiz
+function StartQuiz() {
+    // Check that SetToPlay is not null
+    if (!SetToPlay) {
+        throw new Error("SetToPlay cannot be null");
+    }
+
+    // Calculate question count
+    let QuestionCount = 5;
+
+    if (PlayEntireSet) {
+        QuestionCount = SetToPlay.length;
+    }
+
+    // Calculate difficulty settings
+    let UseMultipleChoice = !Difficulty;
+    let Attempts = 1;
+    
+    if (Difficulty == 1) {
+        Attempts = 3;
+    }
+
+    // Create a quiz object
+    ActiveQuiz = new Quiz(SetToPlay, Attempts, UseMultipleChoice, QuestionCount);
+}
+
 window.onload = function() {
     // Initialize modals
     IncorrectModal = new bootstrap.Modal(document.getElementById("IncorrectModal"), {
@@ -470,6 +501,5 @@ window.onload = function() {
         keyboard: false,
         backdrop: "static"
     });
-
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false);
+    SetToPlay = CityGroups.Norway;
 };
