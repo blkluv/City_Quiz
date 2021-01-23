@@ -1,3 +1,7 @@
+// Global variables
+let CorrectModal;
+let IncorrectModal;
+
 // Question class
 class Question {
     // Constructor
@@ -156,6 +160,9 @@ class Quiz {
         if (!this.IsMultipleChoice) {
             // Clear input field
             document.getElementById("cityinput").value = "";
+
+            // Focus on input field
+            document.getElementById("cityinput").focus();
         }
         else {
             // Create alternatives
@@ -184,11 +191,17 @@ class Quiz {
             document.getElementById("radio1").value = Alternatives[1];
             document.getElementById("radio2").value = Alternatives[2];
             document.getElementById("radio3").value = Alternatives[3];
+
+            // Register a keydown event
+            document.addEventListener("keydown", EnterEventSubmit);
         }
     }
 
     // Submit answer
     SubmitAnswer(Answer) {
+        // Destroy the keydown event
+        document.removeEventListener("keydown", EnterEventSubmit);
+
         // Check if answer is right
         if (this.QuestionsToAsk[this.Round].AcceptedAnswers.indexOf(Answer.toLowerCase()) > -1) {
             this.RunCorrectAnswerScenario();
@@ -226,11 +239,10 @@ class Quiz {
         }
 
         // Display modal
-        let Modal = new bootstrap.Modal(document.getElementById("CorrectModal"), {
-            keyboard: false,
-            backdrop: "static"
-        });
-        Modal.show();
+        CorrectModal.show();
+
+        // Add key event listener for enter
+        document.addEventListener('keydown', EnterEventNext);
     }
 
     // Wrong answer handler
@@ -259,16 +271,18 @@ class Quiz {
             }
 
             // Display modal
-            let Modal = new bootstrap.Modal(document.getElementById("IncorrectModal"), {
-                keyboard: false,
-                backdrop: "static"
-            });
-            Modal.show();
-            }
+            IncorrectModal.show();
+
+            // Add key event listener for enter
+            document.addEventListener('keydown', EnterEventNext);
+        }
     }
 
     // Progress to next question or summary screen
     NextQuestion() {
+        // Destroy keydown event
+        document.removeEventListener('keydown', EnterEventNext);
+
         // Check if this round is the last
         if (this.Round + 1 == this.QuestionCount) {
             this.GoToSummary();
@@ -342,6 +356,28 @@ class Quiz {
         document.getElementById("game-page").style.display = "none";
         document.getElementById("summary-page").style.display = "block";
     }
+
+
+}
+
+// NextQuestion on enter
+function EnterEventNext(Event) {
+    if (Event.code == "Enter") {
+        // Hide modals
+        CorrectModal.hide();
+        IncorrectModal.hide();
+
+        // Progress to next question
+        ActiveQuiz.NextQuestion();
+    }
+}
+
+// Submit multiple choice on enter
+function EnterEventSubmit(Event) {
+    if (Event.code == "Enter") {
+        // Submit answer
+        ActiveQuiz.SubmitAnswer(document.getElementById('mcform').elements['mc'].value)
+    }
 }
 
 // Array shufler
@@ -365,5 +401,15 @@ function shuffle(array) {
 }
 
 window.onload = function() {
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false, 7);
+    // Initialize modals
+    IncorrectModal = new bootstrap.Modal(document.getElementById("IncorrectModal"), {
+        keyboard: false,
+        backdrop: "static"
+    });
+    CorrectModal = new bootstrap.Modal(document.getElementById("CorrectModal"), {
+        keyboard: false,
+        backdrop: "static"
+    });
+
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true, 7);
 };
