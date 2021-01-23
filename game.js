@@ -48,6 +48,7 @@ class Quiz {
         // Set parent variables
         this.Questions = questions;
         this.IsMultipleChoice = isMultipleChoice;
+        questionCount = questionCount ?? questions.length;
 
         // Check that attempts is in range
         if (attempts > 0) {
@@ -69,14 +70,8 @@ class Quiz {
         }
 
         // Decide which questions are to be asked
-        if (questionCount == questions.length) {
-            // Copy questions array if going to ask all questions
-            this.QuestionsToAsk = shuffle([...questions]);
-        }
-        else {
-            // Shuffle array and slice
-            this.QuestionsToAsk = shuffle(questions).slice(0, questionCount);
-        }
+        // Shuffle array and slice
+        this.QuestionsToAsk = shuffle(questions).slice(0, questionCount);
 
         // Start the quiz
         this.StartQuiz();
@@ -474,5 +469,5 @@ window.onload = function() {
         backdrop: "static"
     });
 
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true, 7);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true);
 };
