@@ -71,7 +71,7 @@ class Quiz {
         // Decide which questions are to be asked
         if (questionCount == questions.length) {
             // Copy questions array if going to ask all questions
-            this.QuestionsToAsk = [...questions];
+            this.QuestionsToAsk = shuffle([...questions]);
         }
         else {
             // Shuffle array and slice
