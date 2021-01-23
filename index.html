@@ -84,8 +84,29 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. At a ex, aliquid, necessitatibus voluptates quod neque doloribus cupiditate beatae deserunt cum obcaecati incidunt aspernatur distinctio corrupti, repellendus illum laboriosam culpa!
             </div>
 
+            <!-- Options page -->
+            <div id="options-page">
+                <!-- Headings -->
+                <h2 class="text-center">Game description</h2>
+                <h3 class="text-center">Options</h3>
+
+                <!-- Difficulty -->
+                <!-- List -->
+                <div class="list-group list-group-horizontal pt-5" role="tablist">
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-easy" data-bs-toggle="list" href="#list-difficulty-easy-tab" role="tab" aria-controls="easy" onclick="Difficulty = 0">Easy</a>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2 active" id="list-difficulty-medium" data-bs-toggle="list" href="#list-difficulty-medium-tab" role="tab" aria-controls="medium" onclick="Difficulty = 1">Medium</a>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-hard" data-bs-toggle="list" href="#list-difficulty-hard-tab" role="tab" aria-controls="hard" onclick="Difficulty = 2">Hard</a>
+                </div>
+                <!-- Tab-content -->
+                <div class="tab-content container p-5">
+                    <div class="tab-pane fade" id="list-difficulty-easy-tab" role="tabpanel" aria-labelledby="list-difficulty-easy">You get 4 choices and one attempt.</div>
+                    <div class="tab-pane fade show active" id="list-difficulty-medium-tab" role="tabpanel" aria-labelledby="list-difficulty-medium">You have to write the city name without alternatives, but you get 3 attempts.</div>
+                    <div class="tab-pane fade" id="list-difficulty-hard-tab" role="tabpanel" aria-labelledby="list-difficulty-hard">You have to write the city name without alternatives, and have only one attempt.</div>
+                </div>
+            </div>
+
             <!-- Game page -->
-            <div id="game-page">
+            <div id="game-page" style="display: none;">
                 <!-- Headings and scores -->
                 <h2 class="text-center">Game description</h2>
                 <h3 class="d-flex justify-content-between px-5">

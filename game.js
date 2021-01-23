@@ -2,6 +2,7 @@
 let CorrectModal;
 let IncorrectModal;
 let ActiveQuiz;
+let Difficulty = 1;
 
 // Question class
 class Question {
@@ -469,5 +470,5 @@ window.onload = function() {
         backdrop: "static"
     });
 
-    ActiveQuiz = new Quiz(CityGroups.Norway, 1, true);
+    ActiveQuiz = new Quiz(CityGroups.Norway, 1, false);
 };
