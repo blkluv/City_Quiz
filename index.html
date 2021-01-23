@@ -94,7 +94,7 @@
                 <h5 class="mb-3 mt-3">Question count</h5>
                 <div class="list-group list-group-horizontal" role="tablist">
                     <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2 active" id="list-qcount-five" data-bs-toggle="list" href="#" onclick="PlayEntireSet = false">5 questions</a>
-                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-qcount-all" data-bs-toggle="list" href="#" onclick="PlayEntireSet = true">Play entire set</a>                </div>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-qcount-all" data-bs-toggle="list" href="#" onclick="PlayEntireSet = true">Play entire set</a>
                 </div>
 
                 <!-- Difficulty -->
@@ -110,6 +110,11 @@
                     <div class="tab-pane fade" id="list-difficulty-easy-tab" role="tabpanel" aria-labelledby="list-difficulty-easy">You get 4 choices and one attempt.</div>
                     <div class="tab-pane fade show active" id="list-difficulty-medium-tab" role="tabpanel" aria-labelledby="list-difficulty-medium">You have to write the city name without alternatives, but you get 3 attempts.</div>
                     <div class="tab-pane fade" id="list-difficulty-hard-tab" role="tabpanel" aria-labelledby="list-difficulty-hard">You have to write the city name without alternatives, and have only one attempt.</div>
+                </div>
+
+                <!-- Start button -->
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-primary" onclick="">Start game</button>
                 </div>
             </div>
 
@@ -178,7 +183,7 @@
                     <br>
 
                     <!-- Submit button -->
-                    <div class="text-right">
+                    <div class="d-flex flex-row-reverse">
                         <button class="btn btn-primary" onclick="ActiveQuiz.SubmitAnswer(document.getElementById('mcform').elements['mc'].value)">Answer</button>
                     </div>
                 </div>
