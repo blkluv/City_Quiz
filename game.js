@@ -3,6 +3,7 @@ let CorrectModal;
 let IncorrectModal;
 let ActiveQuiz;
 let Difficulty = 1;
+let PlayEntireSet = false; 
 
 // Question class
 class Question {
