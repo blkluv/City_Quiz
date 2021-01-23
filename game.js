@@ -119,6 +119,7 @@ class Quiz {
 
         // Clean validation
         document.getElementById("cityinput").className = "form-control";
+        document.getElementById("noneselectederror").style.display = "none";
 
         // Deselect all radios
         document.getElementById("radio0").checked = false;
@@ -186,6 +187,15 @@ class Quiz {
 
     // Submit answer
     SubmitAnswer(Answer) {
+        // Check if the answer is blank for multiplechoice
+        if (!Answer && this.IsMultipleChoice) {
+            // Set the notselectederror to be visible
+            document.getElementById("noneselectederror").style.display = "block";
+
+            // Exit method
+            return;
+        }
+
         // Destroy the keydown event
         document.removeEventListener("keydown", EnterEventSubmit);
 
@@ -283,6 +293,7 @@ class Quiz {
 
             // Clean validation
             document.getElementById("cityinput").className = "form-control";
+            document.getElementById("noneselectederror").style.display = "none";
 
             // Increment round counter
             document.getElementById("currentround").textContent = ++this.Round + 1;
