@@ -1,6 +1,7 @@
 // Global variables
 let CorrectModal;
 let IncorrectModal;
+let ActiveQuiz;
 
 // Question class
 class Question {
