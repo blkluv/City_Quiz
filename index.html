@@ -27,10 +27,8 @@
     <body>
         <!-- Header -->
         <header class="bg-primary container-fluid p-3 mb-5">
-            <div class="row">
-                <!-- Heading -->
-                <h1 class="col">SatelliteImageQuiz</h1>
-            </div>
+            <!-- Heading -->
+            <a href="?"><h1 class="d-inline-block">SatelliteImageQuiz</h1></a>
         </header>
 
         <!-- Modals -->
@@ -80,8 +78,45 @@
             
             <!-- Info page -->
             <div id="info-page">
-                Info info<br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. At a ex, aliquid, necessitatibus voluptates quod neque doloribus cupiditate beatae deserunt cum obcaecati incidunt aspernatur distinctio corrupti, repellendus illum laboriosam culpa!
+                <!-- Heading -->
+                <h2 class="text-center">Info heading</h2>
+
+                <!-- Info text -->
+                <p><span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum soluta corrupti facere commodi tempore alias quibusdam, molestiae eum perferendis architecto quod voluptatum autem delectus? Voluptas quibusdam dolor minima odit aspernatur!</span><span>Aliquid, praesentium soluta laboriosam obcaecati eum quas enim. Deserunt repellat rerum, non fugiat ducimus maiores ex soluta omnis, sapiente, dolorum iusto eveniet at blanditiis vero culpa iste sint? Ipsam, voluptas!</span></p>
+
+                <!-- Heading 2 -->
+                <h3 class="text-center">Avaliable games</h3>
+
+                <!-- Games accordion list -->
+                <div class="accordion accordion-flush" id="gameAccordion">
+                    <!-- World -->
+                    <div class="accordion-item bg-dark-1">
+                        <!-- Heading -->
+                        <h2 class="accordion-header" id="gameAccordionHeaderWorld">
+                            <button class="accordion-button on-drop-bg-dark-2" type="button" data-bs-toggle="collapse" data-bs-target="#gameAccordionCollapseWorld" aria-expanded="true" aria-controls="gameAccordionCollapseWorld">
+                            World
+                            </button>
+                        </h2>
+                        <!-- Content -->
+                        <div id="gameAccordionCollapseWorld" class="accordion-collapse collapse show" aria-labelledby="gameAccordionHeaderWorld" data-bs-parent="#gameAccordion">
+                            <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                        </div>
+                    </div>
+
+                    <!-- Europe -->
+                    <div class="accordion-item bg-dark-1">
+                        <!-- Heading -->
+                        <h2 class="accordion-header" id="gameAccordionHeaderEurope">
+                            <button class="accordion-button on-drop-bg-dark-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gameAccordionCollapseEurope" aria-expanded="false" aria-controls="gameAccordionCollapseEurope">
+                            Europe
+                            </button>
+                        </h2>
+                        <!-- Content -->
+                        <div id="gameAccordionCollapseEurope" class="accordion-collapse collapse" aria-labelledby="gameAccordionHeaderEurope" data-bs-parent="#gameAccordion">
+                            <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Options page -->
