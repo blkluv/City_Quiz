@@ -22,28 +22,73 @@ class Question {
 // All cities
 let Cities = {
     // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
+    // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
     NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
     NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
-    NO11_Egersund: new Question("Egersund,Rogaland,Norway", 14, "Egersund", ["egersund", "eigersund"]),
     NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
     NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
     NO03_Oslo: new Question("Barcode%20Project,Norway", 13, "Oslo", ["oslo"]),
     NO50_Trondheim: new Question("Trondheim,Norway", 13, "Trondheim", ["trondheim", "trondhjem"]),
-
+    NO30_Drammen: new Question("Drammen,Norway", 13, "Drammen", ["drammen"]),
+    NO30_Fredrikstad: new Question("Fredrikstad%20Stasjon,Norway", 14, "Fredrikstad", ["fredrikstad"]),
+    NO30_Sarpsborg: new Question("Sarpsborg,Norway", 13, "Sarpsborg", ["sarpsborg"]),
+    NO38_Skien: new Question("Klosterøya,Skien,Norway", 13, "Skien", ["skien"]),
+    NO38_Porsgrunn: new Question("Sykehuset%20Telemark,Porsgrunn,Norway", 13, "Porsgrunn", ["porsgrunn"]),
+    NO42_Kristiansand: new Question("Kvadraturen,Kristiansand,Norway", 13, "Kristiansand", ["kristiansand"]),
+    NO15_Alesund: new Question("Sparebanken%20Møre%20Arena,Ålesund,Norway", 12, "Ålesund", ["ålesund", "alesund", "aalesund"]),
+    NO38_Tonsberg: new Question("Træleborg,Tønsberg,Norway", 13, "Tønsberg", ["tønsberg", "tonsberg", "toensberg"]),
+    NO30_Moss: new Question("Thorneløkka,Moss,Norway", 13, "Moss", ["moss"]),
+    NO38_Sandefjord: new Question("Hvalfangstmonumentet,Sandefjord,Norway", 13, "Sandefjord", ["sandefjord"]),
+    NO42_Arendal: new Question("Arendal,Norway", 13, "Arendal", ["arendal"]),
+    NO18_Bodo: new Question("Bodø,Norway", 12, "Bodø", ["bodø", "bodo", "bodoe"]),
+    NO54_Tromso: new Question("Tromsø,Norway", 12, "Tromsø", ["tromsø", "tromso", "tromsoe"]),
+    NO34_Hamar: new Question("Hamar,Norway", 13, "Hamar", ["hamar"]),
+    NO30_Halden: new Question("Halden%20Stasjon,Norway", 13, "Halden", ["halden"]),
+    NO38_Larvik: new Question("Larvik,Norway", 13, "Larvik", ["larvik"]),
+    NO46_Askoy: new Question("Kleppestø,Norway", 15, "Askøy", ["kleppestø", "kleppesto", "kleppestoe", "askøy", "askoy", "askoey", "kleppestø, askøy", "kleppesto, askoy", "kleppestoe, askoey"]),
+    NO30_Kongsberg: new Question("Kongsberg,Norway", 14, "Kongsberg", ["kongsberg"]),
+    NO54_Harstad: new Question("Generalhagen,Harstad,Norway", 13, "Harstad", ["harstad"]),
+    NO15_Molde: new Question("Molde,Norway", 13, "Molde", ["molde"]),
+    NO34_Gjovik: new Question("Gjøvik,Norway", 14, "Gjøvik", ["gjøvik", "gjovik", "gjoevik"]),
+    NO34_Lillehammer: new Question("Lillehammer,Norway", 13, "Lillehammer", ["lillehammer"]),
+    NO38_Horten: new Question("Horten,Norway", 13, "Horten", ["horten"]),
+    NO30_Ski: new Question("Ski Stasjon,Norway", 14, "Ski", ["ski", "nordre follo"]),
 };
 
 // City groups
 let CityGroups = {
     "norway": {
-        FormatName: "Norway",
+        FormatName: "The 30 largest cities in Norway",
         Cities: [
             Cities.NO11_Sandnes,
             Cities.NO11_Stavanger,
-            Cities.NO11_Egersund,
             Cities.NO11_Haugesund,
             Cities.NO46_Bergen,
             Cities.NO03_Oslo,
-            Cities.NO50_Trondheim
+            Cities.NO50_Trondheim,
+            Cities.NO30_Drammen,
+            Cities.NO30_Fredrikstad,
+            Cities.NO30_Sarpsborg,
+            Cities.NO38_Skien,
+            Cities.NO38_Porsgrunn,
+            Cities.NO42_Kristiansand,
+            Cities.NO15_Alesund,
+            Cities.NO38_Tonsberg,
+            Cities.NO30_Moss,
+            Cities.NO38_Sandefjord,
+            Cities.NO42_Arendal,
+            Cities.NO18_Bodo,
+            Cities.NO54_Tromso,
+            Cities.NO34_Hamar,
+            Cities.NO38_Larvik,
+            Cities.NO46_Askoy,
+            Cities.NO30_Kongsberg,
+            Cities.NO54_Harstad,
+            Cities.NO15_Molde,
+            Cities.NO34_Gjovik,
+            Cities.NO34_Lillehammer,
+            Cities.NO38_Horten,
+            Cities.NO30_Ski
         ]
     }
 };
