@@ -477,7 +477,7 @@ function StartQuiz() {
     }
 
     // Calculate question count
-    let QuestionCount = 5;
+    let QuestionCount = 10;
 
     if (PlayEntireSet) {
         QuestionCount = SetToPlay.length;
