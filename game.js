@@ -546,7 +546,56 @@ let CityGroups = {
             Cities.USKY_Louisville,
             Cities.USMD_Baltimore
         ]
-    }
+    },
+    "capitals": {
+        FormatName: "Capitals of the World",
+        Cities : [
+            Cities.EE37_Tallinn,
+            Cities.LTVL_Vilnius,
+            Cities.LVRIX_Riga,
+            Cities.PLMZ_Warsaw,
+            Cities.CZ10_Prague,
+            Cities.HUBU_Budapest,
+            Cities.ROB_Bucharest,
+            Cities.BG22_Sofia,
+            Cities.SI061_Ljubljana,
+            Cities.SKBl_Bratislava,
+            Cities.HR21_Zagreb,
+            Cities.AL11_Tirana,
+            Cities.ME16_Podgorica,
+            Cities.RS00_Belgrade,
+            Cities.MK85_Skopje,
+            Cities.BABIH_Sarajevo,
+            Cities.BYHM_Minsk,
+            Cities.MDCU_Chisinau,
+            Cities.RUMOW_Moscow,
+            Cities.UAKV_Kyiv,
+            Cities.AD07_AndorraLaVella,
+            Cities.AT9_Vienna,
+            Cities.BEBRU_Brussels,
+            Cities.DK84_Copenhagen,
+            Cities.FI18_Helsinki,
+            Cities.FRIDF_Paris,
+            Cities.DEBE_Berlin,
+            Cities.GRI_Athens,
+            Cities.IS1_Reykjavik,
+            Cities.IEL_Dublin,
+            Cities.ITRM_Rome,
+            Cities.LI11_Vaduz,
+            Cities.LULU_Luxembourg,
+            Cities.MT60_Valetta,
+            Cities.MC_Monaco,
+            Cities.NLNH_Amsterdam,
+            Cities.NO03_Oslo,
+            Cities.PT11_Lisbon,
+            Cities.SM07SanMarino,
+            Cities.ESMD_Madrid,
+            Cities.SEAB_Stockholm,
+            Cities.CHBE_Bern,
+            Cities.GBENG_London,
+            Cities.USDC_Washington
+        ]
+    },
 };
 
 // Quiz class
