@@ -239,16 +239,23 @@
                 <!-- Per round info -->
                 <div class="container px-5 row" id="SummaryPerRound"></div>
 
-                <!-- Sharer -->
+                <!-- Card footer -->
                 <hr>
-                <div class="px-5">
-                    <a id="facebook-sharer" title="Share on Facebook" target="_blank">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    &nbsp;
-                    <a id="twitter-sharer" title="Share on Twitter" target="_blank">
-                        <div class="fab fa-twitter"></div>
-                    </a>
+                <div class="px-5 d-flex justify-content-between">
+                    <div>
+                        <!-- Share buttons -->
+                        <a id="facebook-sharer" title="Share on Facebook" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        &nbsp;
+                        <a id="twitter-sharer" title="Share on Twitter" target="_blank">
+                            <div class="fab fa-twitter"></div>
+                        </a>
+                    </div>
+                    <div class="text-right">
+                        <!-- Replay button -->
+                        <button class="btn btn-primary" onclick="document.getElementById('options-page').style.display = 'block';document.getElementById('summary-page').style.display = 'none';">Play again</button>
+                    </div>
                 </div>
             </div>
         </div>
