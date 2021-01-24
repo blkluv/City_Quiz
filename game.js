@@ -348,7 +348,7 @@ class Quiz {
         }
 
         // Set href of sharer buttons
-        let ShareText = `I just played GAME DESCRIPTION on GAME NAME and got ${this.Points} out of ${this.QuestionCount} point in ${FormatDateDifference(new Date(), this.StartTime)}.`;
+        let ShareText = `I just played ${SetName} on GAME NAME and got ${this.Points} out of ${this.QuestionCount} point in ${FormatDateDifference(new Date(), this.StartTime)}.`;
         document.getElementById("facebook-sharer").href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&quote=${ShareText}`;
         document.getElementById("twitter-sharer").href = `https://twitter.com/compose/tweet?url=${window.location.href}&text=${ShareText}`;
 
