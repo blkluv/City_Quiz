@@ -22,6 +22,7 @@ class Question {
 // All cities
 let Cities = {
     // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
+    // Europe
     // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
     NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
     NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
@@ -53,6 +54,133 @@ let Cities = {
     NO34_Lillehammer: new Question("Lillehammer,Norway", 13, "Lillehammer", ["lillehammer"]),
     NO38_Horten: new Question("Horten,Norway", 13, "Horten", ["horten"]),
     NO30_Ski: new Question("Ski Stasjon,Norway", 14, "Ski", ["ski", "nordre follo"]),
+
+    // Russia: RU. 
+    RUMOW_Moscow: new Question("Moscow,RU", 13, "Moscow", ["moscow", "москва"]),
+
+    // Ukraine: UA
+    UAKV_Kyiv: new Question("Kyiv,UA", 13, "Kyiv", ["kyiv", "kiev", "київ"]),
+
+    // France: FR
+    FRIDF_Paris: new Question("Notre%20Dame,Paris,FR", 13, "Paris", ["paris"]),
+
+    // Spain: ES
+    ESMD_Madrid: new Question("Madrid,ES", 13, "Madrid", ["madrid"]),
+
+    // Sweden: SE
+    SEAB_Stockholm: new Question("Stockholm,SE", 12, "Stockholm", ["stockholm"]),
+
+    // Germany: DE
+    DEBE_Berlin: new Question("Berlin,DE", 12, "Berlin", ["berlin"]),
+
+    // Finland: FI
+    FI18_Helsinki: new Question("Helsinki,FI", 12, "Helsinki", ["helsinki"]),
+
+    // Poland: PL
+    PLMZ_Warsaw: new Question("Warsaw,PL", 12, "Warsaw", ["warsaw", "warszawa"]),
+
+    // Italy: IT
+    ITRM_Rome: new Question("Colosessum,Rome,IT", 12, "Rome", ["rome", "roma"]),
+
+    // United Kingdom: GB
+    GBENG_London: new Question("London,GB", 12, "London", ["london"]),
+
+    // Romania: RO
+    ROB_Bucharest: new Question("Bucharest,RO", 13, "Bucharest", ["bucharest", "bucurești"]),
+
+    // Belarus: BY
+    BYHM_Minsk: new Question("Minsk,BY", 12, "Minsk", ["minsk", "мінск", "менск", "минск"]),
+
+    // Greece: GR
+    GRI_Athens: new Question("Athens,GR", 13, "Athens", ["athens", "αθήνα"]),
+
+    // Bulgaria: BG
+    BG22_Sofia: new Question("Sofia,BG", 13, "Sofia", ["sofia", "софия"]),
+
+    // Iceland: IS
+    IS1_Reykjavik: new Question("64.13599420450862,-21.92402210755096", 13, "Reykjavik", ["reykjavik", "reykjavík"]),
+
+    // Hungary: HU
+    HUBU_Budapest: new Question("Budapest,HU", 13, "Budapest", ["budapest"]),
+
+    // Portugal: PT
+    PT11_Lisbon: new Question("Lisbon,PT", 12, "Lisbon", ["lisbon", "lisboa"]),
+
+    // Austria: AT
+    AT9_Vienna: new Question("Vienna,AT", 12, "Vienna", ["vienna", "wien"]),
+
+    // Czech Republic: CZ
+    CZ10_Prague: new Question("Prague,CZ", 12, "Prague", ["prague", "praha"]),
+
+    // Serbia: RS
+    RS00_Belgrade: new Question("Belgrade,RS", 12, "Belgrade", ["belgrade", "beograd", "београд"]),
+
+    // Ireland: IE
+    IEL_Dublin: new Question("Dublin,IE", 13, "Dublin", ["dublin"]),
+
+    // Lithuania: LT
+    LTVL_Vilnius: new Question("Vilnius,LT", 13, "Vilnius", ["vilnius"]),
+
+    // Latvia: LV
+    LVRIX_Riga: new Question("Riga,LV", 12, "Riga", ["riga", "rīga"]),
+
+    // Croatia: HR
+    HR21_Zagreb: new Question("Most%20slobode,Zagreb,HR", 13, "Zagreb", ["zagreb"]),
+
+    // Bosnia and Herzegovina: BA
+    BABIH_Sarajevo: new Question("Sarajevo,BA", 13, "Sarajevo", ["sarajevo"]),
+
+    // Slovakia: SK
+    SKBl_Bratislava: new Question("Bratislava,SK", 12, "Bratislava", ["bratislava"]),
+
+    // Estonia: EE
+    EE37_Tallinn: new Question("Tallinn,EE", 12, "Tallinn", ["tallinn"]),
+
+    // Denmark: DK
+    DK84_Copenhagen: new Question("Copenhagen,DK", 12, "Copenhagen", ["copenhagen", "københavn"]),
+
+    // Switzerland: CH
+    CHBE_Bern: new Question("Bern,CH", 13, "Bern", ["bern"]),
+
+    // Netherlands: NL
+    NLNH_Amsterdam: new Question("Amsterdam,NL", 12, "Amsterdam", ["amsterdam"]),
+
+    // Moldova: MD
+    MDCU_Chisinau: new Question("Chișinău,MD", 13, "Chișinău", ["chișinău", "chisinau"]),
+
+    // Belgium: BE
+    BEBRU_Brussels: new Question("Brussels,BE", 13, "Brussels", ["Brussels", "Bruxelles"]),
+
+    // Albania: AL
+    AL11_Tirana: new Question("Tirana,AL", 13, "Tirana", ["tirana", "tiranë", "tirane"]),
+
+    // North Macedonia: MK
+    MK85_Skopje: new Question("Skopje,MK", 13, "Skopje", ["skopje", "скопје", "shkup"]),
+
+    // Slovenia: SI
+    SI061_Ljubljana: new Question("Ljubljana,SI", 13, "Ljubljana", ["ljubljana"]),
+
+    // Montenegro: ME
+    ME16_Podgorica: new Question("Podgorica,ME", 13, "Podgorica", ["podgorica", "подгорица"]),
+
+    // Luxembourg: LU
+    LULU_Luxembourg: new Question("Palais%20Grand-Ducal,Luxembourg,LU", 13, "Luxembourg", ["luxembourg"]),
+
+    // Andorra: AD
+    AD07_AndorraLaVella: new Question("Andorra la Vella,AD", 14, "Andorra la Vella", ["andorra la vella", "andorra"]),
+
+    // Malta: MT
+    MT60_Valetta: new Question("Valetta,MT", 14, "Valetta", ["valetta"]),
+
+    // Liechtenstein: LI
+    LI11_Vaduz: new Question("Vaduz,LI", 14, "Vaduz", ["vaduz"]),
+
+    // San Marino: SM
+    SM07SanMarino: new Question("San Marino,SM", 14, "City of San Marino", ["san marino", "città di san sarino", "city of san marino"]),
+
+    // Monaco: MC
+    MC_Monaco: new Question("Monaco,MC", 14, "Monaco", ["monaco"]),
+
 };
 
 // City groups
@@ -90,7 +218,108 @@ let CityGroups = {
             Cities.NO38_Horten,
             Cities.NO30_Ski
         ]
-    }
+    },
+    "westerneurope": {
+        FormatName: "Capitals of Western Europe",
+        Cities : [
+            Cities.AD07_AndorraLaVella,
+            Cities.AT9_Vienna,
+            Cities.BEBRU_Brussels,
+            Cities.DK84_Copenhagen,
+            Cities.FI18_Helsinki,
+            Cities.FRIDF_Paris,
+            Cities.DEBE_Berlin,
+            Cities.GRI_Athens,
+            Cities.IS1_Reykjavik,
+            Cities.IEL_Dublin,
+            Cities.ITRM_Rome,
+            Cities.LI11_Vaduz,
+            Cities.LULU_Luxembourg,
+            Cities.MT60_Valetta,
+            Cities.MC_Monaco,
+            Cities.NLNH_Amsterdam,
+            Cities.NO03_Oslo,
+            Cities.PT11_Lisbon,
+            Cities.SM07SanMarino,
+            Cities.ESMD_Madrid,
+            Cities.SEAB_Stockholm,
+            Cities.CHBE_Bern,
+            Cities.GBENG_London
+        ]
+    },
+    "easterneurope": {
+        FormatName: "Capitals of Eastern Europe",
+        Cities : [
+            Cities.EE37_Tallinn,
+            Cities.LTVL_Vilnius,
+            Cities.LVRIX_Riga,
+            Cities.PLMZ_Warsaw,
+            Cities.CZ10_Prague,
+            Cities.HUBU_Budapest,
+            Cities.ROB_Bucharest,
+            Cities.BG22_Sofia,
+            Cities.SI061_Ljubljana,
+            Cities.SKBl_Bratislava,
+            Cities.HR21_Zagreb,
+            Cities.AL11_Tirana,
+            Cities.ME16_Podgorica,
+            Cities.RS00_Belgrade,
+            Cities.MK85_Skopje,
+            Cities.BABIH_Sarajevo,
+            Cities.BYHM_Minsk,
+            Cities.MDCU_Chisinau,
+            Cities.RUMOW_Moscow,
+            Cities.UAKV_Kyiv
+        ]
+    },
+    "europe": {
+        FormatName: "Capitals of Europe",
+        Cities : [
+            Cities.EE37_Tallinn,
+            Cities.LTVL_Vilnius,
+            Cities.LVRIX_Riga,
+            Cities.PLMZ_Warsaw,
+            Cities.CZ10_Prague,
+            Cities.HUBU_Budapest,
+            Cities.ROB_Bucharest,
+            Cities.BG22_Sofia,
+            Cities.SI061_Ljubljana,
+            Cities.SKBl_Bratislava,
+            Cities.HR21_Zagreb,
+            Cities.AL11_Tirana,
+            Cities.ME16_Podgorica,
+            Cities.RS00_Belgrade,
+            Cities.MK85_Skopje,
+            Cities.BABIH_Sarajevo,
+            Cities.BYHM_Minsk,
+            Cities.MDCU_Chisinau,
+            Cities.RUMOW_Moscow,
+            Cities.UAKV_Kyiv,
+            Cities.AD07_AndorraLaVella,
+            Cities.AT9_Vienna,
+            Cities.BEBRU_Brussels,
+            Cities.DK84_Copenhagen,
+            Cities.FI18_Helsinki,
+            Cities.FRIDF_Paris,
+            Cities.DEBE_Berlin,
+            Cities.GRI_Athens,
+            Cities.IS1_Reykjavik,
+            Cities.IEL_Dublin,
+            Cities.ITRM_Rome,
+            Cities.LI11_Vaduz,
+            Cities.LULU_Luxembourg,
+            Cities.MT60_Valetta,
+            Cities.MC_Monaco,
+            Cities.NLNH_Amsterdam,
+            Cities.NO03_Oslo,
+            Cities.PT11_Lisbon,
+            Cities.SM07SanMarino,
+            Cities.ESMD_Madrid,
+            Cities.SEAB_Stockholm,
+            Cities.CHBE_Bern,
+            Cities.GBENG_London
+        ]
+    },
 };
 
 // Quiz class
