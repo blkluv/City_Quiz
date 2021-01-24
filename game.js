@@ -15,7 +15,7 @@ class Question {
         this.Query = query;
         this.Zoom = zoom;
         this.FormatName = formatName;
-        this.AcceptedAnswers = acceptedAnswers;
+        this.AcceptedAnswers = acceptedAnswers ?? [formatName.toLowerCase()];
     }
 }
 
