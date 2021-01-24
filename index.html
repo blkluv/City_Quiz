@@ -159,7 +159,7 @@
             <div id="game-page" style="display: none;">
                 <!-- Headings and scores -->
                 <h2 class="text-center header-game-description"></h2>
-                <h3 class="d-flex justify-content-between px-5">
+                <h3 class="d-flex justify-content-between flex-column flex-sm-row px-sm-5 px-3">
                     <span>Current round: <span id="currentround"></span> of <span id="roundcount"></span>.</span>
                     <span>Points: <span id="points">&nbsp;&nbsp;&nbsp;</span></span>
                 </h3>
@@ -169,7 +169,7 @@
 
                 <!-- Inputs -->
                 <!-- Text -->
-                <div id="textinput" class="px-5 py-3">
+                <div id="textinput" class="px-sm-5 px-3 py-3">
                     <!-- Attempt counter -->
                     <h5 id="attemptcounter">Attempt <span id="attempt"></span> of <span id="attempts"></span>.</h5>
 
@@ -184,7 +184,7 @@
                 </div>
 
                 <!-- Multiple choice -->
-                <div id="mcinput" class="container px-5 py-3 text-center">
+                <div id="mcinput" class="container px-sm-5 px-3 py-3 text-center">
                     <!-- Label -->
                     <p>Please select the correct city.</p>
 
@@ -192,7 +192,7 @@
                     <p class="text-danger" id="noneselectederror" style="display: none;">No answer selected, please select one before submitting.</p>
                     
                     <!-- Radios -->
-                    <form class="d-flex justify-content-between" id="mcform">
+                    <form class="d-flex justify-content-between flex-column flex-sm-row" id="mcform">
                         <!-- Radio 0 -->
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="radio0" name="mc">
