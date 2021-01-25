@@ -22,6 +22,10 @@ class Question {
 // All cities
 let Cities = {
     // Scheme: ISO 3166-2 country and subdivison code c and d, and city name n: cd_n
+    // For future reference: 
+    // https://unstats.un.org/unsd/methodology/m49/
+    // https://www.iso.org/obp/ui/#search
+
     // Europe
     // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
     NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
@@ -260,7 +264,173 @@ let Cities = {
     USNV_LasVegas: new Question("Las Vegas,NV", 13, "Las Vegas"),
     USTN_Memphis: new Question("Memphis,TN", 13, "Memphis"),
     USKY_Louisville: new Question("Louisville,KY", 13, "Louisville"),
-    USMD_Baltimore: new Question("Baltimore,MD", 13, "Baltimore")
+    USMD_Baltimore: new Question("Baltimore,MD", 13, "Baltimore"),
+
+    // Asia
+
+    // Central Asia
+    
+    // Kazakhstan: KZ
+    KZ_NurSultan: new Question("Nur-Sultan,KZ", 13, "Nur-Sultan", ["nur-sultan", "nur sultan", "нұр-сұлтан", "нұр сұлтан"]),
+
+    // Kyrgyzstan: KG
+    KG_Bishkek: new Question("Bishkek,KG", 13, "Bishkek", ["bishkek", "бишкек"]),
+
+    // Tajikistan: TJ
+    TJ_Dushanbe: new Question("Dushanbe,TJ", 13, "Dushanbe", ["dushanbe", "душанбе"]),
+
+    // Turkmenistan: TM
+    TM_Ashgabat: new Question("37.94044188585668,58.40071752389324", 13, "Ashgabat", ["ashgabat", "aşgabat", "asgabat"]),
+
+    // Uzbekistan: UZ
+    UZ_Tashkent: new Question("Bunyodkor%20Square,Tashkent,UZ", 13, "Tashkent", ["tashkent", "тошкент"]),
+
+    
+    // Western Asia
+
+    // Armenia: AM
+    AM_Yerevan: new Question("Yerevan,AM", 13, "Yerevan", ["yerevan", "երևան"]),
+
+    // Azerbaijan: AZ
+    AZ_Baku: new Question("Baku,AZ", 12, "Baku", ["baku", "bakı"]),
+
+    // Bahrain: BH
+    BH_Manama: new Question("Manama,BH", 13, "Manama", ["manama", "المنامة"]),
+
+    // Cyprus: CY
+    CY_Nicosia: new Question("Saint%20Sophia%20Cathedral,Nicosia,CY", 13, "Nicosia", ["nicosia", "λευκωσία"]),
+
+    // Georgia: GE
+    GE_Tbilisi: new Question("Tbilisi,GE", 13, "Tbilisi", ["tbilisi", "თბილისი"]),
+
+    // Iraq: IQ
+    IQ_Baghdad: new Question("Baghdad,IQ", 13, "Baghdad", ["baghdad", "بغداد"]),
+
+    // Israel: IL
+    // For the purpose of this quiz, Jerusalem is in Israel.
+    IL_Jerusalem: new Question("Jerusalem", 13, "Jerusalem", ["jerusalem", "ירושלים", "القُدس"]),
+
+    // Jordan: JO
+    JO_Amman: new Question("Amman,JO", 13, "Amman", ["amman", "عمّان"]),
+
+    // Kuwait: KW
+    KW_KuwaitCity: new Question("Kuwait City,KW", 13, "Kuwait City", ["kuwait city", "مدينة الكويت"]),
+
+    // Lebanon: LB
+    LB_Beirut: new Question("Beirut,LB", 13, "Beirut", ["beirut", "بيروت"]),
+
+    // Oman: OM
+    OM_Muscat: new Question("23.594404504657824,58.445742397862496", 12, "Muscat", ["muscat", "مسقط"]),
+
+    // Qatar: QA
+    QA_Doha: new Question("Doha,QA", 12, "Doha", ["doha", "الدوحة"]),
+
+    // Saudi Arabia: SA
+    SA_Riyadh: new Question("Riyadh,SA", 12, "Riyadh", ["riyadh", "الرياض"]),
+
+    // Syria: SY
+    SY_Damascus: new Question("33.500125914524176,36.291779130892174", 13, "Damascus", ["damascus", "دمشق"]),
+
+    // Turkey: TR
+    TR_Ankara: new Question("Ankara,TR", 13, "Ankara"),
+
+    // United Arab Emirates: AE
+    AE_AbuDhabi: new Question("Abu Dhabi,AE", 12, "Abu Dhabi", ["abu dhabi", "أبو ظبي"]),
+
+    // Yemen: YE
+    YE_Sanaa: new Question("Sana'a,YE", 13, "Sana'a", ["sana'a", "sanaa", "sana a", "صنعاء‎"]),
+
+
+    // Eastern Asia
+
+    // China: CN
+    CN_Beijing: new Question("Beijing,CN", 12, "Beijing"),
+    // China's special administrative regions and Taiwan are countries with dedicated capitals for the purpose of this quiz.
+    CN_HongKong: new Question("Hong Kong", 12, "Hong Kong", ["hong kong", "香港"]),
+    CN_Macau: new Question("Macau", 12, "Macau", ["macau", "澳門", "macao"]),
+
+    // Taiwan: TW
+    TW_Taipei: new Question("Taipei,TW", 12, "Taipei", ["taipei", "台北"]),
+
+    // North Korea: KP
+    KP_Peyongyang: new Question("Peyongyang,KP", 12, "Peyongyang", ["peyongyang", "평양"]),
+
+    // Japan: JP
+    JP_Tokyo: new Question("35.65215309344215,139.76374158507505", 12, "Tokyo", ["tokyo", "東京都"]),
+
+    // Mongolia: MN
+    MN_Ulaanbaatar: new Question("47.908197953446304,106.91802085541644", 13, "Ulaanbaatar", ["ulaanbaatar", "улаанбаатар"]),
+
+    // South Korea: KR
+    KR_Seoul: new Question("Seoul,KR", 12, "Seoul", ["seoul", "서울특별시"]),
+
+
+    // South-Eastern Asia
+
+    // Brunei: BN
+    BN_BandarSeriBegawan: new Question("Bandar Seri Begawan,BN", 13, "Bandar Seri Begawan"),
+
+    // Cambodia: KH
+    KH_PhenomPenh: new Question("Phnom Penh,KH", 13, "Phnom Penh", ["phnom penh", "រាជធានី​ភ្នំពេញ"]),
+
+    // Indonesia: ID
+    ID_Jakarta: new Question("National%20Monument,Jakarta,ID", 12, "Jakarta"),
+
+    // Laos: LA
+    LA_Vientiane: new Question("Vientiane,LA", 13, "Vientiane", ["vientiane", "ວຽງຈັນ"]),
+
+    // Malaysia: MY
+    MY_KualaLumpur: new Question("3.1543511105192623,101.68496738207166", 12, "Kuala Lumpur"),
+
+    // Myanmar: MM
+    MM_Naypyitaw: new Question("19.749868673641554,96.08540212024712", 13, "Naypyitaw", ["naypyitaw", "နေပြည်တော်"]),
+
+    // Philippines: PH
+    PH_Manila: new Question("Manila,PH", 12, "Manila"),
+
+    // Singapore: SG
+    SG_Singapore: new Question("1.30236765807081,103.84958970443697", 12, "Singapore"),
+
+    // Thailand: TH
+    TH_Bangkok: new Question("Bangkok,TH", 12, "Bangkok", ["bangkok", "กรุงเทพมหานคร"]),
+
+    // Timor-Leste: TL
+    TL_Dili: new Question("Dili,TL", 13, "Dili"),
+
+    // Vietnam: VN
+    VN_Hanoi: new Question("Hanoi,VN", 13, "Hanoi", ["hanoi", "ha noi", "hà nội", "hoàn kiếm", "hoan kiem"]),
+
+
+    // Southern Asia
+
+    // Afghanistan: AF
+    AF_Kabul: new Question("34.53543285351253,69.17978518015983", 13, "Kabul", ["kabul", "کابل"]),
+
+    // Bangladesh: BD
+    BD_Dhaka: new Question("Dhaka,BD", 12, "Dhaka", ["dhaka", "ঢাকা"]),
+
+    // Bhutan: BT
+    BT_Thimphu: new Question("27.465263737348632,89.64388811067192", 14, "Thimphu"),
+
+    // India: IN
+    IN_NewDelhi: new Question("New Delhi,IN", 12, "New Delhi", ["new delhi", "delhi", "नई दिल्ली"]),
+
+    // Iran: IR
+    IR_Tehran: new Question("Tehran,IR", 12, "Tehran", ["tehran", "تهران"]),
+
+    // Maldives: MV
+    MV_Male: new Question("Malé,MV", 14, "Malé", ["male", "malé"]),
+
+    // Nepal: NP
+    NP_Kathmandu: new Question("Kathmandu,NP", 13, "Kathmandu", ["kathmandu", "काठमाडौँ"]),
+
+    // Pakistan: PK
+    PK_Islamabad: new Question("Islamabad,PK", 13, "Islamabad", ["islamabad", "اسلام آباد"]),
+
+    // Sri Lanka: LK
+    // Sri Jayawardenepura Kotte is the de jure capital.
+    LK_SriJayawardenepuraKotte: new Question("Sri Jayawardenepura Kotte,LK", 13, "Sri Jayawardenepura Kotte"),
+
 };
 
 // City groups
@@ -593,9 +763,168 @@ let CityGroups = {
             Cities.SEAB_Stockholm,
             Cities.CHBE_Bern,
             Cities.GBENG_London,
-            Cities.USDC_Washington
+            Cities.USDC_Washington,
+            Cities.KZ_NurSultan,
+            Cities.KG_Bishkek,
+            Cities.TJ_Dushanbe,
+            Cities.UZ_Tashkent,
+            Cities.TM_Ashgabat,
+            Cities.AM_Yerevan,
+            Cities.AZ_Baku,
+            Cities.BH_Manama,
+            Cities.CY_Nicosia,
+            Cities.GE_Tbilisi,
+            Cities.IQ_Baghdad,
+            Cities.IL_Jerusalem,
+            Cities.JO_Amman,
+            Cities.KW_KuwaitCity,
+            Cities.LB_Beirut,
+            Cities.OM_Muscat,
+            Cities.QA_Doha,
+            Cities.SA_Riyadh,
+            Cities.SY_Damascus,
+            Cities.TR_Ankara,
+            Cities.AE_AbuDhabi,
+            Cities.YE_Sanaa,
+            Cities.CN_Beijing,
+            Cities.CN_HongKong,
+            Cities.CN_Macau,
+            Cities.JP_Tokyo,
+            Cities.MN_Ulaanbaatar,
+            Cities.KP_Peyongyang,
+            Cities.KR_Seoul,
+            Cities.BN_BandarSeriBegawan,
+            Cities.KH_PhenomPenh,
+            Cities.ID_Jakarta,
+            Cities.LA_Vientiane,
+            Cities.MY_KualaLumpur,
+            Cities.MM_Naypyitaw,
+            Cities.PH_Manila,
+            Cities.SG_Singapore,
+            Cities.TH_Bangkok,
+            Cities.TL_Dili,
+            Cities.VN_Hanoi,
+            Cities.AF_Kabul,
+            Cities.BD_Dhaka,
+            Cities.BH_Manama,
+            Cities.IN_NewDelhi,
+            Cities.IR_Tehran,
+            Cities.MV_Male,
+            Cities.PK_Islamabad,
+            Cities.LK_SriJayawardenepuraKotte
         ]
     },
+    "westcentralasia": {
+        FormatName: "Capitals of Western and Central Asia",
+        Cities: [
+            Cities.KZ_NurSultan,
+            Cities.KG_Bishkek,
+            Cities.TJ_Dushanbe,
+            Cities.UZ_Tashkent,
+            Cities.TM_Ashgabat,
+            Cities.AM_Yerevan,
+            Cities.AZ_Baku,
+            Cities.BH_Manama,
+            Cities.CY_Nicosia,
+            Cities.GE_Tbilisi,
+            Cities.IQ_Baghdad,
+            Cities.IL_Jerusalem,
+            Cities.JO_Amman,
+            Cities.KW_KuwaitCity,
+            Cities.LB_Beirut,
+            Cities.OM_Muscat,
+            Cities.QA_Doha,
+            Cities.SA_Riyadh,
+            Cities.SY_Damascus,
+            Cities.TR_Ankara,
+            Cities.AE_AbuDhabi,
+            Cities.YE_Sanaa
+        ]
+    },
+    "eastsouthasia": {
+        FormatName: "Eastern, Southern and Southeastern Asian capitals",
+        Cities: [
+            Cities.CN_Beijing,
+            Cities.CN_HongKong,
+            Cities.CN_Macau,
+            Cities.JP_Tokyo,
+            Cities.MN_Ulaanbaatar,
+            Cities.KP_Peyongyang,
+            Cities.KR_Seoul,
+            Cities.BN_BandarSeriBegawan,
+            Cities.KH_PhenomPenh,
+            Cities.ID_Jakarta,
+            Cities.LA_Vientiane,
+            Cities.MY_KualaLumpur,
+            Cities.MM_Naypyitaw,
+            Cities.PH_Manila,
+            Cities.SG_Singapore,
+            Cities.TH_Bangkok,
+            Cities.TL_Dili,
+            Cities.VN_Hanoi,
+            Cities.AF_Kabul,
+            Cities.BD_Dhaka,
+            Cities.BH_Manama,
+            Cities.IN_NewDelhi,
+            Cities.IR_Tehran,
+            Cities.MV_Male,
+            Cities.PK_Islamabad,
+            Cities.LK_SriJayawardenepuraKotte
+        ]
+    },
+    "asia": {
+        FormatName: "Capitals of Asia", 
+        Cities: [
+            Cities.KZ_NurSultan,
+            Cities.KG_Bishkek,
+            Cities.TJ_Dushanbe,
+            Cities.UZ_Tashkent,
+            Cities.TM_Ashgabat,
+            Cities.AM_Yerevan,
+            Cities.AZ_Baku,
+            Cities.BH_Manama,
+            Cities.CY_Nicosia,
+            Cities.GE_Tbilisi,
+            Cities.IQ_Baghdad,
+            Cities.IL_Jerusalem,
+            Cities.JO_Amman,
+            Cities.KW_KuwaitCity,
+            Cities.LB_Beirut,
+            Cities.OM_Muscat,
+            Cities.QA_Doha,
+            Cities.SA_Riyadh,
+            Cities.SY_Damascus,
+            Cities.TR_Ankara,
+            Cities.AE_AbuDhabi,
+            Cities.YE_Sanaa,
+            Cities.CN_Beijing,
+            Cities.CN_HongKong,
+            Cities.CN_Macau,
+            Cities.JP_Tokyo,
+            Cities.MN_Ulaanbaatar,
+            Cities.KP_Peyongyang,
+            Cities.KR_Seoul,
+            Cities.BN_BandarSeriBegawan,
+            Cities.KH_PhenomPenh,
+            Cities.ID_Jakarta,
+            Cities.LA_Vientiane,
+            Cities.MY_KualaLumpur,
+            Cities.MM_Naypyitaw,
+            Cities.PH_Manila,
+            Cities.SG_Singapore,
+            Cities.TH_Bangkok,
+            Cities.TL_Dili,
+            Cities.VN_Hanoi,
+            Cities.AF_Kabul,
+            Cities.BD_Dhaka,
+            Cities.BH_Manama,
+            Cities.IN_NewDelhi,
+            Cities.IR_Tehran,
+            Cities.MV_Male,
+            Cities.PK_Islamabad,
+            Cities.LK_SriJayawardenepuraKotte
+        ]
+    }
 };
 
 // Quiz class
