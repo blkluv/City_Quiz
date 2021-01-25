@@ -886,6 +886,7 @@ class Quiz {
         document.getElementById("SummaryTime").textContent = FormatDateDifference(new Date(), this.StartTime);
         document.getElementById("SummaryPoints").textContent = this.Points;
         document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
+        document.getElementById("SummaryPerRound").innerHTML = "";
 
         // Print round info
         for (let i = 0; i < this.Log.length; i++) {
