@@ -149,7 +149,7 @@ let Cities = {
     MDCU_Chisinau: new Question("Chișinău,MD", 13, "Chișinău", ["chișinău", "chisinau"]),
 
     // Belgium: BE
-    BEBRU_Brussels: new Question("Brussels,BE", 13, "Brussels", ["Brussels", "Bruxelles"]),
+    BEBRU_Brussels: new Question("Brussels,BE", 13, "Brussels", ["brussels", "bruxelles"]),
 
     // Albania: AL
     AL11_Tirana: new Question("Tirana,AL", 13, "Tirana", ["tirana", "tiranë", "tirane"]),
@@ -234,7 +234,7 @@ let Cities = {
     USWV_Charleston: new Question("Charleston,WV", 13, "Charleston"),
     USWI_Madison: new Question("Madison,WI", 13, "Madison"),
     USWY_Cheyenne: new Question("Cheyenne,WY", 14, "Cheyenne"),
-    USDC_Washington: new Question("Lincoln%20Memorial,Washington,DC", 13, "Washington, D.C.", ["washigton", "washigton dc", "washigton, d.c.", "washigton d.c.", "dc", "d.c.", "washigton, district of columbia", "district of columbia", "washigton district of columbia"]),
+    USDC_Washington: new Question("Lincoln%20Memorial,Washington,DC", 13, "Washington, D.C.", ["washington", "washington dc", "washington, d.c.", "washington d.c.", "dc", "d.c.", "washington, district of columbia", "district of columbia", "washington district of columbia"]),
     USAS_PagoPago: new Question("Pago Pago,AS", 15, "Pago Pago"),
     USGU_Hagatna: new Question("Hagåtña, GU", 15, "Hagåtña", ["hagåtña", "hagatna", "hagatnja"]),
     USMP_Saipain: new Question("Chalan Piao,MP", 14, "Saipan", ["chalan piao", "saipan"]),
