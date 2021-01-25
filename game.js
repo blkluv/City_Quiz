@@ -808,9 +808,6 @@ class Quiz {
 
         // Display modal
         CorrectModal.show();
-
-        // Add key event listener for enter
-        document.addEventListener('keydown', EnterEventNext);
     }
 
     // Wrong answer handler
@@ -840,9 +837,6 @@ class Quiz {
 
             // Display modal
             IncorrectModal.show();
-
-            // Add key event listener for enter
-            document.addEventListener('keydown', EnterEventNext);
         }
     }
 
@@ -1055,6 +1049,16 @@ window.onload = function() {
     CorrectModal = new bootstrap.Modal(document.getElementById("CorrectModal"), {
         keyboard: false,
         backdrop: "static"
+    });
+
+    // Add events to modals
+    document.getElementById("CorrectModal").addEventListener("shown.bs.modal", function(event) {
+        // Add key event listener for enter
+        document.addEventListener('keydown', EnterEventNext);
+    });
+    document.getElementById("IncorrectModal").addEventListener("shown.bs.modal", function(event) {
+        // Add key event listener for enter
+        document.addEventListener('keydown', EnterEventNext);
     });
 
     // Check if a game ID is provided in query string
