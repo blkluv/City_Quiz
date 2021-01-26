@@ -188,6 +188,8 @@ let Cities = {
     
     // North America
 
+    // Mainland NA
+
     // United States of America: US
     USAL_Montgomery: new Question("Montgomery,AL", 14, "Montgomery"),
     USAK_Juneau: new Question("Juneau,AK", 14, "Juneau"),
@@ -265,6 +267,81 @@ let Cities = {
     USTN_Memphis: new Question("Memphis,TN", 13, "Memphis"),
     USKY_Louisville: new Question("Louisville,KY", 13, "Louisville"),
     USMD_Baltimore: new Question("Baltimore,MD", 13, "Baltimore"),
+
+    // Canada: CA
+    CA_Ottawa: new Question("Ottawa,CA", 13, "Ottawa"),
+
+    // Mexico: MX
+    MX_MexicoCity: new Question("Mexico City,MX", 12, "Mexico City", ["mexico city", "ciudad de mexico", "ciudad de méxico"]),
+
+
+    // Central America
+
+    // Belize: BZ
+    BZ_Belmopan: new Question("17.249718736487612,-88.77482133927614", 14, "Belmopan"),
+
+    // Costa Rica: CR
+    CR_SanJose: new Question("San Jose,CR", 13, "San José"),
+
+    // El Salvador: SV
+    SV_SanSalvador: new Question("San Salvador,SV", 13, "San Salvador"),
+
+    // Guatemala: GT
+    GT_GuatemalaCity: new Question("Guatemala City,GT", 13, "Guatemala City", ["guatemala city", "guatemala", "ciudad de guatemala"]),
+
+    // Honduras: HN
+    HN_Tegucigalpa: new Question("Tegucigalpa,HN", 14, "Tegucigalpa"),
+
+    // Nicaragua: NI
+    NI_Managua: new Question("12.141746057514073,-86.23472491667405", 14, "Managua"),
+
+    // Panama: PA
+    PA_PanamaCity: new Question("8.974352249627257,-79.5320251153119", 13, "Panama City", ["panama city", "ciudad de panama"]),
+
+
+    // Caribbean
+
+    // Antigua and Barbuda: AG
+    AG_StJohns: new Question("St John's,AG", 14, "St John's", ["st john's", "st. john's", "st. johns", "st johns", "saint john's", "saint johns"]),
+
+    // Bahamas: 
+    BS_Nassau: new Question("Nassau,BS", 13, "Nassau"),
+
+    // Barbados: BB
+    BB_Bridgetown: new Question("Bridgetown,BB", 14, "Bridgetown"),
+
+    // Cuba: CU
+    CU_Havana: new Question("Havana,CU", 13, "Havana", ["havana", "la habana", "habana"]),
+
+    // Dominica: DM
+    DM_Roseau: new Question("15.303355522937578,-61.38328958409704", 15, "Roseau"),
+
+    // Dominican Republic: DO
+    DO_SantoDomingo: new Question("Santo Domingo,DO", 13, "Santo Domingo"),
+
+    // Grenada: GD
+    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's"]),
+
+    // Haiti: HT
+    HT_PortAuPrince: new Question("18.559152198412633,-72.31765312911371", 13, "Port-au-Prince", ["port-au-prince", "port au prince"]),
+
+    // Jamaica: JM
+    JM_Kingston: new Question("Kingston,JM", 12, "Kingston"),
+
+    // Saint Kitts and Nevis: KN
+    KN_Basseterre: new Question("Basseterre,KN", 14, "Basseterre"),
+
+    // Saint Lucia: LC
+    LC_Castries: new Question("Castries,LC", 14, "Castries"),
+
+    // Saint Vincent and the Grenadines: VC
+    VC_Kingstown: new Question("Kingstown,VC", 15, "Kingstown"),
+
+    // Trinidad and Tobago: TT
+    TT_PortOfSpain: new Question("Port of Spain,TT", 14, "Port of Spain", ["port of spain", "puerto españa", "puerto espana"]),
+
+
+
 
     // Asia
 
@@ -717,6 +794,34 @@ let CityGroups = {
             Cities.USMD_Baltimore
         ]
     },
+    "northamerica": {
+        FormatName: "Capitals of North America",
+        Cities: [
+            Cities.USDC_Washington,
+            Cities.CA_Ottawa,
+            Cities.MX_MexicoCity,
+            Cities.BZ_Belmopan,
+            Cities.CR_SanJose,
+            Cities.SV_SanSalvador,
+            Cities.GT_GuatemalaCity,
+            Cities.HN_Tegucigalpa,
+            Cities.NI_Managua,
+            Cities.PA_PanamaCity,
+            Cities.AG_StJohns,
+            Cities.BS_Nassau,
+            Cities.BB_Bridgetown,
+            Cities.CU_Havana,
+            Cities.DO_SantoDomingo,
+            Cities.DM_Roseau,
+            Cities.GD_SaintGeorges,
+            Cities.HT_PortAuPrince,
+            Cities.JM_Kingston,
+            Cities.KN_Basseterre,
+            Cities.LC_Castries,
+            Cities.VC_Kingstown,
+            Cities.TT_PortOfSpain
+        ]
+    },
     "capitals": {
         FormatName: "Capitals of the World",
         Cities : [
@@ -811,7 +916,29 @@ let CityGroups = {
             Cities.IR_Tehran,
             Cities.MV_Male,
             Cities.PK_Islamabad,
-            Cities.LK_SriJayawardenepuraKotte
+            Cities.LK_SriJayawardenepuraKotte,
+            Cities.CA_Ottawa,
+            Cities.MX_MexicoCity,
+            Cities.BZ_Belmopan,
+            Cities.CR_SanJose,
+            Cities.SV_SanSalvador,
+            Cities.GT_GuatemalaCity,
+            Cities.HN_Tegucigalpa,
+            Cities.NI_Managua,
+            Cities.PA_PanamaCity,
+            Cities.AG_StJohns,
+            Cities.BS_Nassau,
+            Cities.BB_Bridgetown,
+            Cities.CU_Havana,
+            Cities.DO_SantoDomingo,
+            Cities.DM_Roseau,
+            Cities.GD_SaintGeorges,
+            Cities.HT_PortAuPrince,
+            Cities.JM_Kingston,
+            Cities.KN_Basseterre,
+            Cities.LC_Castries,
+            Cities.VC_Kingstown,
+            Cities.TT_PortOfSpain,
         ]
     },
     "westcentralasia": {
