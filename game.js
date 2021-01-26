@@ -340,7 +340,44 @@ let Cities = {
     // Trinidad and Tobago: TT
     TT_PortOfSpain: new Question("Port of Spain,TT", 14, "Port of Spain", ["port of spain", "puerto españa", "puerto espana"]),
 
+    
+    // South America
 
+    // Argentina: AR
+    AR_BuenoisAires: new Question("-34.59587806430996,-58.39333844020621", 12, "Buenos Aires"),
+
+    // Bolivia: BO
+    BO_LaPaz: new Question("-16.506124650345612,-68.1320557282154", 13, "La Paz"),
+
+    // Brazil: BR
+    BR_Brasilia: new Question("-15.793759808178818,-47.88280591732727", 12, "Brasília", ["brasilia", "brasília"]),
+
+    // Chile: CL
+    CL_Santiago: new Question("Santiago,CL", 12, "Santiago"),
+
+    // Colombia: CO
+    CO_Bogota: new Question("Bogota,CO", 13, "Bogota"),
+    
+    // Ecuador: EC
+    EC_Quito: new Question("Quito,EC", 12, "Quito"),
+
+    // Guyana: GY
+    GY_Georgetown: new Question("Georgetown,GY", 13, "Georgetown"),
+
+    // Paraguay: PY
+    PY_Asuncion: new Question("-25.296162735747956,-57.604880210492034", 12, "Asunción", ["asunción", "asuncion"]),
+
+    // Peru: PE
+    PE_Lima: new Question("Lima,PE", 12, "Lima", ["lima", "lima district"]),
+
+    // Suriname: SR
+    SR_Paramaribo: new Question("5.83562113597878,-55.16240409102544", 13, "Paramaribo"),
+
+    // Uruguay: UY
+    UY_Montevideo: new Question("Montevideo,UY", 12, "Montevideo"),
+
+    // Venezuela: VE
+    VE_Caracas: new Question("Caracas,VE", 13, "Caracas"),
 
 
     // Asia
@@ -822,6 +859,23 @@ let CityGroups = {
             Cities.TT_PortOfSpain
         ]
     },
+    "southamerica": {
+        FormatName: "Capitals of South America",
+        Cities: [
+            Cities.AR_BuenoisAires,
+            Cities.BO_LaPaz,
+            Cities.BR_Brasilia,
+            Cities.CL_Santiago,
+            Cities.CO_Bogota,
+            Cities.EC_Quito,
+            Cities.GY_Georgetown,
+            Cities.PE_Lima,
+            Cities.PY_Asuncion,
+            Cities.SR_Paramaribo,
+            Cities.UY_Montevideo,
+            Cities.VE_Caracas
+        ]
+    },
     "capitals": {
         FormatName: "Capitals of the World",
         Cities : [
@@ -939,6 +993,18 @@ let CityGroups = {
             Cities.LC_Castries,
             Cities.VC_Kingstown,
             Cities.TT_PortOfSpain,
+            Cities.AR_BuenoisAires,
+            Cities.BO_LaPaz,
+            Cities.BR_Brasilia,
+            Cities.CL_Santiago,
+            Cities.CO_Bogota,
+            Cities.EC_Quito,
+            Cities.GY_Georgetown,
+            Cities.PE_Lima,
+            Cities.PY_Asuncion,
+            Cities.SR_Paramaribo,
+            Cities.UY_Montevideo,
+            Cities.VE_Caracas,
         ]
     },
     "westcentralasia": {
