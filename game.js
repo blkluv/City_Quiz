@@ -725,6 +725,68 @@ let Cities = {
     ZA_CapeTown: new Question("-33.9444999526873, 18.477117670821627", 12, "Cape Town"),
     ZA_Pretoria: new Question("Pretoria,ZA", 13, "Pretoria"),
     ZA_Bloemfontein: new Question("-29.119225501787085,26.218450777331118", 13, "Bloemfontein"),
+
+
+    // Oceania
+
+    // Australia and New Zealand
+
+    // Australia: AU
+    AU_Canberra: new Question("-35.29493269593273,149.1265014572204", 13, "Canberra"),
+
+    // New Zealand: NZ
+    NZ_Wellington: new Question("Wellington,NZ", 12, "Wellington"),
+
+
+    // Melanesia
+
+    // Fiji: FJ
+    FJ_Suva: new Question("Suva,FJ", 13, "Suva"),
+
+    // Papua New Guinea: PG
+    PG_PortMoresby: new Question("-9.451710674016937,147.1865826797314", 13, "Port Moresby"),
+
+    // Solomon Islands: SB
+    SB_Honiara: new Question("Honiara,SB", 13, "Honiara"),
+
+    // Vanuatu: VU
+    VU_PortVila: new Question("-17.741929902441512,168.31900200166007", 13, "Port Vila"),
+
+
+    // Micronesia
+
+    // Kiribati: KI
+    KI_Tarawa: new Question("1.3296169094142725,172.97830578844227", 15, "Tarawa"),
+
+    // Marshall Islands: MH
+    MH_Majuro: new Question("7.101525454351255,171.3286102860227", 13, "Majuro"),
+
+    // Micronesia: FM
+    FM_Palikir: new Question("Palikir,FM", 15, "Palikir"),
+
+    // Nauru: NR
+    NR_Yaren: new Question("Yaren,NR", 15, "Yaren"),
+
+    // Palau: PW
+    PW_Ngerulmud: new Question("Ngerulmud,PW", 15, "Ngerulmud"),
+
+    
+    // Polynesia
+
+    // Niue: NU
+    NU_Alofi: new Question("Alofi,NU", 15, "Alofi"),
+
+    // Samoa: WS
+    WS_Apia: new Question("Apia,WS", 14, "Apia"),
+
+    // Tokelau: TK
+    TK_Nukunonu: new Question("-9.201201872390989,-171.8478143549439", 16, "Nukunonu"),
+
+    // Tonga: TO
+    TO_Nukualofa: new Question("-21.140947029865778,-175.19662333758913", 15, "Nuku'alofa", ["nuku'alofa", "nukualofa", "nuku alofa"]),
+
+    // Tuvalu: TV
+    TV_Funafuti: new Question("Funafuti,TV", 15, "Funafuti"),
 };
 
 // City groups
@@ -1266,6 +1328,22 @@ let CityGroups = {
             Cities.SN_Dakar,
             Cities.SL_Freetown,
             Cities.TG_Lome,
+            Cities.AU_Canberra,
+            Cities.NZ_Wellington,
+            Cities.FJ_Suva,
+            Cities.PG_PortMoresby,
+            Cities.SB_Honiara,
+            Cities.VU_PortVila,
+            Cities.KI_Tarawa,
+            Cities.MH_Majuro,
+            Cities.FM_Palikir,
+            Cities.NR_Yaren,
+            Cities.PW_Ngerulmud,
+            Cities.NU_Alofi,
+            Cities.WS_Apia,
+            Cities.TK_Nukunonu,
+            Cities.TO_Nukualofa,
+            Cities.TK_Nukunonu,
         ]
     },
     "westcentralasia": {
@@ -1504,6 +1582,27 @@ let CityGroups = {
             Cities.SN_Dakar,
             Cities.SL_Freetown,
             Cities.TG_Lome
+        ]
+    },
+    "oceania": {
+        FormatName: "Oceanian capitals",
+        Cities: [
+            Cities.AU_Canberra,
+            Cities.NZ_Wellington,
+            Cities.FJ_Suva,
+            Cities.PG_PortMoresby,
+            Cities.SB_Honiara,
+            Cities.VU_PortVila,
+            Cities.KI_Tarawa,
+            Cities.MH_Majuro,
+            Cities.FM_Palikir,
+            Cities.NR_Yaren,
+            Cities.PW_Ngerulmud,
+            Cities.NU_Alofi,
+            Cities.WS_Apia,
+            Cities.TK_Nukunonu,
+            Cities.TO_Nukualofa,
+            Cities.TK_Nukunonu
         ]
     }
 };
