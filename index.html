@@ -234,8 +234,8 @@
 
                     <!-- Text field -->
                     <div class="form-group">
-                        <label for="cityinput" id="cityinput-label">Type the name of the city.</label>
-                        <input class="form-control" type="text" placeholder="City name" id="cityinput" aria-labelledby="cityinput-label" onchange="ActiveQuiz.SubmitAnswer(this.value)">
+                        <label for="cityinput" id="cityinput-label">Type the answer.</label>
+                        <input class="form-control" type="text" placeholder="Your answer" id="cityinput" aria-labelledby="cityinput-label" onchange="ActiveQuiz.SubmitAnswer(this.value)">
                         <div class="invalid-feedback">
                             Wrong answer. Please try again.
                         </div>
@@ -245,7 +245,7 @@
                 <!-- Multiple choice -->
                 <div id="mcinput" class="container px-sm-5 px-3 py-3 text-center">
                     <!-- Label -->
-                    <p>Please select the correct city.</p>
+                    <p>Please select the correct answer.</p>
 
                     <!-- Please select one -->
                     <p class="text-danger" id="noneselectederror" style="display: none;">No answer selected, please select one before submitting.</p>
