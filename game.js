@@ -545,6 +545,186 @@ let Cities = {
     // Sri Jayawardenepura Kotte is the de jure capital.
     LK_SriJayawardenepuraKotte: new Question("Sri Jayawardenepura Kotte,LK", 13, "Sri Jayawardenepura Kotte"),
 
+    
+    // Africa
+
+    // Northern Africa
+
+    // Algeria: DZ
+    DZ_Algiers: new Question("36.73926126973858,3.1401109631321784", 12, "Algiers", ["algiers", "مدينة الجزائر"]),
+
+    // Egypt: EG
+    EG_Cairo: new Question("Cairo,EG", 12, "Cairo", ["cairo", "القاهرة"]),
+
+    // Libya: LY
+    LY_Tripoli: new Question("Tripoli,LY", 13, "Tripoli", ["tripoli", "طرابلس"]),
+
+    // Morocco: MA
+    MA_Rabat: new Question("33.9871202227261,-6.851317891285377", 12, "Rabat", ["rabat", "الرباط"]),
+
+    // Sudan: SD
+    SD_Khartoum: new Question("15.55597653510002,32.55369784874869", 12, "Khartoum", ["khartoum", "الخرطوم"]),
+
+    // Tunisia: TN
+    TN_Tunis: new Question("Tunis,TN", 12, "Tunis", ["tunis", "تونس"]),
+
+
+    // Western Africa
+
+    // Benin: BJ
+    BJ_PortoNovo: new Question("6.48516716689515,2.625304061840653", 13, "Porto-Novo", ["porto-novo", "porto novo"]),
+
+    // Burkina Faso: BF
+    BF_Ouagadougou: new Question("Ouagadougou,BF", 13, "Ouagadougou"),
+
+    // Cabo Verde: CV
+    CV_Praia: new Question("Praia,CV", 13, "Praia"),
+
+    // Côte d’Ivoire: CI
+    CI_Yamoussoukro: new Question("6.816708147354264,-5.275004023189095", 14, "Yamoussoukro"),
+
+    // Gambia: GM
+    GM_Banjul: new Question("Banjul,GM", 14, "Banjul"),
+
+    // Ghana: GH
+    GH_Accra: new Question("Accra,GH", 12, "Accra"),
+
+    // Guinea: GN
+    GN_Conakry: new Question("Conakry,GN", 11, "Conakry"),
+
+    // Guinea-Bissau: GW
+    GW_Bissau: new Question("11.867873053265104, -15.60862036773853", 13, "Bissau"),
+
+    // Liberia: LR
+    LR_Monrovia: new Question("6.309849823376375,-10.773524344285931", 13, "Monrovia"),
+
+    // Mali: ML
+    ML_Bamako: new Question("Bamako,ML", 13, "Bamako"),
+
+    // Mauritania: MR
+    MR_Nouakchott: new Question("Nouakchott,MR", 12, "Nouakchott", ["nouakchott", "نواكشوط"]),
+
+    // Niger: NE
+    NE_Niamey: new Question("Niamey,NE", 12, "Niamey"),
+
+    // Nigeria: NG
+    NG_Abuja: new Question("Abuja,NG", 12, "Abuja"),
+
+    // Senegal: SN
+    SN_Dakar: new Question("Dakar,SN", 12, "Dakar"),
+
+    // Sierra Leone: SL
+    SL_Freetown: new Question("Freetown,SL", 13, "Freetown"),
+
+    // Togo: TG
+    TG_Lome: new Question("6.1509180174696585,1.2354344368181667", 13, "Lomé", ["lome", "lomé"]),
+
+    
+    // Eastern Africa
+
+    // Burundi: BI
+    BI_Bujumbura: new Question("-3.373164824280705,29.350021123852834", 13, "Bujumbura"),
+
+    // Comoros: KM
+    KM_Moroni: new Question("Moroni,KM", 14, "Moroni", ["moroni", "موروني"]),
+
+    // Djibouti: DJ
+    DJ_Djibouti: new Question("11.575614920149501,43.14547463687727", 13, "Djibouti", ["djibouti", "جيبوتي‎"]),
+
+    // Eritrea: ER
+    ER_Asmara: new Question("Asmara,ER", 13, "Asmara", ["asmara", "أسمرة"]),
+
+    // Ethiopia: ET
+    ET_AddisAbaba: new Question("8.998090061563595,38.7586823595628", 13, "Addis Ababa", ["addis ababa", "አዲስ አበባ"]),
+
+    // Kenya: KE
+    KE_Nairobi: new Question("-1.296606433683914,36.87531051469906", 13, "Nairobi"),
+
+    // Madagascar: MG
+    MG_Antananarivo: new Question("-18.90602042991008,47.525082943685504", 13, "Antananarivo"),
+
+    // Malawi: MW
+    MW_Lilongwe: new Question("Lilongwe,MW", 13, "Lilongwe"),
+
+    // Mauritius: MU
+    MU_PortLouis: new Question("Port Louis,MU", 13, "Port Louis"),
+
+    // Mozambique: MZ
+    MZ_Maputo: new Question("-25.950029916473373,32.57564584938457", 13, "Maputo"),
+
+    // Rwanda: RW
+    RW_Kigali: new Question("Kigali,RW", 13, "Kigali"),
+
+    // Seychelles: SC
+    SC_Victoria: new Question("-4.621789319609552,55.45221620870077", 14, "Victoria"),
+
+    // Somalia: SO
+    SO_Mogadishu: new Question("Mogadishu,SO", 13, "Mogadishu", ["mogadishu", "مقديشو‎"]),
+
+    // South Sudan: SS
+    SS_Juba: new Question("4.845323025795621,31.584501948261114", 13, "Juba"),
+
+    // Uganda: UG
+    UG_Kampala: new Question("Kampala,UG", 12, "Kampala"),
+
+    // Tanzania: TZ
+    TZ_Dodoma: new Question("Dodoma,TZ", 13, "Dodoma"),
+
+    // Zambia: ZM
+    ZM_Lusaka: new Question("Lusaka,ZM", 12, "Lusaka"),
+
+    // Zimbabwe: ZW
+    ZW_Harare: new Question("-17.835952868614406,31.047554363505483", 13, "Harare"),
+
+
+    // Middle Africa
+
+    // Angola: AO
+    AO_Luanda: new Question("Luanda,AO", 12, "Luanda"),
+
+    // Cameroon: CM
+    CM_Yaounde: new Question("Yaounde,CM", 13, "Yaounde"),
+
+    // Central African Republic: CF
+    CF_Bangui: new Question("Bangui,CF", 12, "Bangui"),
+
+    // Chad: TD
+    TD_NDjamena: new Question("N'Djamena,TD", 12, "N'Djamena", ["n'djamena", "n djamena", "ndjamena", "إنجامينا"]),
+
+    // Congo: CG
+    CG_Brazzaville: new Question("-4.262187511720094,15.263287188216271", 13, "Brazzaville"),
+
+    // Democratic Republic of the Congo: CD
+    CD_Kinshasa: new Question("-4.333698257227162,15.300332974343227", 12, "Kinshasa"),
+
+    // Equatorial Guinea: GQ
+    GQ_Malabo: new Question("3.742103505929251,8.759836697860926", 13, "Malabo"),
+
+    // Gabon: GA
+    GA_Libreville: new Question("Libreville,GA", 13, "Libreville"),
+
+    // Sao Tome and Principe: ST
+    ST_SaoTome: new Question("0.3428586466988996,6.728509430872581", 14, "São Tomé", ["sao tome", "são tomé"]),
+
+
+    // Southern Africa
+
+    // Botswana: BW
+    BW_Gaborone: new Question("-24.654771693952117,25.90730835256741", 12, "Gaborone"),
+
+    // Eswatini: SZ
+    SZ_Mbabane: new Question("-26.313610218571366,31.13370586001086", 13, "Mbabane"),
+
+    // Lesotho: LS
+    LS_Maseru: new Question("Maseru,LS", 13, "Maseru"),
+
+    // Namibia: NA
+    NA_Windhoek: new Question("Windhoek,NA", 13, "Windhoek"),
+
+    // South Africa: ZA
+    ZA_CapeTown: new Question("-33.9444999526873, 18.477117670821627", 12, "Cape Town"),
+    ZA_Pretoria: new Question("Pretoria,ZA", 13, "Pretoria"),
+    ZA_Bloemfontein: new Question("-29.119225501787085,26.218450777331118", 13, "Bloemfontein"),
 };
 
 // City groups
@@ -1030,6 +1210,62 @@ let CityGroups = {
             Cities.SR_Paramaribo,
             Cities.UY_Montevideo,
             Cities.VE_Caracas,
+            Cities.BI_Bujumbura,
+            Cities.KM_Moroni,
+            Cities.DJ_Djibouti,
+            Cities.ER_Asmara,
+            Cities.ET_AddisAbaba,
+            Cities.KE_Nairobi,
+            Cities.MG_Antananarivo,
+            Cities.MW_Lilongwe,
+            Cities.MU_PortLouis,
+            Cities.MZ_Maputo,
+            Cities.RW_Kigali,
+            Cities.SC_Victoria,
+            Cities.SO_Mogadishu,
+            Cities.SS_Juba,
+            Cities.UG_Kampala,
+            Cities.TZ_Dodoma,
+            Cities.ZM_Lusaka,
+            Cities.ZW_Harare,
+            Cities.AO_Luanda,
+            Cities.CM_Yaounde,
+            Cities.CF_Bangui,
+            Cities.TD_NDjamena,
+            Cities.CG_Brazzaville,
+            Cities.CD_Kinshasa,
+            Cities.GQ_Malabo,
+            Cities.GA_Libreville,
+            Cities.ST_SaoTome,
+            Cities.BW_Gaborone,
+            Cities.SZ_Mbabane,
+            Cities.LS_Maseru,
+            Cities.NA_Windhoek,
+            Cities.ZA_Bloemfontein,
+            Cities.ZA_CapeTown,
+            Cities.ZA_Pretoria,
+            Cities.DZ_Algiers,
+            Cities.EG_Cairo,
+            Cities.LY_Tripoli,
+            Cities.MA_Rabat,
+            Cities.SD_Khartoum,
+            Cities.TN_Tunis,
+            Cities.BJ_PortoNovo,
+            Cities.BF_Ouagadougou,
+            Cities.CV_Praia,
+            Cities.CI_Yamoussoukro,
+            Cities.GM_Banjul,
+            Cities.GH_Accra,
+            Cities.GN_Conakry,
+            Cities.GW_Bissau,
+            Cities.LR_Monrovia,
+            Cities.ML_Bamako,
+            Cities.MR_Nouakchott,
+            Cities.NE_Niamey,
+            Cities.NG_Abuja,
+            Cities.SN_Dakar,
+            Cities.SL_Freetown,
+            Cities.TG_Lome,
         ]
     },
     "westcentralasia": {
@@ -1141,6 +1377,133 @@ let CityGroups = {
             Cities.MV_Male,
             Cities.PK_Islamabad,
             Cities.LK_SriJayawardenepuraKotte
+        ]
+    },
+    "northwestafrica": {
+        FormatName: "Capitals of Northern and Western Africa",
+        Cities: [
+            Cities.DZ_Algiers,
+            Cities.EG_Cairo,
+            Cities.LY_Tripoli,
+            Cities.MA_Rabat,
+            Cities.SD_Khartoum,
+            Cities.TN_Tunis,
+            Cities.BJ_PortoNovo,
+            Cities.BF_Ouagadougou,
+            Cities.CV_Praia,
+            Cities.CI_Yamoussoukro,
+            Cities.GM_Banjul,
+            Cities.GH_Accra,
+            Cities.GN_Conakry,
+            Cities.GW_Bissau,
+            Cities.LR_Monrovia,
+            Cities.ML_Bamako,
+            Cities.MR_Nouakchott,
+            Cities.NE_Niamey,
+            Cities.NG_Abuja,
+            Cities.SN_Dakar,
+            Cities.SL_Freetown,
+            Cities.TG_Lome
+        ]
+    },
+    "eastmiddlesouthafrica": {
+        FormatName: "Capitals of Eastern, Middle and Southern Africa",
+        Cities: [
+            Cities.BI_Bujumbura,
+            Cities.KM_Moroni,
+            Cities.DJ_Djibouti,
+            Cities.ER_Asmara,
+            Cities.ET_AddisAbaba,
+            Cities.KE_Nairobi,
+            Cities.MG_Antananarivo,
+            Cities.MW_Lilongwe,
+            Cities.MU_PortLouis,
+            Cities.MZ_Maputo,
+            Cities.RW_Kigali,
+            Cities.SC_Victoria,
+            Cities.SO_Mogadishu,
+            Cities.SS_Juba,
+            Cities.UG_Kampala,
+            Cities.TZ_Dodoma,
+            Cities.ZM_Lusaka,
+            Cities.ZW_Harare,
+            Cities.AO_Luanda,
+            Cities.CM_Yaounde,
+            Cities.CF_Bangui,
+            Cities.TD_NDjamena,
+            Cities.CG_Brazzaville,
+            Cities.CD_Kinshasa,
+            Cities.GQ_Malabo,
+            Cities.GA_Libreville,
+            Cities.ST_SaoTome,
+            Cities.BW_Gaborone,
+            Cities.SZ_Mbabane,
+            Cities.LS_Maseru,
+            Cities.NA_Windhoek,
+            Cities.ZA_Bloemfontein,
+            Cities.ZA_CapeTown,
+            Cities.ZA_Pretoria
+        ]
+    },
+    "africa": {
+        FormatName: "Capitals of Africa",
+        Cities: [
+            Cities.BI_Bujumbura,
+            Cities.KM_Moroni,
+            Cities.DJ_Djibouti,
+            Cities.ER_Asmara,
+            Cities.ET_AddisAbaba,
+            Cities.KE_Nairobi,
+            Cities.MG_Antananarivo,
+            Cities.MW_Lilongwe,
+            Cities.MU_PortLouis,
+            Cities.MZ_Maputo,
+            Cities.RW_Kigali,
+            Cities.SC_Victoria,
+            Cities.SO_Mogadishu,
+            Cities.SS_Juba,
+            Cities.UG_Kampala,
+            Cities.TZ_Dodoma,
+            Cities.ZM_Lusaka,
+            Cities.ZW_Harare,
+            Cities.AO_Luanda,
+            Cities.CM_Yaounde,
+            Cities.CF_Bangui,
+            Cities.TD_NDjamena,
+            Cities.CG_Brazzaville,
+            Cities.CD_Kinshasa,
+            Cities.GQ_Malabo,
+            Cities.GA_Libreville,
+            Cities.ST_SaoTome,
+            Cities.BW_Gaborone,
+            Cities.SZ_Mbabane,
+            Cities.LS_Maseru,
+            Cities.NA_Windhoek,
+            Cities.ZA_Bloemfontein,
+            Cities.ZA_CapeTown,
+            Cities.ZA_Pretoria,
+            Cities.DZ_Algiers,
+            Cities.EG_Cairo,
+            Cities.LY_Tripoli,
+            Cities.MA_Rabat,
+            Cities.SD_Khartoum,
+            Cities.TN_Tunis,
+            Cities.BJ_PortoNovo,
+            Cities.BF_Ouagadougou,
+            Cities.CV_Praia,
+            Cities.CI_Yamoussoukro,
+            Cities.GM_Banjul,
+            Cities.GH_Accra,
+            Cities.GN_Conakry,
+            Cities.GW_Bissau,
+            Cities.LR_Monrovia,
+            Cities.ML_Bamako,
+            Cities.MR_Nouakchott,
+            Cities.NE_Niamey,
+            Cities.NG_Abuja,
+            Cities.SN_Dakar,
+            Cities.SL_Freetown,
+            Cities.TG_Lome
         ]
     }
 };
