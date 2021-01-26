@@ -356,7 +356,7 @@ let Cities = {
     CL_Santiago: new Question("Santiago,CL", 12, "Santiago"),
 
     // Colombia: CO
-    CO_Bogota: new Question("Bogota,CO", 13, "Bogota"),
+    CO_Bogota: new Question("Bogota,CO", 13, "Bogota", ["bogota", "bogotá"]),
     
     // Ecuador: EC
     EC_Quito: new Question("Quito,EC", 12, "Quito"),
