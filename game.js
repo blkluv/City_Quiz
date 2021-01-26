@@ -344,7 +344,7 @@ let Cities = {
     // South America
 
     // Argentina: AR
-    AR_BuenoisAires: new Question("-34.59587806430996,-58.39333844020621", 12, "Buenos Aires"),
+    AR_BuenosAires: new Question("-34.59587806430996,-58.39333844020621", 12, "Buenos Aires"),
 
     // Bolivia: BO
     BO_LaPaz: new Question("-16.506124650345612,-68.1320557282154", 13, "La Paz"),
@@ -862,7 +862,7 @@ let CityGroups = {
     "southamerica": {
         FormatName: "Capitals of South America",
         Cities: [
-            Cities.AR_BuenoisAires,
+            Cities.AR_BuenosAires,
             Cities.BO_LaPaz,
             Cities.BR_Brasilia,
             Cities.CL_Santiago,
@@ -874,6 +874,31 @@ let CityGroups = {
             Cities.SR_Paramaribo,
             Cities.UY_Montevideo,
             Cities.VE_Caracas
+        ]
+    },
+    "latinamerica": {
+        FormatName: "Capitals of Latin America",
+        Cities: [
+            Cities.AR_BuenosAires,
+            Cities.BO_LaPaz,
+            Cities.BR_Brasilia,
+            Cities.CL_Santiago,
+            Cities.CO_Bogota,
+            Cities.EC_Quito,
+            Cities.PE_Lima,
+            Cities.PY_Asuncion,
+            Cities.UY_Montevideo,
+            Cities.VE_Caracas,
+            Cities.CU_Havana,
+            Cities.DO_SantoDomingo,
+            Cities.HT_PortAuPrince,
+            Cities.CR_SanJose,
+            Cities.SV_SanSalvador,
+            Cities.GT_GuatemalaCity,
+            Cities.HN_Tegucigalpa,
+            Cities.NI_Managua,
+            Cities.PA_PanamaCity,
+            Cities.MX_MexicoCity
         ]
     },
     "capitals": {
@@ -993,7 +1018,7 @@ let CityGroups = {
             Cities.LC_Castries,
             Cities.VC_Kingstown,
             Cities.TT_PortOfSpain,
-            Cities.AR_BuenoisAires,
+            Cities.AR_BuenosAires,
             Cities.BO_LaPaz,
             Cities.BR_Brasilia,
             Cities.CL_Santiago,
