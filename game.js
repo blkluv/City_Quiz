@@ -25,6 +25,7 @@ let Cities = {
     // For future reference: 
     // https://unstats.un.org/unsd/methodology/m49/
     // https://www.iso.org/obp/ui/#search
+    // https://en.wikipedia.org/wiki/List_of_largest_cities
 
     // Europe
     // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
@@ -61,6 +62,7 @@ let Cities = {
 
     // Russia: RU. 
     RUMOW_Moscow: new Question("Moscow,RU", 13, "Moscow", ["moscow", "москва"]),
+    RU_SaintPetersburg: new Question("Saint Petersburg,RU", 12, "Saint Petersburg", ["saint petersburg", "st. petersburg", "st petersburg", "санкт-петербург", "санкт петербург"]),
 
     // Ukraine: UA
     UAKV_Kyiv: new Question("Kyiv,UA", 13, "Kyiv", ["kyiv", "kiev", "київ"]),
@@ -70,6 +72,7 @@ let Cities = {
 
     // Spain: ES
     ESMD_Madrid: new Question("Madrid,ES", 13, "Madrid", ["madrid"]),
+    ES_Barcelona: new Question("Barcelona,ES", 12, "Barcelona"),
 
     // Sweden: SE
     SEAB_Stockholm: new Question("Stockholm,SE", 12, "Stockholm", ["stockholm"]),
@@ -267,12 +270,15 @@ let Cities = {
     USTN_Memphis: new Question("Memphis,TN", 13, "Memphis"),
     USKY_Louisville: new Question("Louisville,KY", 13, "Louisville"),
     USMD_Baltimore: new Question("Baltimore,MD", 13, "Baltimore"),
+    USFL_Miami: new Question("Miami,FL", 12, "Miami"),
 
     // Canada: CA
     CA_Ottawa: new Question("Ottawa,CA", 13, "Ottawa"),
+    CA_Toronto: new Question("Toronto,CA", 13, "Toronto"),
 
     // Mexico: MX
     MX_MexicoCity: new Question("Mexico City,MX", 12, "Mexico City", ["mexico city", "ciudad de mexico", "ciudad de méxico"]),
+    MX_Guadalajara: new Question("Guadalajara,MX", 12, "Guadalajara"),
 
 
     // Central America
@@ -351,6 +357,9 @@ let Cities = {
 
     // Brazil: BR
     BR_Brasilia: new Question("-15.793759808178818,-47.88280591732727", 12, "Brasília", ["brasilia", "brasília"]),
+    BR_SaoPaulo: new Question("Sao Paulo,BR", 12, "São Paulo", ["sao paulo", "são paulo"]),
+    BR_RioDeJainero: new Question("-22.90982753846069,-43.25032348088225", 12, "Rio de Janeiro"),
+    BR_BeloHorizonte: new Question("Belo Horizonte,BR", 13, "Belo Horizonte"),
 
     // Chile: CL
     CL_Santiago: new Question("Santiago,CL", 12, "Santiago"),
@@ -447,6 +456,7 @@ let Cities = {
 
     // Turkey: TR
     TR_Ankara: new Question("Ankara,TR", 13, "Ankara"),
+    TR_Istanbul: new Question("41.0339896717834,29.00227760434989", 12, "İstanbul", ["istanbul", "i̇stanbul"]),
 
     // United Arab Emirates: AE
     AE_AbuDhabi: new Question("Abu Dhabi,AE", 12, "Abu Dhabi", ["abu dhabi", "أبو ظبي"]),
@@ -462,6 +472,24 @@ let Cities = {
     // China's special administrative regions and Taiwan are countries with dedicated capitals for the purpose of this quiz.
     CN_HongKong: new Question("Hong Kong", 12, "Hong Kong", ["hong kong", "香港"]),
     CN_Macau: new Question("Macau", 12, "Macau", ["macau", "澳門", "macao"]),
+    CN_Shanghai: new Question("Shanghai,CN", 11, "Shanghai", ["shanghai", "上海市"]),
+    CN_Chongqing: new Question("29.53041735117703,106.51004857524514", 12, "Chongqing", ["chongqing", "重庆市"]),
+    CN_Tianjin: new Question("39.041176543409094,117.43083312561843", 10, "Tianjin", ["tianjin", "天津市"]),
+    CN_Guangzhou: new Question("23.101688839025908,113.31859275981766", 11, "Guangzhou", ["guangzhou", "广州市"]),
+    CN_Shenzhen: new Question("22.541825057544028,113.99857568695052", 11, "Shenzhen", ["shenzhen", "深圳市"]),
+    CN_Chengdu: new Question("30.658194604748203,104.06538493799329", 11, "Chengdu", ["chengdu", "成都市"]),
+    CN_Nanjing: new Question("32.098471043878575,118.72545595314396", 11, "Nanjing", ["nanjing", "南京市"]),
+    CN_Wuhan: new Question("Wuhan,CN", 12, "Wuhan", ["wuhan", "武汉市"]),
+    CN_Xian: new Question("Xi'an,CN", 11, "Xi'an", ["xi'an", "xian", "xi an", "西安市"]),
+    CN_Dongguan: new Question("Dongguan,CN", 11, "Dongguan", ["dongguan", "东莞市"]),
+    CN_Hangzhou: new Question("Hangzhou,CN", 12, "Hangzhou", ["hangzhou", "杭州市"]),
+    CN_Foshan: new Question("Foshan,CN", 12, "Foshan", ["foshan", "佛山市"]),
+    CN_Shenyang: new Question("Shenyang,CN", 12, "Shenyang", ["shenyang", "沈阳市"]),
+    CN_Suzhou: new Question("Suzhou,CN", 11, "Suzhou", ["suzhou", "苏州市"]),
+    CN_Harbin: new Question("45.75118398404859,126.63503358779869", 12, "Harbin", ["harbin", "哈尔滨市"]),
+    CN_Qingdao: new Question("36.084118270198516,120.26102878838749", 11, "Qingdao", ["qingdao", "青岛市"]),
+    CN_Dalian: new Question("38.99195617233138,121.6879700846968", 11, "Dalian", ["dalian"]),
+    CN_Jinan: new Question("36.683555253546295,117.02622201044134", 12, "Jinan", ["jinan", "济南市"]),
 
     // Taiwan: TW
     TW_Taipei: new Question("Taipei,TW", 12, "Taipei", ["taipei", "台北"]),
@@ -471,6 +499,9 @@ let Cities = {
 
     // Japan: JP
     JP_Tokyo: new Question("35.65215309344215,139.76374158507505", 12, "Tokyo", ["tokyo", "東京都"]),
+    JP_Osaka: new Question("34.65897638415954,135.46888841841673", 12, "Osaka", ["osaka", "大阪市"]),
+    JP_Nagoya: new Question("35.151009971329515,136.9054820513379", 12, "Nagoya", ["nagoya", "名古屋市"]),
+    JP_Fukuoka: new Question("Fukuoka,JP", 12, "Fukuoka", ["fukoka", "福岡市"]),
 
     // Mongolia: MN
     MN_Ulaanbaatar: new Question("47.908197953446304,106.91802085541644", 13, "Ulaanbaatar", ["ulaanbaatar", "улаанбаатар"]),
@@ -498,6 +529,7 @@ let Cities = {
 
     // Myanmar: MM
     MM_Naypyitaw: new Question("19.749868673641554,96.08540212024712", 13, "Naypyitaw", ["naypyitaw", "နေပြည်တော်"]),
+    MM_Yangon: new Question("Yangon,MM", 12, "Yangon", ["yangon", "ရန်ကုန်"]),
 
     // Philippines: PH
     PH_Manila: new Question("Manila,PH", 12, "Manila"),
@@ -513,6 +545,7 @@ let Cities = {
 
     // Vietnam: VN
     VN_Hanoi: new Question("Hanoi,VN", 13, "Hanoi", ["hanoi", "ha noi", "hà nội", "hoàn kiếm", "hoan kiem"]),
+    VM_HoChiMinhCity: new Question("10.784882948074642,106.7123749413786", 13, "Ho Chi Minh City"),
 
 
     // Southern Asia
@@ -528,6 +561,14 @@ let Cities = {
 
     // India: IN
     IN_NewDelhi: new Question("New Delhi,IN", 12, "New Delhi", ["new delhi", "delhi", "नई दिल्ली"]),
+    IN_Mumbai: new Question("19.018458330154452,72.84737658966236", 11, "Mumbai", ["mumbai", "मुंबई", "bombay"]),
+    IN_Kolkata: new Question("Kolkata,IN", 12, "Kolkata", ["kolkata", "কলকাতা]", "calcutta"]),
+    IN_Bangalore: new Question("Bangalore,IN", 12, "Bangalore", ["bangalore", "bengaluru", "ಬೆಂಗಳೂರು"]),
+    IN_Chennai: new Question("13.056120032397454,80.22524413963409", 12, "Chennai", ["chennai"]),
+    IN_Hyderabad: new Question("17.380947517427618,78.4372193845361", 12, "Hyderabad", ["hyderabad", "హైదరాబాద్"]),
+    IN_Ahmedabad: new Question("Ahmedabad,IN", 12, "Ahmedabad", ["ahmedabad", "અમદાવાદ"]),
+    IN_Surat: new Question("21.187849578147176,72.84349334304075", 12, "Surat"),
+    IN_Pune: new Question("18.518462239367764,73.85518003902651", 13, "Pune", ["pune", "पुणे"]),
 
     // Iran: IR
     IR_Tehran: new Question("Tehran,IR", 12, "Tehran", ["tehran", "تهران"]),
@@ -540,6 +581,8 @@ let Cities = {
 
     // Pakistan: PK
     PK_Islamabad: new Question("Islamabad,PK", 13, "Islamabad", ["islamabad", "اسلام آباد"]),
+    PK_Karachi: new Question("24.83105445375928,67.01892079364137", 13, "Karachi", ["karachi", "کراچی"]),
+    PK_Lahore: new Question("Lahore,PK", 12, "Lahore", ["lahore", "لاہور"]),
 
     // Sri Lanka: LK
     // Sri Jayawardenepura Kotte is the de jure capital.
@@ -555,6 +598,7 @@ let Cities = {
 
     // Egypt: EG
     EG_Cairo: new Question("Cairo,EG", 12, "Cairo", ["cairo", "القاهرة"]),
+    EG_Alexandria: new Question("Alexandria,EG", 12, "Alexandria", ["alexandria", "الإسكندرية"]),
 
     // Libya: LY
     LY_Tripoli: new Question("Tripoli,LY", 13, "Tripoli", ["tripoli", "طرابلس"]),
@@ -609,6 +653,7 @@ let Cities = {
 
     // Nigeria: NG
     NG_Abuja: new Question("Abuja,NG", 12, "Abuja"),
+    NG_Lagos: new Question("6.458513753352044,3.374406061531793", 12, "Lagos"),
 
     // Senegal: SN
     SN_Dakar: new Question("Dakar,SN", 12, "Dakar"),
@@ -669,6 +714,7 @@ let Cities = {
 
     // Tanzania: TZ
     TZ_Dodoma: new Question("Dodoma,TZ", 13, "Dodoma"),
+    TZ_DarEsSalaam: new Question("-6.816848511055588,39.2702996438777", 13, "Dar es Salaam"),
 
     // Zambia: ZM
     ZM_Lusaka: new Question("Lusaka,ZM", 12, "Lusaka"),
@@ -725,6 +771,7 @@ let Cities = {
     ZA_CapeTown: new Question("-33.9444999526873, 18.477117670821627", 12, "Cape Town"),
     ZA_Pretoria: new Question("Pretoria,ZA", 13, "Pretoria"),
     ZA_Bloemfontein: new Question("-29.119225501787085,26.218450777331118", 13, "Bloemfontein"),
+    ZA_Johannesburg: new Question("Johannesburg,ZA", 12, "Johannesburg"),
 
 
     // Oceania
@@ -1603,6 +1650,91 @@ let CityGroups = {
             Cities.TK_Nukunonu,
             Cities.TO_Nukualofa,
             Cities.TK_Nukunonu
+        ]
+    },
+    "cities": {
+        FormatName: "World's 80 largest cities",
+        Cities: [
+            Cities.JP_Tokyo,
+            Cities.IN_NewDelhi,
+            Cities.CN_Shanghai,
+            Cities.BR_SaoPaulo,
+            Cities.MX_MexicoCity,
+            Cities.EG_Cairo,
+            Cities.IN_Mumbai,
+            Cities.CN_Beijing,
+            Cities.BD_Dhaka,
+            Cities.JP_Osaka,
+            Cities.USNY_NewYorkCity,
+            Cities.PK_Karachi,
+            Cities.AR_BuenosAires,
+            Cities.CN_Chongqing,
+            Cities.TR_Istanbul,
+            Cities.IN_Kolkata,
+            Cities.PH_Manila,
+            Cities.NG_Lagos,
+            Cities.BR_RioDeJainero,
+            Cities.CN_Tianjin,
+            Cities.CD_Kinshasa,
+            Cities.CN_Guangzhou,
+            Cities.USCA_LosAngeles,
+            Cities.RUMOW_Moscow,
+            Cities.CN_Shenzhen,
+            Cities.PK_Lahore,
+            Cities.IN_Bangalore,
+            Cities.FRIDF_Paris,
+            Cities.CO_Bogota,
+            Cities.ID_Jakarta,
+            Cities.IN_Chennai,
+            Cities.PE_Lima,
+            Cities.TH_Bangkok,
+            Cities.KR_Seoul,
+            Cities.JP_Nagoya,
+            Cities.IN_Hyderabad,
+            Cities.GBENG_London,
+            Cities.IR_Tehran,
+            Cities.USIL_Chicago,
+            Cities.CN_Chengdu,
+            Cities.CN_Nanjing,
+            Cities.CN_Wuhan,
+            Cities.VM_HoChiMinhCity,
+            Cities.AO_Luanda,
+            Cities.IN_Ahmedabad,
+            Cities.MY_KualaLumpur,
+            Cities.CN_Xian,
+            Cities.CN_HongKong,
+            Cities.CN_Dongguan,
+            Cities.CN_Hangzhou,
+            Cities.CN_Foshan,
+            Cities.CN_Shenyang,
+            Cities.SA_Riyadh,
+            Cities.IQ_Baghdad,
+            Cities.CL_Santiago,
+            Cities.IN_Surat,
+            Cities.ESMD_Madrid,
+            Cities.CN_Suzhou,
+            Cities.IN_Pune,
+            Cities.CN_Harbin,
+            Cities.USTX_Houston,
+            Cities.USTX_Dallas,
+            Cities.CA_Toronto,
+            Cities.TZ_DarEsSalaam,
+            Cities.USFL_Miami,
+            Cities.BR_BeloHorizonte,
+            Cities.SG_Singapore,
+            Cities.USPA_Philadelphia,
+            Cities.USGA_Atlanta,
+            Cities.JP_Fukuoka,
+            Cities.SD_Khartoum,
+            Cities.ES_Barcelona,
+            Cities.ZA_Johannesburg,
+            Cities.RU_SaintPetersburg,
+            Cities.CN_Qingdao,
+            Cities.CN_Dalian,
+            Cities.USDC_Washington,
+            Cities.MM_Yangon,
+            Cities.EG_Alexandria,
+            Cities.CN_Jinan
         ]
     }
 };
