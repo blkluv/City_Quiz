@@ -1,0 +1,2 @@
+# UrbQuiz
+UrbQuiz is a quiz game, where the objective is to identify the city, based on a satellite image from Google Maps. It offers multiple categories, including all of the world's capital cities, with geographically limited versions also avaliable. More city sets are coming, so if you have an idea, please send me an email. The game offers three difficulty tiers, easy, with multiple choice, medium, with three attempts at a text input, and hard, which only gives you one attempt at spelling the place name.
