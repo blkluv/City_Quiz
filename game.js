@@ -15,7 +15,7 @@ class Question {
         this.Query = query;
         this.Zoom = zoom;
         this.FormatName = formatName;
-        this.AcceptedAnswers = acceptedAnswers ?? [formatName.toLowerCase()];
+        this.AcceptedAnswers = acceptedAnswers || [formatName.toLowerCase()];
     }
 }
 
@@ -1740,7 +1740,7 @@ class Quiz {
         // Set parent variables
         this.Questions = questions;
         this.IsMultipleChoice = isMultipleChoice;
-        questionCount = questionCount ?? questions.length;
+        questionCount = questionCount || questions.length;
 
         // Check that attempts is in range
         if (attempts > 0) {
