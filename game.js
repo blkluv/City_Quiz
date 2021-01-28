@@ -1390,6 +1390,7 @@ let CityGroups = {
             Cities.TK_Nukunonu,
             Cities.TO_Nukualofa,
             Cities.TK_Nukunonu,
+            Cities.BT_Thimphu
         ]
     },
     "westcentralasia": {
@@ -1446,7 +1447,8 @@ let CityGroups = {
             Cities.IR_Tehran,
             Cities.MV_Male,
             Cities.PK_Islamabad,
-            Cities.LK_SriJayawardenepuraKotte
+            Cities.LK_SriJayawardenepuraKotte,
+            Cities.BT_Thimphu
         ]
     },
     "asia": {
@@ -1498,7 +1500,8 @@ let CityGroups = {
             Cities.IR_Tehran,
             Cities.MV_Male,
             Cities.PK_Islamabad,
-            Cities.LK_SriJayawardenepuraKotte
+            Cities.LK_SriJayawardenepuraKotte,
+            Cities.BT_Thimphu
         ]
     },
     "northwestafrica": {
