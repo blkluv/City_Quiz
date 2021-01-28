@@ -469,7 +469,6 @@ let Cities = {
 
     // China: CN
     CN_Beijing: new Question("Beijing,CN", 12, "Beijing"),
-    // China's special administrative regions and Taiwan are countries with dedicated capitals for the purpose of this quiz.
     CN_HongKong: new Question("Hong Kong", 12, "Hong Kong", ["hong kong", "香港"]),
     CN_Macau: new Question("Macau", 12, "Macau", ["macau", "澳門", "macao"]),
     CN_Shanghai: new Question("Shanghai,CN", 11, "Shanghai", ["shanghai", "上海市"]),
@@ -491,6 +490,7 @@ let Cities = {
     CN_Dalian: new Question("38.99195617233138,121.6879700846968", 11, "Dalian", ["dalian"]),
     CN_Jinan: new Question("36.683555253546295,117.02622201044134", 12, "Jinan", ["jinan", "济南市"]),
 
+    // Taiwan is a country for the purpose of this quiz
     // Taiwan: TW
     TW_Taipei: new Question("Taipei,TW", 12, "Taipei", ["taipei", "台北"]),
 
@@ -1260,8 +1260,6 @@ let CityGroups = {
             Cities.AE_AbuDhabi,
             Cities.YE_Sanaa,
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
@@ -1424,8 +1422,6 @@ let CityGroups = {
         FormatName: "Eastern, Southern and Southeastern Asian capitals",
         Cities: [
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
@@ -1477,8 +1473,6 @@ let CityGroups = {
             Cities.AE_AbuDhabi,
             Cities.YE_Sanaa,
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
