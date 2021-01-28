@@ -15,7 +15,7 @@ class Question {
         this.Query = query;
         this.Zoom = zoom;
         this.FormatName = formatName;
-        this.AcceptedAnswers = acceptedAnswers ?? [formatName.toLowerCase()];
+        this.AcceptedAnswers = acceptedAnswers || [formatName.toLowerCase()];
     }
 }
 
@@ -469,7 +469,6 @@ let Cities = {
 
     // China: CN
     CN_Beijing: new Question("Beijing,CN", 12, "Beijing"),
-    // China's special administrative regions and Taiwan are countries with dedicated capitals for the purpose of this quiz.
     CN_HongKong: new Question("Hong Kong", 12, "Hong Kong", ["hong kong", "香港"]),
     CN_Macau: new Question("Macau", 12, "Macau", ["macau", "澳門", "macao"]),
     CN_Shanghai: new Question("Shanghai,CN", 11, "Shanghai", ["shanghai", "上海市"]),
@@ -491,6 +490,7 @@ let Cities = {
     CN_Dalian: new Question("38.99195617233138,121.6879700846968", 11, "Dalian", ["dalian"]),
     CN_Jinan: new Question("36.683555253546295,117.02622201044134", 12, "Jinan", ["jinan", "济南市"]),
 
+    // Taiwan is a country for the purpose of this quiz
     // Taiwan: TW
     TW_Taipei: new Question("Taipei,TW", 12, "Taipei", ["taipei", "台北"]),
 
@@ -1260,8 +1260,6 @@ let CityGroups = {
             Cities.AE_AbuDhabi,
             Cities.YE_Sanaa,
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
@@ -1279,7 +1277,6 @@ let CityGroups = {
             Cities.VN_Hanoi,
             Cities.AF_Kabul,
             Cities.BD_Dhaka,
-            Cities.BH_Manama,
             Cities.IN_NewDelhi,
             Cities.IR_Tehran,
             Cities.MV_Male,
@@ -1391,6 +1388,7 @@ let CityGroups = {
             Cities.TK_Nukunonu,
             Cities.TO_Nukualofa,
             Cities.TK_Nukunonu,
+            Cities.BT_Thimphu
         ]
     },
     "westcentralasia": {
@@ -1424,8 +1422,6 @@ let CityGroups = {
         FormatName: "Eastern, Southern and Southeastern Asian capitals",
         Cities: [
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
@@ -1443,12 +1439,12 @@ let CityGroups = {
             Cities.VN_Hanoi,
             Cities.AF_Kabul,
             Cities.BD_Dhaka,
-            Cities.BH_Manama,
             Cities.IN_NewDelhi,
             Cities.IR_Tehran,
             Cities.MV_Male,
             Cities.PK_Islamabad,
-            Cities.LK_SriJayawardenepuraKotte
+            Cities.LK_SriJayawardenepuraKotte,
+            Cities.BT_Thimphu
         ]
     },
     "asia": {
@@ -1477,8 +1473,6 @@ let CityGroups = {
             Cities.AE_AbuDhabi,
             Cities.YE_Sanaa,
             Cities.CN_Beijing,
-            Cities.CN_HongKong,
-            Cities.CN_Macau,
             Cities.JP_Tokyo,
             Cities.MN_Ulaanbaatar,
             Cities.KP_Peyongyang,
@@ -1496,12 +1490,12 @@ let CityGroups = {
             Cities.VN_Hanoi,
             Cities.AF_Kabul,
             Cities.BD_Dhaka,
-            Cities.BH_Manama,
             Cities.IN_NewDelhi,
             Cities.IR_Tehran,
             Cities.MV_Male,
             Cities.PK_Islamabad,
-            Cities.LK_SriJayawardenepuraKotte
+            Cities.LK_SriJayawardenepuraKotte,
+            Cities.BT_Thimphu
         ]
     },
     "northwestafrica": {
@@ -1746,7 +1740,7 @@ class Quiz {
         // Set parent variables
         this.Questions = questions;
         this.IsMultipleChoice = isMultipleChoice;
-        questionCount = questionCount ?? questions.length;
+        questionCount = questionCount || questions.length;
 
         // Check that attempts is in range
         if (attempts > 0) {
@@ -2034,7 +2028,7 @@ class Quiz {
         }
 
         // Set href of sharer buttons
-        let ShareText = `I just played ${SetName} on GAME NAME and got ${this.Points} out of ${this.QuestionCount} point in ${FormatDateDifference(new Date(), this.StartTime)}.`;
+        let ShareText = `I just played ${SetName} on UrbQuiz and got ${this.Points} out of ${this.QuestionCount} points in ${FormatDateDifference(new Date(), this.StartTime)}.`;
         document.getElementById("facebook-sharer").href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&quote=${ShareText}`;
         document.getElementById("twitter-sharer").href = `https://twitter.com/compose/tweet?url=${window.location.href}&text=${ShareText}`;
 
