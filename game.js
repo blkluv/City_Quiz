@@ -2213,8 +2213,8 @@ window.onload = function() {
 
         // Update SEO
         document.getElementById("OGURLMeta").content += "?game=" + GameID;
-        document.getElementsByTagName("title")[0].innerHTML = CityGroups[GameID].FormatName + "- UrbQuiz";
-        document.getElementById("TitleMeta").content = CityGroups[GameID].FormatName + "- UrbQuiz";
+        document.getElementsByTagName("title")[0].innerHTML = CityGroups[GameID].FormatName + " - UrbQuiz";
+        document.getElementById("TitleMeta").content = CityGroups[GameID].FormatName + " - UrbQuiz";
         document.getElementById("MetaDescription").content = CityGroups[GameID].FormatName + " - UrbQuiz. " + document.getElementById("MetaDescription").content;
         document.getElementById("OGDescription").content = CityGroups[GameID].FormatName + " - UrbQuiz. " + document.getElementById("OGDescription").content;
 
