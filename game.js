@@ -1933,6 +1933,9 @@ class Quiz {
             document.getElementById("CorrectModalAttempts").textContent = this.Attempts;
         }
 
+        // Logging for summary
+        this.Log[this.Round].WasCorrect = true;
+
         // Rename button if this is last round
         if (this.Round + 1 == this.QuestionCount) {
             document.getElementById("CorrectModalNextQuestionButton").textContent = "View summary";
@@ -1961,6 +1964,9 @@ class Quiz {
             document.getElementById("IncorrectModalPoints").textContent = this.Points;
             document.getElementById("IncorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[this.Round].FormatName;
             document.getElementById("IncorrectModalUserAnswer").textContent = UserAnswer;
+
+            // Logging for summary
+            this.Log[this.Round].WasCorrect = false;
 
             // Rename button if this is last round
             if (this.Round + 1 == this.QuestionCount) {
@@ -2015,6 +2021,7 @@ class Quiz {
         document.getElementById("SummaryTime").textContent = FormatDateDifference(new Date(), this.StartTime);
         document.getElementById("SummaryPoints").textContent = this.Points;
         document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
+        document.getElementById("SummaryDifficulty").textContent = ["Easy", "Medium", "Hard"][Difficulty];
         document.getElementById("SummaryPerRound").innerHTML = "";
 
         // Print round info
@@ -2024,7 +2031,7 @@ class Quiz {
             if (!this.IsMultipleChoice && this.Attempts > 1) {
                 AttemptCounter = `<br>Attempts: ${this.Log[i].AttemptsUsed} out of ${this.Attempts}`;
             }
-            document.getElementById("SummaryPerRound").innerHTML += `<div class="col-12 col-md-6 col-xxl-4"><h5>Round ${i + 1}</h5><div class="d-flex justify-content-between flex-column flex-md-row"><p>Time spent: ${FormatDateDifference(this.Log[i].EndTime, this.Log[i].StartTime)}<br>Your answer: ${FormatArray(this.Log[i].Answers)}<br>Correct answer: ${this.QuestionsToAsk[i].FormatName}${AttemptCounter}</p><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[i].Query}&zoom=${this.QuestionsToAsk[i].Zoom}&size=150x150&scale=1&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA"></div></div>`;
+            document.getElementById("SummaryPerRound").innerHTML += `<div class="col-12 col-md-6 col-xxl-4"><h5>Round ${i + 1}</h5><div class="d-flex justify-content-between flex-column flex-md-row"><p>Time spent: ${FormatDateDifference(this.Log[i].EndTime, this.Log[i].StartTime)}<br>Your answer: ${SummaryFormatArray(this.Log[i].Answers, this.Log[i].WasCorrect)}<br>Correct answer: ${this.QuestionsToAsk[i].FormatName}${AttemptCounter}</p><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[i].Query}&zoom=${this.QuestionsToAsk[i].Zoom}&size=150x150&scale=1&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA"></div></div>`;
         }
 
         // Set href of sharer buttons
@@ -2118,7 +2125,22 @@ function FormatDateDifference(date0, date1) {
 }
 
 // Format string array
-function FormatArray(Array) {
+function SummaryFormatArray(Array, WasRight) {
+    // Format each element according to WasRight
+    
+    let LastWrongIndex = Array.length - 1;
+
+    // Sanitize and wrap last element in text-success if right
+    if (WasRight) {
+        Array[Array.length - 1] = `<span class="text-success">${Array[Array.length - 1].replace("<", "&lt;").replace(">", "&gt;")}</span>`;
+        LastWrongIndex--;
+    }
+
+    // Iterate through array, formatting each answer within range with text-danger
+    for (let i = LastWrongIndex; i > -1; i--) {
+        Array[i] = `<span class="text-danger">${Array[i].replace("<", "&lt;").replace(">", "&gt;")}</span>`;
+    }
+
     let FormatText = "";
 
     // 1 element
