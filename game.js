@@ -59,6 +59,7 @@ let Cities = {
     NO34_Lillehammer: new Question("Lillehammer,Norway", 13, "Lillehammer", ["lillehammer"]),
     NO38_Horten: new Question("Horten,Norway", 13, "Horten", ["horten"]),
     NO30_Ski: new Question("Ski Stasjon,Norway", 14, "Ski", ["ski", "nordre follo"]),
+    NO18_MoIRana: new Question("Mo i Rana,NO", 13, "Mo i Rana"),
 
     // Russia: RU. 
     RUMOW_Moscow: new Question("Moscow,RU", 13, "Moscow", ["moscow", "москва"]),
@@ -869,7 +870,8 @@ let CityGroups = {
             Cities.NO34_Gjovik,
             Cities.NO34_Lillehammer,
             Cities.NO38_Horten,
-            Cities.NO30_Ski
+            Cities.NO30_Ski,
+            Cities.NO18_MoIRana
         ]
     },
     "westerneurope": {
