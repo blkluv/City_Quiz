@@ -2015,6 +2015,7 @@ class Quiz {
         document.getElementById("SummaryTime").textContent = FormatDateDifference(new Date(), this.StartTime);
         document.getElementById("SummaryPoints").textContent = this.Points;
         document.getElementById("SummaryPointsPossible").textContent = this.QuestionCount;
+        document.getElementById("SummaryDifficulty").textContent = ["Easy", "Medium", "Hard"][Difficulty];
         document.getElementById("SummaryPerRound").innerHTML = "";
 
         // Print round info
