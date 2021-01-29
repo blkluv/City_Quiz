@@ -244,9 +244,9 @@
                 <h5 class="mb-3 mt-3">Difficulty</h5>
                 <!-- List -->
                 <div class="list-group list-group-horizontal" role="tablist">
-                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-easy" data-bs-toggle="list" href="#list-difficulty-easy-tab" role="tab" aria-controls="easy" onclick="Difficulty = 0">Easy</a>
-                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2 active" id="list-difficulty-medium" data-bs-toggle="list" href="#list-difficulty-medium-tab" role="tab" aria-controls="medium" onclick="Difficulty = 1">Medium</a>
-                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-hard" data-bs-toggle="list" href="#list-difficulty-hard-tab" role="tab" aria-controls="hard" onclick="Difficulty = 2">Hard</a>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-easy" data-bs-toggle="list" href="#list-difficulty-easy-tab" role="tab" onclick="Difficulty = 0">Easy</a>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2 active" id="list-difficulty-medium" data-bs-toggle="list" href="#list-difficulty-medium-tab" role="tab" onclick="Difficulty = 1">Medium</a>
+                    <a class="list-group-item list-group-item-action bg-dark-1 hover-bg-dark-2" id="list-difficulty-hard" data-bs-toggle="list" href="#list-difficulty-hard-tab" role="tab" onclick="Difficulty = 2">Hard</a>
                 </div>
                 <!-- Tab-content -->
                 <div class="tab-content container px-5 mt-3">
@@ -339,11 +339,11 @@
                 <h3 class="text-center header-game-description"></h3>
 
                 <!-- Game statistics -->
-                <h4 class="container px-5 py-3">
+                <div class="container px-5 py-3 fs-4">
                     Time spent: <span id="SummaryTime"></span>.<br>
-                    Points: <spain id="SummaryPoints"></spain> of <spain id="SummaryPointsPossible"></spain> possible.<br>
+                    Points: <span id="SummaryPoints"></span> of <span id="SummaryPointsPossible"></span> possible.<br>
                     Difficulty: <span id="SummaryDifficulty"></span>.
-                </h4>
+                </div>
 
                 <!-- Per round info -->
                 <div class="container px-5 row" id="SummaryPerRound"></div>
