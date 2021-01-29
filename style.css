@@ -61,4 +61,7 @@ a {
 
 #questionimage {
     max-height: 85vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
