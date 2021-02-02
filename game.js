@@ -5,6 +5,7 @@ let ActiveQuiz;
 let Difficulty = 1;
 let SetToPlay;
 let SetName;
+let LastAnswer;
 let PlayEntireSet = false; 
 
 // Question class
@@ -1934,10 +1935,10 @@ class Quiz {
             document.getElementById("radio1").value = Alternatives[1];
             document.getElementById("radio2").value = Alternatives[2];
             document.getElementById("radio3").value = Alternatives[3];
-
-            // Register a keydown event
-            document.addEventListener("keydown", EnterEventSubmit);
         }
+
+        // Register a keydown event
+        document.addEventListener("keydown", EnterEventSubmit);
 
         // Logging for summary
         this.Log.push({
@@ -1960,9 +1961,6 @@ class Quiz {
             return;
         }
 
-        // Destroy the keydown event
-        document.removeEventListener("keydown", EnterEventSubmit);
-
         // Logging for summary
         this.Log[this.Round].Answers.push(Answer);
         this.Log[this.Round].EndTime = new Date();
@@ -1979,6 +1977,9 @@ class Quiz {
     
     // Right answer handler
     RunCorrectAnswerScenario() {
+        // Destroy the keydown event
+        document.removeEventListener("keydown", EnterEventSubmit);
+
         // Update other variables
         document.getElementById("points").textContent = ++this.Points;
 
@@ -2023,6 +2024,9 @@ class Quiz {
         }
         // Handle with modal in all other cases
         else {
+            // Destroy the keydown event
+            document.removeEventListener("keydown", EnterEventSubmit);
+
             // Update modal data
             document.getElementById("IncorrectModalPoints").textContent = this.Points;
             document.getElementById("IncorrectModalCorrectAnswer").textContent = this.QuestionsToAsk[this.Round].FormatName;
@@ -2059,6 +2063,7 @@ class Quiz {
             // Reset attempts
             this.Attempt = 0;
             document.getElementById("attempt").textContent = 1;
+            LastAnswer = null;
 
             // Clean validation
             document.getElementById("cityinput").className = "form-control";
@@ -2110,7 +2115,7 @@ class Quiz {
 
 // NextQuestion on enter
 function EnterEventNext(Event) {
-    if (Event.code == "Enter") {
+    if (Event.code == "Enter" || Event.code == "NumpadEnter") {
         // Hide modals
         CorrectModal.hide();
         IncorrectModal.hide();
@@ -2122,9 +2127,19 @@ function EnterEventNext(Event) {
 
 // Submit multiple choice on enter
 function EnterEventSubmit(Event) {
-    if (Event.code == "Enter") {
-        // Submit answer
-        ActiveQuiz.SubmitAnswer(document.getElementById('mcform').elements['mc'].value)
+    if (Event.code == "Enter" || Event.code == "NumpadEnter") {
+        // Check what input mode is used
+        if (ActiveQuiz.IsMultipleChoice) {
+            // Submit answer
+            ActiveQuiz.SubmitAnswer(document.getElementById('mcform').elements['mc'].value)
+        }
+        else {
+            let Answer = document.getElementById("cityinput").value;
+            if (Answer != LastAnswer && Answer) {
+                LastAnswer = Answer;
+                ActiveQuiz.SubmitAnswer(Answer);
+            }
+        }
     }
 }
 
