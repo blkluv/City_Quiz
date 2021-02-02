@@ -27,6 +27,7 @@ let Cities = {
     // https://unstats.un.org/unsd/methodology/m49/
     // https://www.iso.org/obp/ui/#search
     // https://en.wikipedia.org/wiki/List_of_largest_cities
+    // https://worldpopulationreview.com/continents/cities/europe
 
     // Europe
     // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
@@ -65,34 +66,64 @@ let Cities = {
     // Russia: RU. 
     RUMOW_Moscow: new Question("Moscow,RU", 13, "Moscow", ["moscow", "москва"]),
     RU_SaintPetersburg: new Question("Saint Petersburg,RU", 12, "Saint Petersburg", ["saint petersburg", "st. petersburg", "st petersburg", "санкт-петербург", "санкт петербург"]),
+    RU_Novosibirsk: new Question("54.99502590654898,82.91607062283774", 12, "Novosibirsk", ["novosibirsk", "новосибирск"]),
+    RU_Yekaterinburg: new Question("Yekaterinburg,RU", 12, "Yekaterinburg", ["yekaterinburg", "екатеринбург"]),
+    RU_NizhnyNovgorod: new Question("Nizhny Novgorod,RU", 13, "Nizhny Novgorod", ["nizhny Novgorod", "нижний новгород"]),
+    RU_Samara: new Question("Samara,RU", 12, "Samara", ["samara","самара"]),
+    RU_Omsk: new Question("Omsk,RU", 13, "Omsk", ["omsk", "омск"]),
+    RU_Kazan: new Question("Kazan,RU", 12, "Kazan", ["kazan", "казань"]),
+    RU_RostovnaDonu: new Question("Rostov-na-Donu,RU", 12, "Rostov-na-Donu", ["rostov-na-donu", "rostov na donu", "rostov", "rostov on don", "rostov-on-don", "ростов-на-дону", "ростов на дону"]),
+    RU_Chelyabinsk: new Question("Chelyabinsk,RU", 12, "Chelyabinsk", ["chelyabinsk", "челябинск"]),
+    RU_Ufa: new Question("Ufa,RU", 12, "Ufa", ["ufa","уфа"]),
+    RU_Volgograd: new Question("Volgograd,RU", 13, "Volgograd", ["volgograd", "волгоград"]),
+    RU_Perm: new Question("Perm,RU", 13, "Perm", ["perm", "пермь"]),
+    RU_Krasnoyarsk: new Question("Krasnoyarsk,RU", 12, "Krasnoyarsk", ["krasnoyarsk", "красноярск"]),
+    RU_Saratov: new Question("Saratov,RU", 12, "Saratov", ["saratov", "саратов"]),
+    RU_Voronezh: new Question("Voronezh,RU", 12, "Voronezh", ["voronezh", "воронеж"]),
 
     // Ukraine: UA
     UAKV_Kyiv: new Question("Kyiv,UA", 13, "Kyiv", ["kyiv", "kiev", "київ"]),
+    UA_Kharkiv: new Question("Kharkiv,UA", 13, "Kharkiv", ["kharkiv", "харків"]),
+    UA_Dnipro: new Question("Dnipro,UA", 12, "Dnipro", ["dnipro", "дніпро"]),
+    UA_Donetsk: new Question("Donetsk,UA", 13, "Donetsk", ["donetsk", "донецьк"]),
+    UA_Odessa: new Question("Odessa,UA", 13, "Odessa", ["odessa","одеса"]),
+    UA_Zaporizhia: new Question("Zaporizhia,UA", 13, "Zaporizhia", ["zaporizhia", "запоріжжя"]),
 
     // France: FR
     FRIDF_Paris: new Question("Notre%20Dame,Paris,FR", 13, "Paris", ["paris"]),
+    FR_Marseille: new Question("43.29538035304942,5.390813492041645", 13, "Marseille"),
 
     // Spain: ES
     ESMD_Madrid: new Question("Madrid,ES", 13, "Madrid", ["madrid"]),
     ES_Barcelona: new Question("Barcelona,ES", 12, "Barcelona"),
+    ES_Valencia: new Question("39.450801797485184,-0.35078216120929945", 12, "Valencia"),
 
     // Sweden: SE
     SEAB_Stockholm: new Question("Stockholm,SE", 12, "Stockholm", ["stockholm"]),
 
     // Germany: DE
     DEBE_Berlin: new Question("Berlin,DE", 12, "Berlin", ["berlin"]),
+    DE_Hamburg: new Question("53.53960788691941,9.981611263805362", 13, "Hamburg"),
+    DE_Munich: new Question("Munich,DE", 13, "Munich", ["munich", "munchen", "münchen"]),
+    DE_Cologne: new Question("Cologne,DE", 13, "Cologne", ["cologne", "koln", "köln"]),
 
     // Finland: FI
     FI18_Helsinki: new Question("Helsinki,FI", 12, "Helsinki", ["helsinki"]),
 
     // Poland: PL
     PLMZ_Warsaw: new Question("Warsaw,PL", 12, "Warsaw", ["warsaw", "warszawa"]),
+    PL_Lodz: new Question("Lodz,PL", 13, "Łódź", ["lodz", "łódź"]),
 
     // Italy: IT
     ITRM_Rome: new Question("Colosessum,Rome,IT", 12, "Rome", ["rome", "roma"]),
+    IT_Milan: new Question("Milan,IT", 13, "Milan", ["milan", "milano"]),
+    IT_Naples: new Question("Naples,IT", 13, "Naples", ["naples", "napoli"]),
+    IT_Turin: new Question("Turin,IT", 13, "Turin", ["turin", "torino"]),
 
     // United Kingdom: GB
     GBENG_London: new Question("London,GB", 12, "London", ["london"]),
+    GB_Birmingham: new Question("Birmingham,GB", 13, "Birmingham"),
+    GB_Liverpool: new Question("53.41307630055226,-2.9330236606574416", 12, "Liverpool"),
 
     // Romania: RO
     ROB_Bucharest: new Question("Bucharest,RO", 13, "Bucharest", ["bucharest", "bucurești"]),
@@ -1031,6 +1062,61 @@ let CityGroups = {
             Cities.SEAB_Stockholm,
             Cities.CHBE_Bern,
             Cities.GBENG_London
+        ]
+    },
+    "europelargest": {
+        FormatName: "50 largest cities in Europe",
+        Cities: [
+            Cities.RUMOW_Moscow,
+            Cities.GBENG_London,
+            Cities.RU_SaintPetersburg,
+            Cities.DEBE_Berlin,
+            Cities.ESMD_Madrid,
+            Cities.UAKV_Kyiv,
+            Cities.ITRM_Rome,
+            Cities.FRIDF_Paris,
+            Cities.ROB_Bucharest,
+            Cities.BYHM_Minsk,
+            Cities.HUBU_Budapest,
+            Cities.DE_Hamburg,
+            Cities.PLMZ_Warsaw,
+            Cities.AT9_Vienna,
+            Cities.ES_Barcelona,
+            Cities.UA_Kharkiv,
+            Cities.RU_Novosibirsk,
+            Cities.RU_Yekaterinburg,
+            Cities.RU_NizhnyNovgorod,
+            Cities.RS00_Belgrade,
+            Cities.DE_Munich,
+            Cities.IT_Milan,
+            Cities.CZ10_Prague,
+            Cities.DK84_Copenhagen,
+            Cities.BG22_Sofia,
+            Cities.RU_Samara,
+            Cities.RU_Omsk,
+            Cities.RU_Kazan,
+            Cities.RU_RostovnaDonu,
+            Cities.RU_Chelyabinsk,
+            Cities.RU_Ufa,
+            Cities.UA_Dnipro,
+            Cities.UA_Donetsk,
+            Cities.IEL_Dublin,
+            Cities.BEBRU_Brussels,
+            Cities.RU_Volgograd,
+            Cities.UA_Odessa,
+            Cities.GB_Birmingham,
+            Cities.RU_Perm,
+            Cities.DE_Cologne,
+            Cities.IT_Naples,
+            Cities.RU_Krasnoyarsk,
+            Cities.IT_Turin,
+            Cities.GB_Liverpool,
+            Cities.RU_Saratov,
+            Cities.RU_Voronezh,
+            Cities.ES_Valencia,
+            Cities.UA_Zaporizhia,
+            Cities.FR_Marseille,
+            Cities.PL_Lodz
         ]
     },
     "statecapitals": {

@@ -19,3 +19,4 @@ https://www.urbquiz.com/?game=africa
 https://www.urbquiz.com/?game=oceania
 https://www.urbquiz.com/?game=cities
 https://www.urbquiz.com/?game=airports
+https://www.urbquiz.com/?game=europelargest
