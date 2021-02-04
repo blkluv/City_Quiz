@@ -1531,9 +1531,7 @@ let CityGroups = {
             Cities.PW_Ngerulmud,
             Cities.NU_Alofi,
             Cities.WS_Apia,
-            Cities.TK_Nukunonu,
             Cities.TO_Nukualofa,
-            Cities.TK_Nukunonu,
             Cities.BT_Thimphu
         ]
     },
@@ -1787,9 +1785,7 @@ let CityGroups = {
             Cities.PW_Ngerulmud,
             Cities.NU_Alofi,
             Cities.WS_Apia,
-            Cities.TK_Nukunonu,
             Cities.TO_Nukualofa,
-            Cities.TK_Nukunonu
         ]
     },
     "cities": {
