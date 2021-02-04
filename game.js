@@ -1945,6 +1945,7 @@ class Quiz {
         this.Round = 0;
         this.Attempt = 0;
         this.Log = [];
+        LastAnswer = null;
 
         // Print counters
         document.getElementById("currentround").textContent = 1;
