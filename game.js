@@ -359,7 +359,7 @@ let Cities = {
     DO_SantoDomingo: new Question("Santo Domingo,DO", 13, "Santo Domingo"),
 
     // Grenada: GD
-    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's"]),
+    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's", "st george's"]),
 
     // Haiti: HT
     HT_PortAuPrince: new Question("18.559152198412633,-72.31765312911371", 13, "Port-au-Prince", ["port-au-prince", "port au prince"]),
