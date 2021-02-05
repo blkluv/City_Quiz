@@ -1532,7 +1532,8 @@ let CityGroups = {
             Cities.NU_Alofi,
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
-            Cities.BT_Thimphu
+            Cities.BT_Thimphu,
+            Cities.TV_Funafuti
         ]
     },
     "westcentralasia": {
@@ -1786,6 +1787,7 @@ let CityGroups = {
             Cities.NU_Alofi,
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
+            Cities.TV_Funafuti
         ]
     },
     "cities": {
