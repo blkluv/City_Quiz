@@ -320,7 +320,7 @@ let Cities = {
     BZ_Belmopan: new Question("17.249718736487612,-88.77482133927614", 14, "Belmopan"),
 
     // Costa Rica: CR
-    CR_SanJose: new Question("San Jose,CR", 13, "San José"),
+    CR_SanJose: new Question("San Jose,CR", 13, "San José", ["san jose", "san josé"]),
 
     // El Salvador: SV
     SV_SanSalvador: new Question("San Salvador,SV", 13, "San Salvador"),
