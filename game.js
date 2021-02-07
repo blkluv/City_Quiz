@@ -359,7 +359,7 @@ let Cities = {
     DO_SantoDomingo: new Question("Santo Domingo,DO", 13, "Santo Domingo"),
 
     // Grenada: GD
-    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's"]),
+    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's", "st george's"]),
 
     // Haiti: HT
     HT_PortAuPrince: new Question("18.559152198412633,-72.31765312911371", 13, "Port-au-Prince", ["port-au-prince", "port au prince"]),
@@ -1533,7 +1533,9 @@ let CityGroups = {
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
             Cities.BT_Thimphu,
-            Cities.TV_Funafuti
+            Cities.TV_Funafuti,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "westcentralasia": {
@@ -1589,7 +1591,9 @@ let CityGroups = {
             Cities.MV_Male,
             Cities.PK_Islamabad,
             Cities.LK_SriJayawardenepuraKotte,
-            Cities.BT_Thimphu
+            Cities.BT_Thimphu,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "asia": {
@@ -1640,7 +1644,9 @@ let CityGroups = {
             Cities.MV_Male,
             Cities.PK_Islamabad,
             Cities.LK_SriJayawardenepuraKotte,
-            Cities.BT_Thimphu
+            Cities.BT_Thimphu,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "northwestafrica": {
