@@ -1533,7 +1533,9 @@ let CityGroups = {
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
             Cities.BT_Thimphu,
-            Cities.TV_Funafuti
+            Cities.TV_Funafuti,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "westcentralasia": {
@@ -1589,7 +1591,9 @@ let CityGroups = {
             Cities.MV_Male,
             Cities.PK_Islamabad,
             Cities.LK_SriJayawardenepuraKotte,
-            Cities.BT_Thimphu
+            Cities.BT_Thimphu,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "asia": {
@@ -1640,7 +1644,9 @@ let CityGroups = {
             Cities.MV_Male,
             Cities.PK_Islamabad,
             Cities.LK_SriJayawardenepuraKotte,
-            Cities.BT_Thimphu
+            Cities.BT_Thimphu,
+            Cities.NP_Kathmandu,
+            Cities.TW_Taipei
         ]
     },
     "northwestafrica": {
