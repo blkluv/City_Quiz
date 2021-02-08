@@ -2,19 +2,44 @@
 let CorrectModal;
 let IncorrectModal;
 let ActiveQuiz;
+let APIkey = "AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA";
 let Difficulty = 1;
 let SetToPlay;
 let SetName;
 let LastAnswer;
 let PlayEntireSet = false; 
 
+// Google maps image class
+class GoogleMapsImage {
+    // Constructor
+    constructor(query, zoom, signatures) {
+        this.Query = query;
+        this.Zoom = zoom;
+        if (signatures.length != 2) {
+            throw new Error("signatures must be lenght 2.")
+        }
+        else {
+            this.Signatues = signatures;
+        }
+    }
+
+    // Get big image
+    getImageURL() {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.Query}&zoom=${this.Zoom}&size=640x400&scale=2&maptype=satellite&key=${APIkey}&signature=${this.Signatues[0]}`;
+    }
+
+    // Get small image
+    getThumbnailURL() {
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${this.Query}&zoom=${this.Zoom}&size=150x150&scale=1&maptype=satellite&key=${APIkey}&signature=${this.Signatues[1]}`;
+    }
+}
+
 // Question class
 class Question {
     // Constructor
-    constructor (query, zoom, formatName, acceptedAnswers) {
+    constructor (image, formatName, acceptedAnswers) {
         // Set parent variables
-        this.Query = query;
-        this.Zoom = zoom;
+        this.Image = image;
         this.FormatName = formatName;
         this.AcceptedAnswers = acceptedAnswers || [formatName.toLowerCase()];
     }
@@ -31,195 +56,195 @@ let Cities = {
 
     // Europe
     // Norway: NO. Oslo: 03, Rogaland: 11, Møre og Romsdal: 15, Nordland: 18, Viken: 30, Innlandet: 34, Vestfold og Telemark: 38, Agder: 42, Vestland: 46, Trøndelag: 50, Troms og Finnmark: 54
-    NO11_Sandnes: new Question("Sandnes,Rogaland,Norway", 14, "Sandnes", ["sandnes"]),
-    NO11_Stavanger: new Question("Stavanger,Rogaland,Norway", 14, "Stavanger", ["stavanger"]),
-    NO11_Haugesund: new Question("Haugesund,Rogaland,Norway", 14, "Haugesund", ["haugesund"]),
-    NO46_Bergen: new Question("Torgalmenningen,Bergen,Norway", 12, "Bergen", ["bergen"]),
-    NO03_Oslo: new Question("Barcode%20Project,Norway", 13, "Oslo", ["oslo"]),
-    NO50_Trondheim: new Question("Trondheim,Norway", 13, "Trondheim", ["trondheim", "trondhjem"]),
-    NO30_Drammen: new Question("Drammen,Norway", 13, "Drammen", ["drammen"]),
-    NO30_Fredrikstad: new Question("Fredrikstad%20Stasjon,Norway", 14, "Fredrikstad", ["fredrikstad"]),
-    NO30_Sarpsborg: new Question("Sarpsborg,Norway", 13, "Sarpsborg", ["sarpsborg"]),
-    NO38_Skien: new Question("Klosterøya,Skien,Norway", 13, "Skien", ["skien"]),
-    NO38_Porsgrunn: new Question("Sykehuset%20Telemark,Porsgrunn,Norway", 13, "Porsgrunn", ["porsgrunn"]),
-    NO42_Kristiansand: new Question("Kvadraturen,Kristiansand,Norway", 13, "Kristiansand", ["kristiansand"]),
-    NO15_Alesund: new Question("Sparebanken%20Møre%20Arena,Ålesund,Norway", 12, "Ålesund", ["ålesund", "alesund", "aalesund"]),
-    NO38_Tonsberg: new Question("Træleborg,Tønsberg,Norway", 13, "Tønsberg", ["tønsberg", "tonsberg", "toensberg"]),
-    NO30_Moss: new Question("Thorneløkka,Moss,Norway", 13, "Moss", ["moss"]),
-    NO38_Sandefjord: new Question("Hvalfangstmonumentet,Sandefjord,Norway", 13, "Sandefjord", ["sandefjord"]),
-    NO42_Arendal: new Question("Arendal,Norway", 13, "Arendal", ["arendal"]),
-    NO18_Bodo: new Question("Bodø,Norway", 12, "Bodø", ["bodø", "bodo", "bodoe"]),
-    NO54_Tromso: new Question("Tromsø,Norway", 12, "Tromsø", ["tromsø", "tromso", "tromsoe"]),
-    NO34_Hamar: new Question("Hamar,Norway", 13, "Hamar", ["hamar"]),
-    NO30_Halden: new Question("Halden%20Stasjon,Norway", 13, "Halden", ["halden"]),
-    NO38_Larvik: new Question("Larvik,Norway", 13, "Larvik", ["larvik"]),
-    NO46_Askoy: new Question("Kleppestø,Norway", 15, "Askøy", ["kleppestø", "kleppesto", "kleppestoe", "askøy", "askoy", "askoey", "kleppestø, askøy", "kleppesto, askoy", "kleppestoe, askoey"]),
-    NO30_Kongsberg: new Question("Kongsberg,Norway", 14, "Kongsberg", ["kongsberg"]),
-    NO54_Harstad: new Question("Generalhagen,Harstad,Norway", 13, "Harstad", ["harstad"]),
-    NO15_Molde: new Question("Molde,Norway", 13, "Molde", ["molde"]),
-    NO34_Gjovik: new Question("Gjøvik,Norway", 14, "Gjøvik", ["gjøvik", "gjovik", "gjoevik"]),
-    NO34_Lillehammer: new Question("Lillehammer,Norway", 13, "Lillehammer", ["lillehammer"]),
-    NO38_Horten: new Question("Horten,Norway", 13, "Horten", ["horten"]),
-    NO30_Ski: new Question("Ski Stasjon,Norway", 14, "Ski", ["ski", "nordre follo"]),
-    NO18_MoIRana: new Question("Mo i Rana,NO", 13, "Mo i Rana"),
+    NO11_Sandnes: new Question(new GoogleMapsImage("Sandnes,Rogaland,Norway", 14, ["FS7uNj4L2XmBGTQguRKlLm_bdZ4=","QvevjnZU2ewwwib9SkEcF1wziWo="]), "Sandnes"),
+    NO11_Stavanger: new Question(new GoogleMapsImage("Stavanger,Rogaland,Norway", 14, ["4gH7Cn3vr8mNrCF7UwjesTLW7Z8=","prTE-7Jjgnxl2kQJkl3uFuuIJ_g="]), "Stavanger"),
+    NO11_Haugesund: new Question(new GoogleMapsImage("Haugesund,Rogaland,Norway", 14, ["hm3LaGjlRlv7Qpa4uVjh9zTSMFg=","jcwfuOWBBKYX1zwAB4zczYm_DCo="]), "Haugesund"),
+    NO46_Bergen: new Question(new GoogleMapsImage("Torgalmenningen,Bergen,Norway", 12, ["YvGaRTLGtV1mEYEQAymb7fy_U1k=","_9Y2lAnxSMsesjJCoAvdfZVZiN8="]), "Bergen"),
+    NO03_Oslo: new Question(new GoogleMapsImage("Barcode%20Project,Norway", 13, ["_KM5dTRIgAmf-_TA-GvFdNaK5HA=","Lc1eZ-KRGWqxeE1FYQvA_lF7CdU="]), "Oslo"),
+    NO50_Trondheim: new Question(new GoogleMapsImage("Trondheim,Norway", 13, ["pH7UZAkyfrWNWcL9dcAEZ49cKiI=","LEOrJqQBUErF59KZ_hxEb5dXMnw="]), "Trondheim", ["trondheim","trondhjem"]),
+    NO30_Drammen: new Question(new GoogleMapsImage("Drammen,Norway", 13, ["m7sVEbccPTQPP-b4vFNt5ncZ6gk=","zweWREjoQaTsvPFBpB4WN4npg7Q="]), "Drammen"),
+    NO30_Fredrikstad: new Question(new GoogleMapsImage("Fredrikstad%20Stasjon,Norway", 14, ["l1RCMHxJ8VwyfvRRWol3YF5SjYk=","d5N557kmzle939MD-fdte5ETrYw="]), "Fredrikstad"),
+    NO30_Sarpsborg: new Question(new GoogleMapsImage("Sarpsborg,Norway", 13, ["QSD4jtKApSqYdy2NnYDSIHEIrhc=","CdFtbZtw1lB-Qm6GRXHxHZv2mOY="]), "Sarpsborg"),
+    NO38_Skien: new Question(new GoogleMapsImage("Klosterøya,Skien,Norway", 13, ["115m21IcOmrgt3fPBkngBtQv6lA=","vE_n1QeM63aacTl-lF_raOspjEM="]), "Skien"),
+    NO38_Porsgrunn: new Question(new GoogleMapsImage("Sykehuset%20Telemark,Porsgrunn,Norway", 13, ["60Vv9SNxZkWg8k_3q_0PPNoaiC4=","hBHi8I1BMydWR6b28XIfuxVpq3M="]), "Porsgrunn"),
+    NO42_Kristiansand: new Question(new GoogleMapsImage("Kvadraturen,Kristiansand,Norway", 13, ["cRd79kKnSpi98GZkm_3jza-gBks=","lrpYZZ6cFrkdXZXhRzYD4mlkfjY="]), "Kristiansand"),
+    NO15_Alesund: new Question(new GoogleMapsImage("Sparebanken%20Møre%20Arena,Ålesund,Norway", 12, ["n0hJ37lOCYLyZQi5Rg-LJ0RtJvE=","O7IFYLdun1Jk8ZkzPcukdto0Nps="]), "Ålesund", ["ålesund","alesund","aalesund"]),
+    NO38_Tonsberg: new Question(new GoogleMapsImage("Træleborg,Tønsberg,Norway", 13, ["RbChx-3bwcB_k6Je0-NKov3fj00=","rsZRh6XTgsFVhpyBpwJvcPjTVZc="]), "Tønsberg", ["tønsberg","tonsberg","toensberg"]),
+    NO30_Moss: new Question(new GoogleMapsImage("Thorneløkka,Moss,Norway", 13, ["yIoeLwy82YCqmpH5_11-9kO8Wgs=","dnmmG4pLnECykt80R64f_4uIDMY="]), "Moss"),
+    NO38_Sandefjord: new Question(new GoogleMapsImage("Hvalfangstmonumentet,Sandefjord,Norway", 13, ["ux0MYeqlJg5CAt_dUDTuojyPeYA=","qpzGHumfDaTJMJDcm0mVglY6NDo="]), "Sandefjord"),
+    NO42_Arendal: new Question(new GoogleMapsImage("Arendal,Norway", 13, ["E2xjzX9Xqmw0ixhIRLuVByHkErA=","G4OK3G7Gy4USuhERJ2gez5C44Xg="]), "Arendal"),
+    NO18_Bodo: new Question(new GoogleMapsImage("Bodø,Norway", 12, ["4ceYlWCRufobq3SqZ3s15DcpipI=","Qi1cciJ-sNh5qrAPh4beQP8LRlE="]), "Bodø", ["bodø","bodo","bodoe"]),
+    NO54_Tromso: new Question(new GoogleMapsImage("Tromsø,Norway", 12, ["AXu4W4cIQlt8ZFEpuvEojlH-kBI=","Z_LCLOWAcruqJIBI5XxkrttU3J0="]), "Tromsø", ["tromsø","tromso","tromsoe"]),
+    NO34_Hamar: new Question(new GoogleMapsImage("Hamar,Norway", 13, ["GrX5jrQzL6vTG0BiQOK6cGbWlP0=","TGRMJ2PZT3kqTt5JGnImzFks1MA="]), "Hamar"),
+    NO30_Halden: new Question(new GoogleMapsImage("Halden%20Stasjon,Norway", 13, ["xhvr1REW_N-h3PLyhvZH4tLqoTg=","WQKaQvtCzglq4DA0QbHzQ64VX3Y="]), "Halden"),
+    NO38_Larvik: new Question(new GoogleMapsImage("Larvik,Norway", 13, ["9RiJJV-34TRp1dqs193CmXwv19Y=","KV1MJ4nf1E5B1Nwp154EXNxpTqI="]), "Larvik"),
+    NO46_Askoy: new Question(new GoogleMapsImage("Kleppestø,Norway", 15, ["tlKLHE4achguY0wUxJWw6mOuOaw=","tN-1S3NCvjrT3XzW3gbvNn3EvXg="]), "Askøy", ["kleppestø","kleppesto","kleppestoe","askøy","askoy","askoey","kleppestø, askøy","kleppesto, askoy","kleppestoe, askoey"]),
+    NO30_Kongsberg: new Question(new GoogleMapsImage("Kongsberg,Norway", 14, ["5k7r8gAFk1eLTAkYaO_AKdFzBhI=","rYEaNlsOjDkDgwpE-8olA8RMUjs="]), "Kongsberg"),
+    NO54_Harstad: new Question(new GoogleMapsImage("Generalhagen,Harstad,Norway", 13, ["g8YpMWoI_w1IW_pGsE6LjJ-JoY8=","p6-SWuwBNFNOPegoLiU56FIza0s="]), "Harstad"),
+    NO15_Molde: new Question(new GoogleMapsImage("Molde,Norway", 13, ["KNGCZGSskunuWF1NDOHayCPHpzs=","qfp8QOEAwZ6Y3YV4SMw6eu68ACo="]), "Molde"),
+    NO34_Gjovik: new Question(new GoogleMapsImage("Gjøvik,Norway", 14, ["8EAMLjH7TUS5rVhWB8wcvYpo1J0=","j5wpFImkSfgRwZpf8RGqFrd2p70="]), "Gjøvik", ["gjøvik","gjovik","gjoevik"]),
+    NO34_Lillehammer: new Question(new GoogleMapsImage("Lillehammer,Norway", 13, ["YZ6jOILKV8b9l9dPs47Plh2Zrww=","tdnre83YPxpRWlkUUbkNH5jTNMQ="]), "Lillehammer"),
+    NO38_Horten: new Question(new GoogleMapsImage("Horten,Norway", 13, ["zd77AzGoFP0qLLPiMY-8ns5yigY=","BEMKEr_VSn4XEfXoGHXlJZxN9YI="]), "Horten"),
+    NO30_Ski: new Question(new GoogleMapsImage("Ski Stasjon,Norway", 14, ["AHp9RbSl4TmWKGVZu6_SJaWOIpw=","S5ocvuPU-_bxszgkyoZ0WZbcEAg="]), "Ski", ["ski","nordre follo"]),
+    NO18_MoIRana: new Question(new GoogleMapsImage("Mo i Rana,NO", 13, ["W-VWzxp6PXQv0TSMVpvA_SCMtAM=","Gbu_EYtRMvKao04UDPKEVg0E0Pg="]), "Mo i Rana"),
 
     // Russia: RU. 
-    RUMOW_Moscow: new Question("Moscow,RU", 13, "Moscow", ["moscow", "москва"]),
-    RU_SaintPetersburg: new Question("Saint Petersburg,RU", 12, "Saint Petersburg", ["saint petersburg", "st. petersburg", "st petersburg", "санкт-петербург", "санкт петербург"]),
-    RU_Novosibirsk: new Question("54.99502590654898,82.91607062283774", 12, "Novosibirsk", ["novosibirsk", "новосибирск"]),
-    RU_Yekaterinburg: new Question("Yekaterinburg,RU", 12, "Yekaterinburg", ["yekaterinburg", "екатеринбург"]),
-    RU_NizhnyNovgorod: new Question("Nizhny Novgorod,RU", 13, "Nizhny Novgorod", ["nizhny Novgorod", "нижний новгород"]),
-    RU_Samara: new Question("Samara,RU", 12, "Samara", ["samara","самара"]),
-    RU_Omsk: new Question("Omsk,RU", 13, "Omsk", ["omsk", "омск"]),
-    RU_Kazan: new Question("Kazan,RU", 12, "Kazan", ["kazan", "казань"]),
-    RU_RostovnaDonu: new Question("Rostov-na-Donu,RU", 12, "Rostov-na-Donu", ["rostov-na-donu", "rostov na donu", "rostov", "rostov on don", "rostov-on-don", "ростов-на-дону", "ростов на дону"]),
-    RU_Chelyabinsk: new Question("Chelyabinsk,RU", 12, "Chelyabinsk", ["chelyabinsk", "челябинск"]),
-    RU_Ufa: new Question("Ufa,RU", 12, "Ufa", ["ufa","уфа"]),
-    RU_Volgograd: new Question("Volgograd,RU", 13, "Volgograd", ["volgograd", "волгоград"]),
-    RU_Perm: new Question("Perm,RU", 13, "Perm", ["perm", "пермь"]),
-    RU_Krasnoyarsk: new Question("Krasnoyarsk,RU", 12, "Krasnoyarsk", ["krasnoyarsk", "красноярск"]),
-    RU_Saratov: new Question("Saratov,RU", 12, "Saratov", ["saratov", "саратов"]),
-    RU_Voronezh: new Question("Voronezh,RU", 12, "Voronezh", ["voronezh", "воронеж"]),
+    RUMOW_Moscow: new Question(new GoogleMapsImage("Moscow,RU", 13, ["DavYo_UJoD9nCP-MAzUXak4wBTI=","jbHVivMidmubo0XHkTCqjGd4JLU="]), "Moscow", ["moscow","москва"]),
+    RU_SaintPetersburg: new Question(new GoogleMapsImage("Saint Petersburg,RU", 12, ["g9Mzpv9KCx7_VrBmd6WXbFWvCQA=","Lcc9yC6wIPUhleKKbG8cdLPh2Ls="]), "Saint Petersburg", ["saint petersburg","st. petersburg","st petersburg","санкт-петербург","санкт петербург"]),
+    RU_Novosibirsk: new Question(new GoogleMapsImage("54.99502590654898,82.91607062283774", 12, ["SxRyFVKttVUmLZkikAiX2HHU1cg=","4NoJKqBhVcZnfHAN6c4Z1g_v4rU="]), "Novosibirsk", ["novosibirsk","новосибирск"]),
+    RU_Yekaterinburg: new Question(new GoogleMapsImage("Yekaterinburg,RU", 12, ["yp-yt_cTB0b3xQB5oEhNWBr_98M=","w5gqOeQaANnVJetRgFmXA78MKVg="]), "Yekaterinburg", ["yekaterinburg","екатеринбург"]),
+    RU_NizhnyNovgorod: new Question(new GoogleMapsImage("Nizhny Novgorod,RU", 13, ["6shhwwe-0YJK4oERX_KRoYvAuLg=","8iyCysCseCrX6qO_1MtP-0P7c_c="]), "Nizhny Novgorod", ["nizhny Novgorod","нижний новгород"]),
+    RU_Samara: new Question(new GoogleMapsImage("Samara,RU", 12, ["c6oAyPP16Oh49ysB0taEyUIbJa0=","KvP0LkcJeTm5M3Y9FnsAY4FU5FI="]), "Samara", ["samara","самара"]),
+    RU_Omsk: new Question(new GoogleMapsImage("Omsk,RU", 13, ["TQ_siF7_utmVxwGkldW858jHowM=","0M9CxyY0kybI5-i-OJB79o4gZjA="]), "Omsk", ["omsk","омск"]),
+    RU_Kazan: new Question(new GoogleMapsImage("Kazan,RU", 12, ["sA2Nxrz1EXr8KntDFIu-kNHepmo=","PllwQUPaFZj57c6wHTkHktJktuA="]), "Kazan", ["kazan","казань"]),
+    RU_RostovnaDonu: new Question(new GoogleMapsImage("Rostov-na-Donu,RU", 12, ["8AYbW9NQNbEmbfZDYONWO_WQihA=","K3mREdtt9EdxgD1OBJSJPpmXMjU="]), "Rostov-na-Donu", ["rostov-na-donu","rostov na donu","rostov","rostov on don","rostov-on-don","ростов-на-дону","ростов на дону"]),
+    RU_Chelyabinsk: new Question(new GoogleMapsImage("Chelyabinsk,RU", 12, ["vsKiONZO2eUGN6Dw8-2KM15e15E=","yVmHgiVpUl7IypuohmdTlkvXVOY="]), "Chelyabinsk", ["chelyabinsk","челябинск"]),
+    RU_Ufa: new Question(new GoogleMapsImage("Ufa,RU", 12, ["x4VHiCrJ8yKOPiqhMsqNLPqf49M=","-oV_sXaOaMCS5o4W10Bo_-SBVR0="]), "Ufa", ["ufa","уфа"]),
+    RU_Volgograd: new Question(new GoogleMapsImage("Volgograd,RU", 13, ["eZSXSE6S9Y-oLUo_X1wd6mXE0_8=","Uk43bsO5QY7CdWXgDbk6uJ8Fk-A="]), "Volgograd", ["volgograd","волгоград"]),
+    RU_Perm: new Question(new GoogleMapsImage("Perm,RU", 13, ["SDQzPnSFgM692s2wMKjMUnz-o_w=","OC0bhRDpFWqBYykzhMh_mnuU_yQ="]), "Perm", ["perm","пермь"]),
+    RU_Krasnoyarsk: new Question(new GoogleMapsImage("Krasnoyarsk,RU", 12, ["OH2ymc8lfEqR-pVUuqgI3ldqOZ4=","sjnEBCACBOgtQTMA4wB0idJImeg="]), "Krasnoyarsk", ["krasnoyarsk","красноярск"]),
+    RU_Saratov: new Question(new GoogleMapsImage("Saratov,RU", 12, ["_4xykyLHAa04LuvOR8JjHFn-3Z8=","5kK6fZse8Wdq_6pRMUwabs8yRi4="]), "Saratov", ["saratov","саратов"]),
+    RU_Voronezh: new Question(new GoogleMapsImage("Voronezh,RU", 12, ["NC0ahGWTWQkM1hwrNtYiXhZhP2I=","4BXrwRrAPgo9AkSVZtbY5y3iLVg="]), "Voronezh", ["voronezh","воронеж"]),
 
     // Ukraine: UA
-    UAKV_Kyiv: new Question("Kyiv,UA", 13, "Kyiv", ["kyiv", "kiev", "київ"]),
-    UA_Kharkiv: new Question("Kharkiv,UA", 13, "Kharkiv", ["kharkiv", "харків"]),
-    UA_Dnipro: new Question("Dnipro,UA", 12, "Dnipro", ["dnipro", "дніпро"]),
-    UA_Donetsk: new Question("Donetsk,UA", 13, "Donetsk", ["donetsk", "донецьк"]),
-    UA_Odessa: new Question("Odessa,UA", 13, "Odessa", ["odessa","одеса"]),
-    UA_Zaporizhia: new Question("Zaporizhia,UA", 13, "Zaporizhia", ["zaporizhia", "запоріжжя"]),
+    UAKV_Kyiv: new Question(new GoogleMapsImage("Kyiv,UA", 13, ["VEQLS1uxbdjbHk2KTb-6YME3hbw=","bF9ocJwd0QOAgmkLBllcw7N8JtY="]), "Kyiv", ["kyiv","kiev","київ"]),
+    UA_Kharkiv: new Question(new GoogleMapsImage("Kharkiv,UA", 13, ["OX4AZNTGYVMTD0y2gakiZQq3P9s=","f4tWP7tpUzJhneruECNOCNRO1H4="]), "Kharkiv", ["kharkiv","харків"]),
+    UA_Dnipro: new Question(new GoogleMapsImage("Dnipro,UA", 12, ["ZXSlskyAd0DdR25rY3uVRy7nml0=","tnNj8qKvvMX9kvcaWZZbx61UzcM="]), "Dnipro", ["dnipro","дніпро"]),
+    UA_Donetsk: new Question(new GoogleMapsImage("Donetsk,UA", 13, ["dsP-p-S2WwzeSjRf316c4dVvHyc=","Bt_SzcbSaTh3_yfI1xgUtT8FdbI="]), "Donetsk", ["donetsk","донецьк"]),
+    UA_Odessa: new Question(new GoogleMapsImage("Odessa,UA", 13, ["JsaXIY2-McFLXZd70j4qTiQH724=","e14Qy1RCaX8T6goAv4AmpOU_rfY="]), "Odessa", ["odessa","одеса"]),
+    UA_Zaporizhia: new Question(new GoogleMapsImage("Zaporizhia,UA", 13, ["eIwyR1v9aEfWq2SbbEVBaaYdUNU=","4Owbibp9P-JSlPJD4228FzSjOvY="]), "Zaporizhia", ["zaporizhia","запоріжжя"]),
 
     // France: FR
-    FRIDF_Paris: new Question("Notre%20Dame,Paris,FR", 13, "Paris", ["paris"]),
-    FR_Marseille: new Question("43.29538035304942,5.390813492041645", 13, "Marseille"),
+    FRIDF_Paris: new Question(new GoogleMapsImage("Notre%20Dame,Paris,FR", 13, ["mAaRmvlHs5yZ_JLQGYMhqH1hW_A=","zwlBr-VH5wZODdFgUirmjD3fPQU="]), "Paris"),
+    FR_Marseille: new Question(new GoogleMapsImage("43.29538035304942,5.390813492041645", 13, ["E9E1koX1-zmGRtK5Y56zPtwxIA4=","64FmRfn-DyeWNQv6TWmnuliK0ZU="]), "Marseille"),
 
     // Spain: ES
-    ESMD_Madrid: new Question("Madrid,ES", 13, "Madrid", ["madrid"]),
-    ES_Barcelona: new Question("Barcelona,ES", 12, "Barcelona"),
-    ES_Valencia: new Question("39.450801797485184,-0.35078216120929945", 12, "Valencia"),
+    ESMD_Madrid: new Question(new GoogleMapsImage("Madrid,ES", 13, ["Q8167jD5NpIVptswZy26IGC-i-0=","BdLBB70CfHwioOJ9E_ip21FAhco="]), "Madrid"),
+    ES_Barcelona: new Question(new GoogleMapsImage("Barcelona,ES", 12, ["fGlXmj36272KRyxYlQly9sK61eA=","Xr9a4sVz6ZCL0kUaUumGFuRsEa4="]), "Barcelona"),
+    ES_Valencia: new Question(new GoogleMapsImage("39.450801797485184,-0.35078216120929945", 12, ["lKInKGCYUk7MLWlEqECk_lGVYH4=","ZlFf3nSvzLcZPzzLGGjLYu8CnnY="]), "Valencia"),
 
     // Sweden: SE
-    SEAB_Stockholm: new Question("Stockholm,SE", 12, "Stockholm", ["stockholm"]),
+    SEAB_Stockholm: new Question(new GoogleMapsImage("Stockholm,SE", 12, ["CsFLbcaXKypxCxslkon6Q4kFSZo=","h-24frHNTtTbcq8eNuwN_qqt5eI="]), "Stockholm"),
 
     // Germany: DE
-    DEBE_Berlin: new Question("Berlin,DE", 12, "Berlin", ["berlin"]),
-    DE_Hamburg: new Question("53.53960788691941,9.981611263805362", 13, "Hamburg"),
-    DE_Munich: new Question("Munich,DE", 13, "Munich", ["munich", "munchen", "münchen"]),
-    DE_Cologne: new Question("Cologne,DE", 13, "Cologne", ["cologne", "koln", "köln"]),
+    DEBE_Berlin: new Question(new GoogleMapsImage("Berlin,DE", 12, ["lxkrJ5HSc6x3HJjNoEm4otPlTvQ=","VrBcxVFmO8CtyjJbsHT4LtNwliM="]), "Berlin"),
+    DE_Hamburg: new Question(new GoogleMapsImage("53.53960788691941,9.981611263805362", 13, ["vVkkTk6JbaMymMK0HfKES7AhvEs=","0uvN0-3KWm17HJPO2UlOgBh8uqY="]), "Hamburg"),
+    DE_Munich: new Question(new GoogleMapsImage("Munich,DE", 13, ["EZ5pGMQBnCm-28SwRwqDr4yC1_Y=","wc9TxQWdFID15Su174Ye6-lqieY="]), "Munich", ["munich","munchen","münchen"]),
+    DE_Cologne: new Question(new GoogleMapsImage("Cologne,DE", 13, ["_Xh0RYTf8_lmK92DYEIV3mIRkVY=","7VH0HutYmpLy3u_TGXi8p1w7Sxw="]), "Cologne", ["cologne","koln","köln"]),
 
     // Finland: FI
-    FI18_Helsinki: new Question("Helsinki,FI", 12, "Helsinki", ["helsinki"]),
+    FI18_Helsinki: new Question(new GoogleMapsImage("Helsinki,FI", 12, ["GKIQvY3ytPm0zQlymXdxr3Z4Wiw=","umV_jyt1_jb8BgKqnI18sWbbANQ="]), "Helsinki"),
 
     // Poland: PL
-    PLMZ_Warsaw: new Question("Warsaw,PL", 12, "Warsaw", ["warsaw", "warszawa"]),
-    PL_Lodz: new Question("Lodz,PL", 13, "Łódź", ["lodz", "łódź"]),
-
+    PLMZ_Warsaw: new Question(new GoogleMapsImage("Warsaw,PL", 12, ["PGOFKU49uTGiNGn--ogcZxgq3tA=","SYU72gUkrUdKMuQtgQpT30busI8="]), "Warsaw", ["warsaw","warszawa"]),
+    PL_Lodz: new Question(new GoogleMapsImage("Lodz,PL", 13, ["LRHOeJdBOEGxCi2qeqWRCTZ3A_I=","15_mC_wmLk50x_LSkRyvJXRygi4="]), "Łódź", ["lodz","łódź"]),
+    
     // Italy: IT
-    ITRM_Rome: new Question("Colosessum,Rome,IT", 12, "Rome", ["rome", "roma"]),
-    IT_Milan: new Question("Milan,IT", 13, "Milan", ["milan", "milano"]),
-    IT_Naples: new Question("Naples,IT", 13, "Naples", ["naples", "napoli"]),
-    IT_Turin: new Question("Turin,IT", 13, "Turin", ["turin", "torino"]),
+    ITRM_Rome: new Question(new GoogleMapsImage("Colosessum,Rome,IT", 12, ["-a_9SpNsa77TkHFsD5xTSz_gfco=","79nFNsBZyTurBZaWzuY0NvJGqC8="]), "Rome", ["rome","roma"]),
+    IT_Milan: new Question(new GoogleMapsImage("Milan,IT", 13, ["SUnPJCnDgiw65kZVy7SLLvvR9zs=","UFk9QBxShEdMTG8AISXpCr35Wl4="]), "Milan", ["milan","milano"]),
+    IT_Naples: new Question(new GoogleMapsImage("Naples,IT", 13, ["pj6J_jgaZRcWBR4JzqKwMSVEUag=","NJllAY1TRMtJVMMpwPmoeSAbr3Q="]), "Naples", ["naples","napoli"]),
+    IT_Turin: new Question(new GoogleMapsImage("Turin,IT", 13, ["lCf9a1eP77OhH_s1PH4tfMjauzc=","nQzx1Bi66lKxDHcSUsFuL_ZlKu8="]), "Turin", ["turin","torino"]),
 
     // United Kingdom: GB
-    GBENG_London: new Question("London,GB", 12, "London", ["london"]),
-    GB_Birmingham: new Question("Birmingham,GB", 13, "Birmingham"),
-    GB_Liverpool: new Question("53.41307630055226,-2.9330236606574416", 12, "Liverpool"),
+    GBENG_London: new Question(new GoogleMapsImage("London,GB", 12, ["Mi3PVkns214roZ_JA_IEL6DMA8s=","RAVFKYIKP3b8nqwQO2v-C8TvHuM="]), "London"),
+    GB_Birmingham: new Question(new GoogleMapsImage("Birmingham,GB", 13, ["KTHX0K0mlUsLa-7itZcWfzRDl4M=","dOLrNCvBrnKOPF5g2iCEzLLTsAs="]), "Birmingham"),
+    GB_Liverpool: new Question(new GoogleMapsImage("53.41307630055226,-2.9330236606574416", 12, ["DX1pJNOoF8gfzvi7xRvpIX04ST0=","IxyqH0F7zvkrHE40pNhYgeievaw="]), "Liverpool"),
 
     // Romania: RO
-    ROB_Bucharest: new Question("Bucharest,RO", 13, "Bucharest", ["bucharest", "bucurești"]),
+    ROB_Bucharest: new Question(new GoogleMapsImage("Bucharest,RO", 13, ["JWIi_S8B-1ooTsrRhecSomPwlY4=","KWhlIIOGqUSd3RmEVA7OAm3JhdM="]), "Bucharest", ["bucharest","bucurești"]),
 
     // Belarus: BY
-    BYHM_Minsk: new Question("Minsk,BY", 12, "Minsk", ["minsk", "мінск", "менск", "минск"]),
+    BYHM_Minsk: new Question(new GoogleMapsImage("Minsk,BY", 12, ["8W9FdhkOXfS5RgQqoCR1HcDXByw=","i1KYT05kv3K0rW57EBwk7bIYbW4="]), "Minsk", ["minsk","мінск","менск","минск"]),
 
     // Greece: GR
-    GRI_Athens: new Question("Athens,GR", 13, "Athens", ["athens", "αθήνα"]),
+    GRI_Athens: new Question(new GoogleMapsImage("Athens,GR", 13, ["LMP2ntVWbVTODT-GJQC-90xYBZo=","VCCKN6ibehEn-9I0XrHGQIwAJCM="]), "Athens", ["athens","αθήνα"]),
 
     // Bulgaria: BG
-    BG22_Sofia: new Question("Sofia,BG", 13, "Sofia", ["sofia", "софия"]),
+    BG22_Sofia: new Question(new GoogleMapsImage("Sofia,BG", 13, ["mrFfZYmebjHjPub_YmbvLTYA60I=","tlMzWdTEvns4VeB7ZAuNBjvcoBc="]), "Sofia", ["sofia","софия"]),
 
     // Iceland: IS
-    IS1_Reykjavik: new Question("64.13599420450862,-21.92402210755096", 13, "Reykjavik", ["reykjavik", "reykjavík"]),
+    IS1_Reykjavik: new Question(new GoogleMapsImage("64.13599420450862,-21.92402210755096", 13, ["31YoHZMVVY8ja7VT6rvYVrJtIsA=","crhr0BpeHlANV3Wzp2MLv1Imo2I="]), "Reykjavik", ["reykjavik","reykjavík"]),
 
     // Hungary: HU
-    HUBU_Budapest: new Question("Budapest,HU", 13, "Budapest", ["budapest"]),
+    HUBU_Budapest: new Question(new GoogleMapsImage("Budapest,HU", 13, ["uaqtBkc6lCADfuwU3-Ce3--8UQI=","tfmsEJQ9wG0xLfXhyG8F-4E4K78="]), "Budapest"),
 
     // Portugal: PT
-    PT11_Lisbon: new Question("Lisbon,PT", 12, "Lisbon", ["lisbon", "lisboa"]),
+    PT11_Lisbon: new Question(new GoogleMapsImage("Lisbon,PT", 12, ["n0NiJ208qPpm74zthCLat8qpToU=","-fBoiG8MFTrhQD-5Qjr-gI1tAM8="]), "Lisbon", ["lisbon","lisboa"]),
 
     // Austria: AT
-    AT9_Vienna: new Question("Vienna,AT", 12, "Vienna", ["vienna", "wien"]),
+    AT9_Vienna: new Question(new GoogleMapsImage("Vienna,AT", 12, ["OnXzIxUsaoCcqr2qICeVdgpJPn8=","rMLuyceE-6O_2Df59GGDcnwxj4w="]), "Vienna", ["vienna","wien"]),
 
     // Czech Republic: CZ
-    CZ10_Prague: new Question("Prague,CZ", 12, "Prague", ["prague", "praha"]),
+    CZ10_Prague: new Question(new GoogleMapsImage("Prague,CZ", 12, ["H1LwV9sM7q-J3653RskThbUwf0I=","qWTHs8jAgs9rH-mcEJ-lwSyMcWw="]), "Prague", ["prague","praha"]),
 
     // Serbia: RS
-    RS00_Belgrade: new Question("Belgrade,RS", 12, "Belgrade", ["belgrade", "beograd", "београд"]),
+    RS00_Belgrade: new Question(new GoogleMapsImage("Belgrade,RS", 12, ["CEiINHmYE1AOiEbA0j-IsCR0Ve0=","wKvm9RmS0_eTPN4mM5MDMESMYMc="]), "Belgrade", ["belgrade","beograd","београд"]),
 
     // Ireland: IE
-    IEL_Dublin: new Question("Dublin,IE", 13, "Dublin", ["dublin"]),
+    IEL_Dublin: new Question(new GoogleMapsImage("Dublin,IE", 13, ["Nn-m5H5thOnOwiI4P9ZKiDgj5hc=","EqFw_s2GmSfcumFjp6Dn2T5o3vc="]), "Dublin"),
 
     // Lithuania: LT
-    LTVL_Vilnius: new Question("Vilnius,LT", 13, "Vilnius", ["vilnius"]),
+    LTVL_Vilnius: new Question(new GoogleMapsImage("Vilnius,LT", 13, ["AdFMai1W-YYNPpbVihjokPXhkVE=","WcUoowQI1lBbeqV0Qhwxb8e1iZc="]), "Vilnius"),
 
     // Latvia: LV
-    LVRIX_Riga: new Question("Riga,LV", 12, "Riga", ["riga", "rīga"]),
-
+    LVRIX_Riga: new Question(new GoogleMapsImage("Riga,LV", 12, ["6rrAfms9N1Jg8d_r0ahBolkQqkU=","_BxBs5DRoDCOzqAENM8WcV-O2kc="]), "Riga", ["riga","rīga"]),
+    
     // Croatia: HR
-    HR21_Zagreb: new Question("Most%20slobode,Zagreb,HR", 13, "Zagreb", ["zagreb"]),
+    HR21_Zagreb: new Question(new GoogleMapsImage("Most%20slobode,Zagreb,HR", 13, ["90zIvi9oQnksQlANYBQu_1KstiY=","33LmkQ5JfDTEMglh0SNNyMkkJ-w="]), "Zagreb"),
 
     // Bosnia and Herzegovina: BA
-    BABIH_Sarajevo: new Question("Sarajevo,BA", 13, "Sarajevo", ["sarajevo"]),
+    BABIH_Sarajevo: new Question(new GoogleMapsImage("Sarajevo,BA", 13, ["2Bsww_J0HoXfEotaAPvxmgnc1Mc=","OGx7j2GEa2ONBZy2CYoNOKzMsRc="]), "Sarajevo"),
 
     // Slovakia: SK
-    SKBl_Bratislava: new Question("Bratislava,SK", 12, "Bratislava", ["bratislava"]),
+    SKBl_Bratislava: new Question(new GoogleMapsImage("Bratislava,SK", 12, ["XFdPEEYR5p7nbp521_tPs260s7I=","U_MWUf8iglKUmUhYKnWm0hFy3uw="]), "Bratislava"),
 
     // Estonia: EE
-    EE37_Tallinn: new Question("Tallinn,EE", 12, "Tallinn", ["tallinn"]),
+    EE37_Tallinn: new Question(new GoogleMapsImage("Tallinn,EE", 12, ["gO57OI4Ee5vbblccSr506sUTMF8=","Qelciln9b4dfok-UPyXKCbEnmSQ="]), "Tallinn"),
 
     // Denmark: DK
-    DK84_Copenhagen: new Question("Copenhagen,DK", 12, "Copenhagen", ["copenhagen", "københavn"]),
+    DK84_Copenhagen: new Question(new GoogleMapsImage("Copenhagen,DK", 12, ["sIUZpBfX8E7-M6iHcIzLZFfEL9E=","-ZrmDnglIGMBRXHxFhac1cWokmg="]), "Copenhagen", ["copenhagen","københavn"]),
 
     // Switzerland: CH
-    CHBE_Bern: new Question("Bern,CH", 13, "Bern", ["bern"]),
+    CHBE_Bern: new Question(new GoogleMapsImage("Bern,CH", 13, ["nBPnms0FT1dPazdJKcEsMCmUTzs=","O9uw8ByiElskCsgvSy2rt98IDdM="]), "Bern"),
 
     // Netherlands: NL
-    NLNH_Amsterdam: new Question("Amsterdam,NL", 12, "Amsterdam", ["amsterdam"]),
+    NLNH_Amsterdam: new Question(new GoogleMapsImage("Amsterdam,NL", 12, ["xUPiQCSJDxwdtvRk_ZBuHLyAGjE=","O0mZQYRfdXGBi4NrzRelq6GJZok="]), "Amsterdam"),
 
     // Moldova: MD
-    MDCU_Chisinau: new Question("Chișinău,MD", 13, "Chișinău", ["chișinău", "chisinau"]),
+    MDCU_Chisinau: new Question(new GoogleMapsImage("Chișinău,MD", 13, ["RkhyA5kyfyQ44qFYNqgLWCcUZGY=","DHlzQbevmL9MHBEIJFHjfiO3zXE="]), "Chișinău", ["chișinău","chisinau"]),
 
     // Belgium: BE
-    BEBRU_Brussels: new Question("Brussels,BE", 13, "Brussels", ["brussels", "bruxelles"]),
+    BEBRU_Brussels: new Question(new GoogleMapsImage("Brussels,BE", 13, ["grkPWLYH1UoWGtnZqmwsbNYZRqE=","DuCs7jbmvBMgqBOD9L_w9KTe7lg="]), "Brussels", ["brussels","bruxelles"]),
 
     // Albania: AL
-    AL11_Tirana: new Question("Tirana,AL", 13, "Tirana", ["tirana", "tiranë", "tirane"]),
+    AL11_Tirana: new Question(new GoogleMapsImage("Tirana,AL", 13, ["bMqf8nXn2uR5-ZhE7zbrS083NaU=","sbiijtMXvgdNVw0oLW_pZDUjuso="]), "Tirana", ["tirana","tiranë","tirane"]),
 
     // North Macedonia: MK
-    MK85_Skopje: new Question("Skopje,MK", 13, "Skopje", ["skopje", "скопје", "shkup"]),
+    MK85_Skopje: new Question(new GoogleMapsImage("Skopje,MK", 13, ["OqHpZGyc0X9Cgp7lwqufYG5GsRI=","ZbEQPZGHlwi-ZCe_cn32z8VLwEk="]), "Skopje", ["skopje","скопје","shkup"]),
 
     // Slovenia: SI
-    SI061_Ljubljana: new Question("Ljubljana,SI", 13, "Ljubljana", ["ljubljana"]),
+    SI061_Ljubljana: new Question(new GoogleMapsImage("Ljubljana,SI", 13, ["3DdC9OTxAKjyK8zNfw3NgYG1Zbg=","xfTGHsDG0_oDDZumdXYsqbET-Ik="]), "Ljubljana"),
 
     // Montenegro: ME
-    ME16_Podgorica: new Question("Podgorica,ME", 13, "Podgorica", ["podgorica", "подгорица"]),
+    ME16_Podgorica: new Question(new GoogleMapsImage("Podgorica,ME", 13, ["LrdrmSp4RZ6D-0arneBKyoASpWk=","Mt4MsRjJ7fPSD5VPQit5Qf7I-bA="]), "Podgorica", ["podgorica","подгорица"]),
 
     // Luxembourg: LU
-    LULU_Luxembourg: new Question("Palais%20Grand-Ducal,Luxembourg,LU", 13, "Luxembourg", ["luxembourg"]),
+    LULU_Luxembourg: new Question(new GoogleMapsImage("Palais%20Grand-Ducal,Luxembourg,LU", 13, ["qQtiG8phHXQsHxDPx06bC7HaLzI=","5X2d5QGu07FUlx14hTCPfNO9Z48="]), "Luxembourg"),
 
     // Andorra: AD
-    AD07_AndorraLaVella: new Question("Andorra la Vella,AD", 14, "Andorra la Vella", ["andorra la vella", "andorra"]),
+    AD07_AndorraLaVella: new Question(new GoogleMapsImage("Andorra la Vella,AD", 14, ["ZB7EJoWAxGLMInIXIKF3oi5Cbrk=","h6OcVY49AZh2trLUJ7h6408mftE="]), "Andorra la Vella", ["andorra la vella","andorra"]),
 
     // Malta: MT
-    MT60_Valetta: new Question("Valetta,MT", 14, "Valetta", ["valetta"]),
+    MT60_Valetta: new Question(new GoogleMapsImage("Valetta,MT", 14, ["vb-_R7ohXK0Fb8_C9NSy6JQEs7k=","s3_zcpDQcYyvBlOcMukSMn6hBz8="]), "Valetta"),
 
     // Liechtenstein: LI
-    LI11_Vaduz: new Question("Vaduz,LI", 14, "Vaduz", ["vaduz"]),
+    LI11_Vaduz: new Question(new GoogleMapsImage("Vaduz,LI", 14, ["ki0UScTS2RVIPB2Ee8jIK7E24rs=","wbEuxyHC1Mm5NcA4gX7zfm40pvo="]), "Vaduz"),
 
     // San Marino: SM
-    SM07SanMarino: new Question("San Marino,SM", 14, "City of San Marino", ["san marino", "città di san sarino", "city of san marino"]),
+    SM07SanMarino: new Question(new GoogleMapsImage("San Marino,SM", 14, ["9XwRUU4PI-kdxu6LTFemGG4TH8Q=","luu1UquQZ_LP8mJaps-rtBAl_x4="]), "City of San Marino", ["san marino","città di san sarino","city of san marino"]),
 
     // Monaco: MC
-    MC_Monaco: new Question("Monaco,MC", 14, "Monaco", ["monaco"]),
+    MC_Monaco: new Question(new GoogleMapsImage("Monaco,MC", 14, ["rIkaeqtjrogxqAxEnwjJMP91QH0=","y8Wy7Zeq-p6VnuPFmo1qhvZ9Pzs="]), "Monaco"),
 
     
     // North America
@@ -227,199 +252,198 @@ let Cities = {
     // Mainland NA
 
     // United States of America: US
-    USAL_Montgomery: new Question("Montgomery,AL", 14, "Montgomery"),
-    USAK_Juneau: new Question("Juneau,AK", 14, "Juneau"),
-    USAZ_Phoenix: new Question("Phoenix,AZ", 13, "Phoenix"),
-    USAR_LittleRock: new Question("Little Rock,AR", 13, "Little Rock"),
-    USCA_Sacramento: new Question("Sacramento,CA", 13, "Sacramento"),
-    USCO_Denver: new Question("Dever,CO", 13, "Denver"),
-    USCT_Hartford: new Question("Hartford,CT", 13, "Hartford"),
-    USDE_Dover: new Question("Dover,DE,US", 13, "Dover"),
-    USFL_Tallahassee: new Question("Tallahassee,FL", 14, "Tallahassee"),
-    USGA_Atlanta: new Question("Atlanta,GA", 13, "Atlanta"),
-    USHI_Honolulu: new Question("Honolulu,HI", 13, "Honolulu"),
-    USID_Boise: new Question("Boise,ID", 13, "Boise"),
-    USIL_Springfield: new Question("Springfield,IL", 13, "Springfield"),
-    USIN_Indianapolis: new Question("Indianapolis,IN", 13, "Indianapolis"),
-    USIA_Des_Moines: new Question("Des Moines,IA", 13, "Des Moines"),
-    USKS_Topeka: new Question("39.05568612488337,-95.67612154084969", 14, "Topeka"),
-    USKY_Frankfort: new Question("Frankfort,KY", 14, "Frankfort"),
-    USLA_BatonRouge: new Question("Baton Rouge,LA", 13, "Baton Rouge"),
-    USME_Augusta: new Question("Augusta,ME", 14, "Augusta"),
-    USMD_Annapolis: new Question("Annapolis,MD", 14, "Annapolis"),
-    USMA_Boston: new Question("Boston,MA", 13, "Boston"),
-    USMI_Lansing: new Question("Lansing,MI", 13, "Lansing"),
-    USMN_StPaul: new Question("St. Paul,MN", 13, "St. Paul", ["st. paul", "st paul", "saint paul"]),
-    USMS_Jackson: new Question("Jackson,MS", 14, "Jackson"),
-    USMO_JeffersonCity: new Question("Jefferson City,MO", 14, "Jefferson City"),
-    USNE_Lincoln: new Question("Lincoln,NE", 14, "Lincoln"),
-    USNV_CarsonCity: new Question("Carson City,NV", 14, "Carson City"),
-    USNH_Concord: new Question("Concord,NH", 14, "Concord"),
-    USNJ_Trenton: new Question("Trenton,NJ", 13, "Trenton"),
-    USNM_SantaFe: new Question("Santa Fe,NM", 14, "Santa Fe"),
-    USNY_Albany: new Question("Albany,NY", 13, "Albany"),
-    USNC_Raleigh: new Question("Raleigh,NC", 13, "Raleigh"),
-    USND_Bismarck: new Question("Bismarck,ND", 13, "Bismarck"),
-    USOH_Columbus: new Question("Columbus,OH", 13, "Columbus"),
-    USOK_OklahomaCity: new Question("Oklahoma City,OK", 13, "Oklahoma City"),
-    USOR_Salem: new Question("Salem,OR", 14, "Salem"),
-    USPA_Harrisburg: new Question("Harrisburg,PA", 13, "Harrisburg"),
-    USRI_Providence: new Question("Providence,RI", 13, "Providence"),
-    USSC_Columbia: new Question("Columbia,SC", 14, "Columbia"),
-    USSD_Pierre: new Question("Pierre,SD", 14, "Pierre"),
-    USTN_Nashville: new Question("Nashville,TN", 13, "Nashville"),
-    USTX_Austin: new Question("Austin,TX", 13, "Austin"),
-    USUT_SaltLakeCity: new Question("Salt Lake City,UT", 13, "Salt Lake City"),
-    USVT_Montpelier: new Question("Montpelier,VT", 15, "Montpelier"),
-    USVA_Richmond: new Question("Richmond,VA", 13, "Richmond"),
-    USWA_Olympia: new Question("Olympia,WA", 13, "Olympia"),
-    USWV_Charleston: new Question("Charleston,WV", 13, "Charleston"),
-    USWI_Madison: new Question("Madison,WI", 13, "Madison"),
-    USWY_Cheyenne: new Question("Cheyenne,WY", 14, "Cheyenne"),
-    USDC_Washington: new Question("Lincoln%20Memorial,Washington,DC", 13, "Washington, D.C.", ["washington", "washington dc", "washington, d.c.", "washington d.c.", "dc", "d.c.", "washington, district of columbia", "district of columbia", "washington district of columbia"]),
-    USAS_PagoPago: new Question("Pago Pago,AS", 15, "Pago Pago"),
-    USGU_Hagatna: new Question("Hagåtña, GU", 15, "Hagåtña", ["hagåtña", "hagatna", "hagatnja"]),
-    USMP_Saipain: new Question("Chalan Piao,MP", 14, "Saipan", ["chalan piao", "saipan"]),
-    USPR_SanJuan: new Question("Puerto%20Rico%20Terminal,PR", 13, "San Juan"),
-    USVI_CharlotteAmalie: new Question("Charlotte Amalie,VI", 14, "Charlotte Amalie"),
-    USNY_NewYorkCity: new Question("New York City,NY", 11, "New York City", ["new york city", "new york"]),
-    USCA_LosAngeles: new Question("Bevery Hills,Los Angeles,CA", 11, "Los Angeles"),
-    USIL_Chicago: new Question("Chicago,IL", 12, "Chicago"),
-    USTX_Houston: new Question("Houston,TX", 13, "Houston"),
-    USPA_Philadelphia: new Question("Philadelphia,PA", 13, "Philadelphia"),
-    USTX_SanAntonio: new Question("San Antonio,TX", 13, "San Antonio"),
-    USCA_SanDiego: new Question("San Diego,CA", 12, "San Diego"),
-    USTX_Dallas: new Question("Dallas,TX", 13, "Dallas"),
-    USCA_SanJose: new Question("San Jose,CA", 12, "San Jose"),
-    USFL_Jacksonvile: new Question("Jacksonville,FL", 12, "Jacksonville"),
-    USTX_ForthWorth: new Question("Fort Worth,TX", 13, "Fort Worth"),
-    USNC_Charlotte: new Question("Charlotte, NC", 13, "Charlotte"),
-    USCA_SanFrancisco: new Question("San Francisco, CA", 11, "San Francisco"),
-    USWA_Seattle: new Question("Seattle,WA", 12, "Seattle"),
-    USTX_ElPaso: new Question("El Paso,TX", 13, "El Paso"),
-    USMI_Detroit: new Question("Detroit,MI", 13, "Detroit"),
-    USOR_Portland: new Question("Portland,OR", 12, "Portland"),
-    USNV_LasVegas: new Question("Las Vegas,NV", 13, "Las Vegas"),
-    USTN_Memphis: new Question("Memphis,TN", 13, "Memphis"),
-    USKY_Louisville: new Question("Louisville,KY", 13, "Louisville"),
-    USMD_Baltimore: new Question("Baltimore,MD", 13, "Baltimore"),
-    USFL_Miami: new Question("Miami,FL", 12, "Miami"),
+    USAL_Montgomery: new Question(new GoogleMapsImage("Montgomery,AL", 14, ["op8R3xWwmUrU2rEt7Y3nYrhgAcI=","UfCS--VDZ8vtlYWc6OlPuafCius="]), "Montgomery"),
+    USAK_Juneau: new Question(new GoogleMapsImage("Juneau,AK", 14, ["aT_LNRZHJteE-v1k9lb5b9dGpxg=","m7if13kY5L8_GOe1NP_ZxAP0KF8="]), "Juneau"),
+    USAZ_Phoenix: new Question(new GoogleMapsImage("Phoenix,AZ", 13, ["dK5FyPnNQ4YZqugy-oPh3OWG_aU=","6yYJ49NhP1beJlRYMdyxM2Xmi8Q="]), "Phoenix"),
+    USAR_LittleRock: new Question(new GoogleMapsImage("Little Rock,AR", 13, ["CuzMCCSBeP4jmt5rzxNhsIjmFg4=","QeJOY3uWzOfNpPXoA-XzGzgTAHM="]), "Little Rock"),
+    USCA_Sacramento: new Question(new GoogleMapsImage("Sacramento,CA", 13, ["KxBw-YR2NoklCZoFyD69wWlE2fU=","s5J9_sw2yvqJygEXvWU2yXjNri4="]), "Sacramento"),
+    USCO_Denver: new Question(new GoogleMapsImage("Dever,CO", 13, ["b9YZyzdFaEb3UvQEclHDAbmThno=","-vf41dTGmSs8FpvobtLoiwydNWE="]), "Denver"),
+    USCT_Hartford: new Question(new GoogleMapsImage("Hartford,CT", 13, ["AzKAMjNFw_ZqI3Up35NhHUyhn50=","Z2cxOMPyHI1R5WbEVFN1plt0NzM="]), "Hartford"),
+    USDE_Dover: new Question(new GoogleMapsImage("Dover,DE,US", 13, ["O3h0-yOsPGKytdlAKzcGa7YD0XQ=","caPnlSYqf6uFT4-68n82qASIJbg="]), "Dover"),
+    USFL_Tallahassee: new Question(new GoogleMapsImage("Tallahassee,FL", 14, ["bp_vGHZR-JVoZZZBtSPHDEAVDlc=","ubZUlf5c__7odfnWffn4l4OlJOU="]), "Tallahassee"),
+    USGA_Atlanta: new Question(new GoogleMapsImage("Atlanta,GA", 13, ["EBRh-gK1g3JuX6V0bz3u0aUB0UI=","fr_qOj0uQ--aMaVGNA_H_bLVbyM="]), "Atlanta"),
+    USHI_Honolulu: new Question(new GoogleMapsImage("Honolulu,HI", 13, ["HnBDXslSNxrfKSZA1MxWFbznPc4=","L0x2RlvQBeuzEnGaJzyFn0ueBOM="]), "Honolulu"),
+    USID_Boise: new Question(new GoogleMapsImage("Boise,ID", 13, ["sGpVcHI56TE8UyF2Z-Jft327nbg=","jOzuy6hJmUZNIi_ujpWsTBD5CH0="]), "Boise"),
+    USIL_Springfield: new Question(new GoogleMapsImage("Springfield,IL", 13, ["7CO5TyNq3uldQT66dYyRryz0zRs=","FIDxskyVBhMQRtM1rFjpMfQrmp8="]), "Springfield"),
+    USIN_Indianapolis: new Question(new GoogleMapsImage("Indianapolis,IN", 13, ["p17BTwbJxUSWFuAi4gxH3WDxt90=","n8T5x2GeMghysEMOYWzG2SvaeGc="]), "Indianapolis"),
+    USIA_Des_Moines: new Question(new GoogleMapsImage("Des Moines,IA", 13, ["sDFg0AAOzCqZH2hfhQf3DKMQfK4=","FjJk8emXYGzGlAqE4xuvGEMy7K8="]), "Des Moines"),
+    USKS_Topeka: new Question(new GoogleMapsImage("39.05568612488337,-95.67612154084969", 14, ["5c6pACSKAIof0XNcPa5dsD675eI=","LpPgozLgPs62C3AtOUuMn_D5sW4="]), "Topeka"),
+    USKY_Frankfort: new Question(new GoogleMapsImage("Frankfort,KY", 14, ["CSgYW7nVxAzVgnSbBoJTgQsun-Y=","jHIQ2JvcsE9o_4u5L2z7KwLi02s="]), "Frankfort"),
+    USLA_BatonRouge: new Question(new GoogleMapsImage("Baton Rouge,LA", 13, ["ozGW-LBftWZXhbsuKOZ5SNbYMS4=","paIqJf2a7LuWxK5_uErFZPwU9NA="]), "Baton Rouge"),
+    USME_Augusta: new Question(new GoogleMapsImage("Augusta,ME", 14, ["cPCrvwbkGaKt-ui20ajnlJ9mUyM=","h6Ljcf0OeRNGYAew5QWUTTsX_tk="]), "Augusta"),
+    USMD_Annapolis: new Question(new GoogleMapsImage("Annapolis,MD", 14, ["M6NDbi7_d2MVQ73voPuKIhqI_Ic=","fG5Df_Z9dRsut-smiVtn5bZYlWQ="]), "Annapolis"),
+    USMA_Boston: new Question(new GoogleMapsImage("Boston,MA", 13, ["rfu6mu4VRNjzMxGMPE8ui8MKIfc=","yapmNpQzeVRCpoUvK074MLq_aXo="]), "Boston"),
+    USMI_Lansing: new Question(new GoogleMapsImage("Lansing,MI", 13, ["Tt8oAC_nca6FGuamyGFxZ5ik80s=","9x7fmsadlV9V0WothbRB-nGxppg="]), "Lansing"),
+    USMN_StPaul: new Question(new GoogleMapsImage("St. Paul,MN", 13, ["mbo8n3JMzxBS_PJqYWD7uHNXnuA=","wz0Id-hbDS3rc1JnskKTrg_YQT8="]), "St. Paul", ["st. paul","st paul","saint paul"]),
+    USMS_Jackson: new Question(new GoogleMapsImage("Jackson,MS", 14, ["LLTUfWMCJQiGTHV0nwGEv6IlahQ=","Ra6yG6b1uEOLwhp0elBVLhPjgwI="]), "Jackson"),
+    USMO_JeffersonCity: new Question(new GoogleMapsImage("Jefferson City,MO", 14, ["CP0-wl95UlyA-0XPsgb-NL8V5Sw=","JPgjH-ENegAwgUoo17mPWhXzuRg="]), "Jefferson City"),
+    USNE_Lincoln: new Question(new GoogleMapsImage("Lincoln,NE", 14, ["j6fVQFfsivjegqJfdwMpdccjZi4=","rDaTK_nYbNRg-WChf61gdN0D7AM="]), "Lincoln"),
+    USNV_CarsonCity: new Question(new GoogleMapsImage("Carson City,NV", 14, ["Dj9aBZCEYfOThtBVnmtY9W6tT0E=","4yMqk230glz56EMVdMw4FniOzUU="]), "Carson City"),
+    USNH_Concord: new Question(new GoogleMapsImage("Concord,NH", 14, ["Pmm01iUJoYev2i3Ev5hZvVvcRqg=","9Op41tMdvogeiOsuNGzkkQKW_5o="]), "Concord"),
+    USNJ_Trenton: new Question(new GoogleMapsImage("Trenton,NJ", 13, ["e0fs4K8Hzu-sh50T9MLog9VZehI=","s__h5tc-2vja6BklVkjq46NYpI0="]), "Trenton"),
+    USNM_SantaFe: new Question(new GoogleMapsImage("Santa Fe,NM", 14, ["aR__BgYP8NnkQeiKNj4oIP7sPzA=","RgD1ql1bvpLr3iJ5e84uITqf3KQ="]), "Santa Fe"),
+    USNY_Albany: new Question(new GoogleMapsImage("Albany,NY", 13, ["LXSmHPYlifx_h5Uh6MaIQCT4rFI=","76-xRtrbDK3kUA55Iebl88sEBM8="]), "Albany"),
+    USNC_Raleigh: new Question(new GoogleMapsImage("Raleigh,NC", 13, ["epNt9lQmFQo3GwO71dVk8UFimR0=","AMpoeUd2gwG5SGRSJNDk7PVXhl0="]), "Raleigh"),
+    USND_Bismarck: new Question(new GoogleMapsImage("Bismarck,ND", 13, ["bbwc4rA6P_bzHc5PMjgKUQZQW6Y=","2LF5_pte0ZXWYuNc7P8i9rl1BDs="]), "Bismarck"),
+    USOH_Columbus: new Question(new GoogleMapsImage("Columbus,OH", 13, ["8v-BJU6oEkzyk65CgsjpXeb7Mdo=","NlSwtayV7ZzvmCsLSF3GDjUmwFk="]), "Columbus"),
+    USOK_OklahomaCity: new Question(new GoogleMapsImage("Oklahoma City,OK", 13, ["BCS73qTUC6BfiypEiuMt_9YIQnc=","59pZ6VeJSUpvyGWxWZC8MLD0LZU="]), "Oklahoma City"),
+    USOR_Salem: new Question(new GoogleMapsImage("Salem,OR", 14, ["J209Qx-e1Gavjr2eKp3c9viRM2M=","a6jEb8kVS0D2GjbrmbCgwAsugZk="]), "Salem"),
+    USPA_Harrisburg: new Question(new GoogleMapsImage("Harrisburg,PA", 13, ["5qCn6f6Uin1eQz72hqx2vUx0gGY=","4qcHZf5u9RH3X0k7WXdCdsdDxFU="]), "Harrisburg"),
+    USRI_Providence: new Question(new GoogleMapsImage("Providence,RI", 13, ["ry4MaO0Klt5FrEMxV6OOyDINywc=","Yn8emjl6162LPhVFpVwNUfasp0E="]), "Providence"),
+    USSC_Columbia: new Question(new GoogleMapsImage("Columbia,SC", 14, ["OF5I2rw2XS_1GA0IgBuXG4LUw_w=","9ZAmTKBJKNBwDhFfqj-cM9I1T6g="]), "Columbia"),
+    USSD_Pierre: new Question(new GoogleMapsImage("Pierre,SD", 14, ["zagG15JKMpAi2JsNLtvTQUWrxV4=","ODTo6Irgh4hmEgxJeyE-SmVMDzE="]), "Pierre"),
+    USTN_Nashville: new Question(new GoogleMapsImage("Nashville,TN", 13, ["wrC0cHZvBOqV96gvEF04lRR-Eyc=","Pe_k5KkpLCw8Fs3iALyNc_JbX_k="]), "Nashville"),
+    USTX_Austin: new Question(new GoogleMapsImage("Austin,TX", 13, ["2tRmmBx555tSjLGa-flrOCOM-LY=","gnBQksofVpFC2bVweUnk2o8AGpg="]), "Austin"),
+    USUT_SaltLakeCity: new Question(new GoogleMapsImage("Salt Lake City,UT", 13, ["enXpMbK3JGAfN-uc9VyIIfLfXwg=","sQJ6FUPj7wSLCe_X6NaKI888At0="]), "Salt Lake City"),
+    USVT_Montpelier: new Question(new GoogleMapsImage("Montpelier,VT", 15, ["C8q8otKDnkKXbLMoBSjC2s3EOS4=","rb1U1lTApAwcYLkeAYm2IaeaDlM="]), "Montpelier"),
+    USVA_Richmond: new Question(new GoogleMapsImage("Richmond,VA", 13, ["B0Kxnpu0iRq46OqAE9ihORb9018=","qzMh0ZFbSkVi7DdWP1BM0p23t_0="]), "Richmond"),
+    USWA_Olympia: new Question(new GoogleMapsImage("Olympia,WA", 13, ["keBzq6AObZdGTx_TAdmWjAP1pWE=","Ifad53elEJ_-Ggr6aA1h7WyPk3A="]), "Olympia"),
+    USWV_Charleston: new Question(new GoogleMapsImage("Charleston,WV", 13, ["9Wabu8pmSi9GhQXkGJIm6RJ3Fao=","PPtGHPPXPaV4-9qvjUC4Y6-NZ60="]), "Charleston"),
+    USWI_Madison: new Question(new GoogleMapsImage("Madison,WI", 13, ["OhyUbBkxtWWOJm467u_K5890L3g=","FJ8_T7pL-vMESufeig9jbfS3CIc="]), "Madison"),
+    USWY_Cheyenne: new Question(new GoogleMapsImage("Cheyenne,WY", 14, ["jABJlxeOcwuB4-tc3jWHLmtYifM=","LunBB1f6JerklNBUZWg48rxKmFg="]), "Cheyenne"),
+    USDC_Washington: new Question(new GoogleMapsImage("Lincoln%20Memorial,Washington,DC", 13, ["qe5vzgGVBOkS4NxsCGpgt8mH-Ig=","3OyjwAXEHmtl3CqkYDvlE5P9mRk="]), "Washington, D.C.", ["washington","washington dc","washington, d.c.","washington d.c.","dc","d.c.","washington, district of columbia","district of columbia","washington district of columbia"]),
+    USAS_PagoPago: new Question(new GoogleMapsImage("Pago Pago,AS", 15, ["Cy2Y7R0Xnz0UR1sIcrDmdz48mT0=","oNraJDebP8Ac6eES_Lj6opbTozc="]), "Pago Pago"),
+    USGU_Hagatna: new Question(new GoogleMapsImage("Hagåtña, GU", 15, ["31ZZHZ_-ndXPwjGjxMgXayFI_f8=","M5XyqrJY1Bamakq0hwsU2l90BtU="]), "Hagåtña", ["hagåtña","hagatna","hagatnja"]),
+    USMP_Saipain: new Question(new GoogleMapsImage("Chalan Piao,MP", 14, ["3zSSw5J2QGg3SJ-VsXwzZO85YrU=","RhMZfM2n9jU0rcjDXFP9jzCFDVs="]), "Saipan", ["chalan piao","saipan"]),
+    USPR_SanJuan: new Question(new GoogleMapsImage("Puerto%20Rico%20Terminal,PR", 13, ["8Er2g1UFR1z6wid4StJfc3VGG5E=","9I-Qzbq5aJIs2dBN4MlOO0IKehQ="]), "San Juan"),
+    USVI_CharlotteAmalie: new Question(new GoogleMapsImage("Charlotte Amalie,VI", 14, ["GwXlrf30CPPGvSO9fviv89bZx_c=","8pdcd46dW3l1EN9jzxzbPS--8JQ="]), "Charlotte Amalie"),
+    USNY_NewYorkCity: new Question(new GoogleMapsImage("New York City,NY", 11, ["DKeQ1nAF6WEjJJCiblj03ZRilPQ=","ms-Gw9Z9nAiFm4DEUs8q8OXWFQ0="]), "New York City", ["new york city","new york"]),
+    USCA_LosAngeles: new Question(new GoogleMapsImage("Bevery Hills,Los Angeles,CA", 11, ["1giIBdP_jbhkpkCcwmKjQLShJo8=","k58w7hpwNmJ5Dl8V2ONUNi4qE_E="]), "Los Angeles"),
+    USIL_Chicago: new Question(new GoogleMapsImage("Chicago,IL", 12, ["3AMaNg70IoFaLDS7BplX3LGsOwo=","Zz-ctlLIsP5DSH7A4B-IJ9MOW-w="]), "Chicago"),
+    USTX_Houston: new Question(new GoogleMapsImage("Houston,TX", 13, ["_-EjLf-Hd4gp9HA4YScynGcE_Oo=","jkGaKBH1B51wO4I5YnTRmeCIUvc="]), "Houston"),
+    USPA_Philadelphia: new Question(new GoogleMapsImage("Philadelphia,PA", 13, ["-dWMYOA2qFR0PvUFCDsC0Quwqfw=","p8-bQ6AO07tpWlqNeaNVXq6lqEU="]), "Philadelphia"),
+    USTX_SanAntonio: new Question(new GoogleMapsImage("San Antonio,TX", 13, ["lrCdP8lg5FizlitJbY-RCiyxchg=","aGmrKXv-W2P5q6RhRQLe_ZaiaVI="]), "San Antonio"),
+    USCA_SanDiego: new Question(new GoogleMapsImage("San Diego,CA", 12, ["8tCSHsadm9ROk8nlzFqJkG0uYBM=","vCYRyiguyqkzDWG7v33sVUEG3ek="]), "San Diego"),
+    USTX_Dallas: new Question(new GoogleMapsImage("Dallas,TX", 13, ["D2wAwh__8dIvnMarQo7bdBu9EKE=","IyEDoRY70MNvSzFEGvr1KV1DY0I="]), "Dallas"),
+    USCA_SanJose: new Question(new GoogleMapsImage("San Jose,CA", 12, ["uu-8pmzOp6-wLpWLjuRrRSHmPn0=","ONtHiLJFEYL24AP-RzYYFrDHDU0="]), "San Jose"),
+    USFL_Jacksonvile: new Question(new GoogleMapsImage("Jacksonville,FL", 12, ["kKY3XozwgFEggZ9F7K2KpYW9Dfw=","xRNMVxe0yJXUR2YLuLJJvRoHezg="]), "Jacksonville"),
+    USTX_ForthWorth: new Question(new GoogleMapsImage("Fort Worth,TX", 13, ["vZkZrRNjQpe69oHtMbCWLk2WnHk=","z7xg8QWY34C3bfo8Bt1fuIRe81I="]), "Fort Worth"),
+    USNC_Charlotte: new Question(new GoogleMapsImage("Charlotte, NC", 13, ["qnpoJxSXqNhBZPdySlKMckJ7VkM=","ouYMUwA99N2xBG6TbxqhBxiDA9s="]), "Charlotte"),
+    USCA_SanFrancisco: new Question(new GoogleMapsImage("San Francisco, CA", 11, ["vVIWsMLjvHdeGKu6U-eI_UFerb0=","US5RSuLP0th5qWctLXm4g_E1t8E="]), "San Francisco"),
+    USWA_Seattle: new Question(new GoogleMapsImage("Seattle,WA", 12, ["hsKZuQMjeQjd5gOk3_RbB3hsxGk=","R89IOpw1hqrOQvIvkp60pqjPFFM="]), "Seattle"),
+    USTX_ElPaso: new Question(new GoogleMapsImage("El Paso,TX", 13, ["7jnV6L3psc8P1yEnScHP5fghFh8=","ArE5RsQr-4EAk9nzPld5FQysI_s="]), "El Paso"),
+    USMI_Detroit: new Question(new GoogleMapsImage("Detroit,MI", 13, ["UGLBqUec2UxQ3Q67qmmNcn6q3hU=","Awal_R1RE_6BnSd1zPmI12IpoxU="]), "Detroit"),
+    USOR_Portland: new Question(new GoogleMapsImage("Portland,OR", 12, ["i7nsn6lMQ8j4kYImP1U3j09sgMo=","a_bhvt9wcXw3Em5TaUgQFwojSJs="]), "Portland"),
+    USNV_LasVegas: new Question(new GoogleMapsImage("Las Vegas,NV", 13, ["3KWYVuiHsOz9sAE-lRspYMzH-TI=","lb0rMK0ssRC-tB4I6boCzRz5tCc="]), "Las Vegas"),
+    USTN_Memphis: new Question(new GoogleMapsImage("Memphis,TN", 13, ["VUGYekfQrioH4jL6FTlpBSP0Ozw=","oogXUKicMvh1J9WubnViWMe4yhI="]), "Memphis"),
+    USKY_Louisville: new Question(new GoogleMapsImage("Louisville,KY", 13, ["DagqYvNhIWmw1gqopXEcW_Tgw6g=","SFnCzPfV7PoWTNRRQuMMV-Rou7I="]), "Louisville"),
+    USMD_Baltimore: new Question(new GoogleMapsImage("Baltimore,MD", 13, ["lp1xoRfXrcAluaXvUM0kOqXgLGQ=","qcZij1lBl5t60G7kzhJmQBbuii0="]), "Baltimore"),
+    USFL_Miami: new Question(new GoogleMapsImage("Miami,FL", 12, ["4nHOmHpedR1EhH9kpHJgiTj42U0=","R12h7k5RYANJieQREH3Au7VYxG0="]), "Miami"),
 
     // Canada: CA
-    CA_Ottawa: new Question("Ottawa,CA", 13, "Ottawa"),
-    CA_Toronto: new Question("Toronto,CA", 13, "Toronto"),
+    CA_Ottawa: new Question(new GoogleMapsImage("Ottawa,CA", 13, ["aRgnwi8QHTTus6dK7gKnqMI1tZ0=","ur3y47AsI79f-oU2nihGgJbdifE="]), "Ottawa"),
+    CA_Toronto: new Question(new GoogleMapsImage("Toronto,CA", 13, ["kdKTvW-K2gzkeWYkEXlYlfomITQ=","QEAZiGRYlay0bO0GSaIQorLocu0="]), "Toronto"),    
 
     // Mexico: MX
-    MX_MexicoCity: new Question("Mexico City,MX", 12, "Mexico City", ["mexico city", "ciudad de mexico", "ciudad de méxico"]),
-    MX_Guadalajara: new Question("Guadalajara,MX", 12, "Guadalajara"),
+    MX_MexicoCity: new Question(new GoogleMapsImage("Mexico City,MX", 12, ["bKSDlsoYl_Q0VB-nPo-5UUDsUvE=","pfmolI-C8lvd9pWZcIOmZ3SiVRQ="]), "Mexico City", ["mexico city","ciudad de mexico","ciudad de méxico"]),
+    MX_Guadalajara: new Question(new GoogleMapsImage("Guadalajara,MX", 12, ["it6EMcreaPmmFJqVKH_TsCJycz0=","xSrxlcsUHQv_swQykoUh80KErSs="]), "Guadalajara"),
 
 
     // Central America
 
     // Belize: BZ
-    BZ_Belmopan: new Question("17.249718736487612,-88.77482133927614", 14, "Belmopan"),
+    BZ_Belmopan: new Question(new GoogleMapsImage("17.249718736487612,-88.77482133927614", 14, ["JVYVuoSdjnbTYX2jnwcWKYrETGw=","9b8XqUw0Owk4EfgvD_vor6-CAbE="]), "Belmopan"),
 
     // Costa Rica: CR
-    CR_SanJose: new Question("San Jose,CR", 13, "San José", ["san jose", "san josé"]),
+    CR_SanJose: new Question(new GoogleMapsImage("San Jose,CR", 13, ["2ytSGoN0fm198zLuYveVBcbvZOc=","T6ZqLBZQfuKvOVDF3SzYzbsKd3k="]), "San José", ["san jose","san josé"]),
 
     // El Salvador: SV
-    SV_SanSalvador: new Question("San Salvador,SV", 13, "San Salvador"),
+    SV_SanSalvador: new Question(new GoogleMapsImage("San Salvador,SV", 13, ["-zFkgT6wFEkfyvaI0qgdvOfoE1k=","JxAOGnSPbUClXK6mTmL8bvpxnnU="]), "San Salvador"),
 
     // Guatemala: GT
-    GT_GuatemalaCity: new Question("Guatemala City,GT", 13, "Guatemala City", ["guatemala city", "guatemala", "ciudad de guatemala"]),
+    GT_GuatemalaCity: new Question(new GoogleMapsImage("Guatemala City,GT", 13, ["ThqP0NzyeQuh85JvzO1-YhyYXHI=","43hwNKiXbjKTGC0p2Q9xi_9p4u0="]), "Guatemala City", ["guatemala city","guatemala","ciudad de guatemala"]),
 
     // Honduras: HN
-    HN_Tegucigalpa: new Question("Tegucigalpa,HN", 14, "Tegucigalpa"),
+    HN_Tegucigalpa: new Question(new GoogleMapsImage("Tegucigalpa,HN", 14, ["7f3u3vUNa7jAMox6jM771QqhJqA=","Rnez7uMAZEDpKyzvo7iP-_GPszo="]), "Tegucigalpa"),
 
     // Nicaragua: NI
-    NI_Managua: new Question("12.141746057514073,-86.23472491667405", 14, "Managua"),
+    NI_Managua: new Question(new GoogleMapsImage("12.141746057514073,-86.23472491667405", 14, ["KfgDNXoa4B79nj6DkK1JR1IFv0U=","UVTrOONahkROpInInNUB0Qakq4o="]), "Managua"),
 
     // Panama: PA
-    PA_PanamaCity: new Question("8.974352249627257,-79.5320251153119", 13, "Panama City", ["panama city", "ciudad de panama"]),
-
+    PA_PanamaCity: new Question(new GoogleMapsImage("8.974352249627257,-79.5320251153119", 13, ["4A5oEx_CQn6ovWabLcpSvOcPEGo=","G2BOUYBD56FKG8efxdFGrN8cA6Y="]), "Panama City", ["panama city","ciudad de panama"]),
 
     // Caribbean
 
     // Antigua and Barbuda: AG
-    AG_StJohns: new Question("St John's,AG", 14, "St John's", ["st john's", "st. john's", "st. johns", "st johns", "saint john's", "saint johns"]),
+    AG_StJohns: new Question(new GoogleMapsImage("St John's,AG", 14, ["M4je6orDBRRYhGozvKNB-geo_Ps=","F0DSma4BkHJaE9q8-NsAzxwisak="]), "St John's", ["st john's","st. john's","st. johns","st johns","saint john's","saint johns"]),
 
     // Bahamas: 
-    BS_Nassau: new Question("Nassau,BS", 13, "Nassau"),
+    BS_Nassau: new Question(new GoogleMapsImage("Nassau,BS", 13, ["3snswPy72D8kE4J2hbZtbwaCUjk=","SZDAaw_BYN8SN8DGmRYn-F477OE="]), "Nassau"),
 
     // Barbados: BB
-    BB_Bridgetown: new Question("Bridgetown,BB", 14, "Bridgetown"),
+    BB_Bridgetown: new Question(new GoogleMapsImage("Bridgetown,BB", 14, ["T-bIhmT-rBc9y0egadWheAgCk1A=","O97Fud-NljbCvugUuZ6z5ZyQydQ="]), "Bridgetown"),
 
     // Cuba: CU
-    CU_Havana: new Question("Havana,CU", 13, "Havana", ["havana", "la habana", "habana"]),
+    CU_Havana: new Question(new GoogleMapsImage("Havana,CU", 13, ["KlpEHYheQpUxUHleVy-iMVCIAeI=","a6T1QILNhDTMsPAk79Ab6d6tSOg="]), "Havana", ["havana","la habana","habana"]),
 
     // Dominica: DM
-    DM_Roseau: new Question("15.303355522937578,-61.38328958409704", 15, "Roseau"),
+    DM_Roseau: new Question(new GoogleMapsImage("15.303355522937578,-61.38328958409704", 15, ["cWkFGb6gv8JsiibBL83PCdsJQtY=","rL2NQDyiWsQUkiRbrQ0yB9VTRmI="]), "Roseau"),
 
     // Dominican Republic: DO
-    DO_SantoDomingo: new Question("Santo Domingo,DO", 13, "Santo Domingo"),
+    DO_SantoDomingo: new Question(new GoogleMapsImage("Santo Domingo,DO", 13, ["4eyvetVXTxzKPBLG3_CGHs16tqQ=","axCE4rcYSiGvoE0ou5iI7ON6L98="]), "Santo Domingo"),
 
     // Grenada: GD
-    GD_SaintGeorges: new Question("12.050832154956812,-61.750482263282464", 15, "Saint George's", ["saint georges", "st. george's", "st georges", "saint george's", "st george's"]),
+    GD_SaintGeorges: new Question(new GoogleMapsImage("12.050832154956812,-61.750482263282464", 15, ["YvxW11OxRbtEAUxEY1lAS1Xtvko=","wqFzGp4wntYpqnOXI_2ifJOwe6s="]), "Saint George's", ["saint georges","st. george's","st georges","saint george's","st george's"]),
 
     // Haiti: HT
-    HT_PortAuPrince: new Question("18.559152198412633,-72.31765312911371", 13, "Port-au-Prince", ["port-au-prince", "port au prince"]),
+    HT_PortAuPrince: new Question(new GoogleMapsImage("18.559152198412633,-72.31765312911371", 13, ["gqStNoL2j0weRphsJZhQKNzadtM=","N88tAt-xg1BNS2jrhv8IJ7UrlLI="]), "Port-au-Prince", ["port-au-prince","port au prince"]),
 
     // Jamaica: JM
-    JM_Kingston: new Question("Kingston,JM", 12, "Kingston"),
+    JM_Kingston: new Question(new GoogleMapsImage("Kingston,JM", 12, ["BEZgQ-2sg6WuZVthThzDkxapRkI=","ih_crHfYmYrj-MO6FM4fmZ1CTGo="]), "Kingston"),
 
     // Saint Kitts and Nevis: KN
-    KN_Basseterre: new Question("Basseterre,KN", 14, "Basseterre"),
+    KN_Basseterre: new Question(new GoogleMapsImage("Basseterre,KN", 14, ["EdH80BBvmZd3QR9BYaoGLdaiu4s=","7fbBGk02B68D5hjxGUwRSgnbbbA="]), "Basseterre"),
 
     // Saint Lucia: LC
-    LC_Castries: new Question("Castries,LC", 14, "Castries"),
+    LC_Castries: new Question(new GoogleMapsImage("Castries,LC", 14, ["CKTuZEjH6EykpKa4FzTWsP4jyw0=","39XIbJ9M72WqIuj0hUP1b5M6rG8="]), "Castries"),
 
     // Saint Vincent and the Grenadines: VC
-    VC_Kingstown: new Question("Kingstown,VC", 15, "Kingstown"),
+    VC_Kingstown: new Question(new GoogleMapsImage("Kingstown,VC", 15, ["5dTeTVQsFVd9vjQay8raoGLHfAY=","aPWIKS3k9jZZ-yU0asbMqwqHEnE="]), "Kingstown"),
 
     // Trinidad and Tobago: TT
-    TT_PortOfSpain: new Question("Port of Spain,TT", 14, "Port of Spain", ["port of spain", "puerto españa", "puerto espana"]),
+    TT_PortOfSpain: new Question(new GoogleMapsImage("Port of Spain,TT", 14, ["6kMIgg3SrBecWPa8d7kU8WU6dKY=","TW9SAwJF2t5Ho2_d97OAGegnOvQ="]), "Port of Spain", ["port of spain","puerto españa","puerto espana"]),
 
     
     // South America
 
     // Argentina: AR
-    AR_BuenosAires: new Question("-34.59587806430996,-58.39333844020621", 12, "Buenos Aires"),
+    AR_BuenosAires: new Question(new GoogleMapsImage("-34.59587806430996,-58.39333844020621", 12, ["Nj24NIL5-JRP4CxcteQydOFtdDA=","M2o94Wgl3-vN8xUNLnwkDc_duEU="]), "Buenos Aires"),
 
     // Bolivia: BO
-    BO_LaPaz: new Question("-16.506124650345612,-68.1320557282154", 13, "La Paz"),
+    BO_LaPaz: new Question(new GoogleMapsImage("-16.506124650345612,-68.1320557282154", 13, ["L0A4ThdrX-0cOn1JujziPJN_J1w=","XZMPMJHWuRJrQ7vNNbylqF_t8oo="]), "La Paz"),
 
     // Brazil: BR
-    BR_Brasilia: new Question("-15.793759808178818,-47.88280591732727", 12, "Brasília", ["brasilia", "brasília"]),
-    BR_SaoPaulo: new Question("Sao Paulo,BR", 12, "São Paulo", ["sao paulo", "são paulo"]),
-    BR_RioDeJainero: new Question("-22.90982753846069,-43.25032348088225", 12, "Rio de Janeiro"),
-    BR_BeloHorizonte: new Question("Belo Horizonte,BR", 13, "Belo Horizonte"),
+    BR_Brasilia: new Question(new GoogleMapsImage("-15.793759808178818,-47.88280591732727", 12, ["S1kEAPx15CFjgS_HLzmk6R_Wul0=","jspwaltdufAMcfPG-nvqGG7ZJpU="]), "Brasília", ["brasilia","brasília"]),
+    BR_SaoPaulo: new Question(new GoogleMapsImage("Sao Paulo,BR", 12, ["Tm2vlH0_Z1gvweMSCHIuwTFz1xM=","-i3FQ13Lt334RP8-kHqSKprUmJE="]), "São Paulo", ["sao paulo","são paulo"]),
+    BR_RioDeJainero: new Question(new GoogleMapsImage("-22.90982753846069,-43.25032348088225", 12, ["S4bGUb_1taBz3z9Wuvapx0VMtV8=","cI6Myn0suFCqrGGyUdPWLcqP_Ek="]), "Rio de Janeiro"),
+    BR_BeloHorizonte: new Question(new GoogleMapsImage("Belo Horizonte,BR", 13, ["lTQVah64W3PzVsxEDIt7Loc3unM=","O3OtsR1YmkqHu5jeSlt6RtDgEWw="]), "Belo Horizonte"),
 
     // Chile: CL
-    CL_Santiago: new Question("Santiago,CL", 12, "Santiago"),
+    CL_Santiago: new Question(new GoogleMapsImage("Santiago,CL", 12, ["Up1neeZrpIYusdHvBrhTj00qwVQ=","Nr_DW0jP6Mnwp2Fv-gKr6pUFtaM="]), "Santiago"),
 
     // Colombia: CO
-    CO_Bogota: new Question("Bogota,CO", 13, "Bogota", ["bogota", "bogotá"]),
-    
+    CO_Bogota: new Question(new GoogleMapsImage("Bogota,CO", 13, ["Ln7ArSJpxbYJjYTr497seXUjHho=","Eu8LHBjepn27pX5EDHJUdSMvjI4="]), "Bogota", ["bogota","bogotá"]),
+
     // Ecuador: EC
-    EC_Quito: new Question("Quito,EC", 12, "Quito"),
+    EC_Quito: new Question(new GoogleMapsImage("Quito,EC", 12, ["irwt3gL-z_CZY0vJp0mxMZJ9ppQ=","T-ahBsr0lI6zYS_Y0jb-aGyYmzQ="]), "Quito"),
 
     // Guyana: GY
-    GY_Georgetown: new Question("Georgetown,GY", 13, "Georgetown"),
+    GY_Georgetown: new Question(new GoogleMapsImage("Georgetown,GY", 13, ["O7qN30VFSX6VUVAGAb3xf-mZzYY=","CgvSVmfrZYt0O9_KaxgLevB0zyU="]), "Georgetown"),
 
     // Paraguay: PY
-    PY_Asuncion: new Question("-25.296162735747956,-57.604880210492034", 12, "Asunción", ["asunción", "asuncion"]),
+    PY_Asuncion: new Question(new GoogleMapsImage("-25.296162735747956,-57.604880210492034", 12, ["sgbhEM01QC-WVWnzSQYZshyosV0=","-Mxbpyr0LAEhO8IUrI6tX0SV3EQ="]), "Asunción", ["asunción","asuncion"]),
 
     // Peru: PE
-    PE_Lima: new Question("Lima,PE", 12, "Lima", ["lima", "lima district"]),
+    PE_Lima: new Question(new GoogleMapsImage("Lima,PE", 12, ["8CTZwQ8dEEKlJa0guhpF3DDoh7c=","DoR6AaHeGUV5hU4yNBm0XgyI-8U="]), "Lima", ["lima","lima district"]),
 
     // Suriname: SR
-    SR_Paramaribo: new Question("5.83562113597878,-55.16240409102544", 13, "Paramaribo"),
+    SR_Paramaribo: new Question(new GoogleMapsImage("5.83562113597878,-55.16240409102544", 13, ["Hf82vzWsShVvYZYhQimBRFM_M4A=","iqK2bxAQUzYGXYmT2zZyZXSiPxw="]), "Paramaribo"),
 
     // Uruguay: UY
-    UY_Montevideo: new Question("Montevideo,UY", 12, "Montevideo"),
+    UY_Montevideo: new Question(new GoogleMapsImage("Montevideo,UY", 12, ["z8b9Ze0iRB2ibZldJBIfDYc0rk4=","OXPK2Uh7bSsAXI4JdvFlewA5fRc="]), "Montevideo"),
 
     // Venezuela: VE
-    VE_Caracas: new Question("Caracas,VE", 13, "Caracas"),
+    VE_Caracas: new Question(new GoogleMapsImage("Caracas,VE", 13, ["WyUZTcsYwhM0yO3u3di0khQnjZI=","o7gU8vREbCdnUA4CtkxWaCs8axw="]), "Caracas"),
 
 
     // Asia
@@ -427,446 +451,444 @@ let Cities = {
     // Central Asia
     
     // Kazakhstan: KZ
-    KZ_NurSultan: new Question("Nur-Sultan,KZ", 13, "Nur-Sultan", ["nur-sultan", "nur sultan", "нұр-сұлтан", "нұр сұлтан"]),
+    KZ_NurSultan: new Question(new GoogleMapsImage("Nur-Sultan,KZ", 13, ["3OKUNmS_hI45Kspz7lsEfmeirzU=","d47sK6z9b_STb2l0rgypPq_zm-U="]), "Nur-Sultan", ["nur-sultan","nur sultan","нұр-сұлтан","нұр сұлтан"]),
 
     // Kyrgyzstan: KG
-    KG_Bishkek: new Question("Bishkek,KG", 13, "Bishkek", ["bishkek", "бишкек"]),
+    KG_Bishkek: new Question(new GoogleMapsImage("Bishkek,KG", 13, ["4AnHV7LdN1nuG7RmMFcswFSYtCM=","BCLRv6wFS5VphZ1yK3heozQr0iw="]), "Bishkek", ["bishkek","бишкек"]),
 
     // Tajikistan: TJ
-    TJ_Dushanbe: new Question("Dushanbe,TJ", 13, "Dushanbe", ["dushanbe", "душанбе"]),
+    TJ_Dushanbe: new Question(new GoogleMapsImage("Dushanbe,TJ", 13, ["l_1dce8PPVECRvv4Mx5Ev1lK3RM=","aKUWzFo552tr4kF5bPipCd7FSmo="]), "Dushanbe", ["dushanbe","душанбе"]),
 
     // Turkmenistan: TM
-    TM_Ashgabat: new Question("37.94044188585668,58.40071752389324", 13, "Ashgabat", ["ashgabat", "aşgabat", "asgabat"]),
+    TM_Ashgabat: new Question(new GoogleMapsImage("37.94044188585668,58.40071752389324", 13, ["hWHcE3mSePDgRR0NZ1SSOaLYP7o=","GAqQ-n_3Yg7oJwQ3zgw209vfvP8="]), "Ashgabat", ["ashgabat","aşgabat","asgabat"]),
 
     // Uzbekistan: UZ
-    UZ_Tashkent: new Question("Bunyodkor%20Square,Tashkent,UZ", 13, "Tashkent", ["tashkent", "тошкент"]),
+    UZ_Tashkent: new Question(new GoogleMapsImage("Bunyodkor%20Square,Tashkent,UZ", 13, ["1VmzJ_6cYvkrZJJic0ITf72G5Ow=","vCNY-JoCDkA6-CyP-Bx8VRM_G5M="]), "Tashkent", ["tashkent","тошкент"]),
 
     
     // Western Asia
 
     // Armenia: AM
-    AM_Yerevan: new Question("Yerevan,AM", 13, "Yerevan", ["yerevan", "երևան"]),
+    AM_Yerevan: new Question(new GoogleMapsImage("Yerevan,AM", 13, ["FbR-gp1zP8cNniZsVDJIzIyXd7E=","Rgx72g1tH4rgM4MzVmAM3UhgAIY="]), "Yerevan", ["yerevan","երևան"]),
 
     // Azerbaijan: AZ
-    AZ_Baku: new Question("Baku,AZ", 12, "Baku", ["baku", "bakı"]),
+    AZ_Baku: new Question(new GoogleMapsImage("Baku,AZ", 12, ["Oj3Q8_4fz0sbAKMatZVYHS7ZXD0=","kG20v_QjGswatuRPGKEXlTmcrI8="]), "Baku", ["baku","bakı"]),
 
     // Bahrain: BH
-    BH_Manama: new Question("Manama,BH", 13, "Manama", ["manama", "المنامة"]),
+    BH_Manama: new Question(new GoogleMapsImage("Manama,BH", 13, ["L96g-VMIV0qrFY6ICFLyMHqOMoY=","6-0nXxzAqdB5drVsRVH5kIWXnWA="]), "Manama", ["manama","المنامة"]),
 
     // Cyprus: CY
-    CY_Nicosia: new Question("Saint%20Sophia%20Cathedral,Nicosia,CY", 13, "Nicosia", ["nicosia", "λευκωσία"]),
+    CY_Nicosia: new Question(new GoogleMapsImage("Saint%20Sophia%20Cathedral,Nicosia,CY", 13, ["jFqbAfCQHYMpXm612LUkrcgyxS4=","RU0EyoZF9lm_U-EdfK0cl6yJWNQ="]), "Nicosia", ["nicosia","λευκωσία"]),
 
     // Georgia: GE
-    GE_Tbilisi: new Question("Tbilisi,GE", 13, "Tbilisi", ["tbilisi", "თბილისი"]),
+    GE_Tbilisi: new Question(new GoogleMapsImage("Tbilisi,GE", 13, ["QkYtzDRastF6ZoBkl0X_OUtOVdM=","j_rVsc_kB53pSd2u7M6Q7N0ZXDM="]), "Tbilisi", ["tbilisi","თბილისი"]),
 
     // Iraq: IQ
-    IQ_Baghdad: new Question("Baghdad,IQ", 13, "Baghdad", ["baghdad", "بغداد"]),
+    IQ_Baghdad: new Question(new GoogleMapsImage("Baghdad,IQ", 13, ["cygKAFtORn_d3vd-0g6MLlDEpps=","Qd7TAI1TgRD_34EIp0N-uko5pHw="]), "Baghdad", ["baghdad","بغداد"]),
 
     // Israel: IL
     // For the purpose of this quiz, Jerusalem is in Israel.
-    IL_Jerusalem: new Question("Jerusalem", 13, "Jerusalem", ["jerusalem", "ירושלים", "القُدس"]),
+    IL_Jerusalem: new Question(new GoogleMapsImage("Jerusalem", 13, ["Nq3n89Iu4sHTFpgQLl-z-EcUYNM=","E6vKOj8vSbhNbEk1D_BQmktKkD8="]), "Jerusalem", ["jerusalem","ירושלים","القُدس"]),
 
     // Jordan: JO
-    JO_Amman: new Question("Amman,JO", 13, "Amman", ["amman", "عمّان"]),
+    JO_Amman: new Question(new GoogleMapsImage("Amman,JO", 13, ["yPPkxz3IVdc0wqW_xumHj29vd0s=","x67Bo2CCKsx_dOF-JB6BRmgWfdo="]), "Amman", ["amman","عمّان"]),
 
     // Kuwait: KW
-    KW_KuwaitCity: new Question("Kuwait City,KW", 13, "Kuwait City", ["kuwait city", "مدينة الكويت"]),
+    KW_KuwaitCity: new Question(new GoogleMapsImage("Kuwait City,KW", 13, ["BqrmHOxxiW9KzSn9KgKy0xzKeG8=","yho7wpy1HBx_tEub5bESXqYYu9U="]), "Kuwait City", ["kuwait city","مدينة الكويت"]),
 
     // Lebanon: LB
-    LB_Beirut: new Question("Beirut,LB", 13, "Beirut", ["beirut", "بيروت"]),
+    LB_Beirut: new Question(new GoogleMapsImage("Beirut,LB", 13, ["8cSXvabuukJQFY8flasEv8wwoNg=","gDnJhUixpJH4k6P4Aj9nif36RNs="]), "Beirut", ["beirut","بيروت"]),
 
     // Oman: OM
-    OM_Muscat: new Question("23.594404504657824,58.445742397862496", 12, "Muscat", ["muscat", "مسقط"]),
+    OM_Muscat: new Question(new GoogleMapsImage("23.594404504657824,58.445742397862496", 12, ["wYs8iJP-rh3O1ZgwQeP41p95lzk=","ro1EQHIsw9jlAGBcTsrP3vosU30="]), "Muscat", ["muscat","مسقط"]),
 
     // Qatar: QA
-    QA_Doha: new Question("Doha,QA", 12, "Doha", ["doha", "الدوحة"]),
+    QA_Doha: new Question(new GoogleMapsImage("Doha,QA", 12, ["fFUAPJqddhAtNuXlHS6hs6n0S4Y=","HKlEp3V8qh_pEthWB4eqCHYSf88="]), "Doha", ["doha","الدوحة"]),
 
     // Saudi Arabia: SA
-    SA_Riyadh: new Question("Riyadh,SA", 12, "Riyadh", ["riyadh", "الرياض"]),
+    SA_Riyadh: new Question(new GoogleMapsImage("Riyadh,SA", 12, ["DtltLjE6N8NVMU0ZiR63OXcmCsE=","JgTqb1a6nQYfwpGG_JATyc1EVWs="]), "Riyadh", ["riyadh","الرياض"]),
 
     // Syria: SY
-    SY_Damascus: new Question("33.500125914524176,36.291779130892174", 13, "Damascus", ["damascus", "دمشق"]),
+    SY_Damascus: new Question(new GoogleMapsImage("33.500125914524176,36.291779130892174", 13, ["YUYPHgSzy_Q4L4XXfltGW5dSTIE=","cl6T-vk1pcdlJEB_pVFde_4fHJQ="]), "Damascus", ["damascus","دمشق"]),
 
     // Turkey: TR
-    TR_Ankara: new Question("Ankara,TR", 13, "Ankara"),
-    TR_Istanbul: new Question("41.0339896717834,29.00227760434989", 12, "İstanbul", ["istanbul", "i̇stanbul"]),
+    TR_Ankara: new Question(new GoogleMapsImage("Ankara,TR", 13, ["bXKlWn7fvunq_u7dTn2uajLtH3o=","zW1N-6116e-cmX_5uBz3d_q46Lk="]), "Ankara"),
+    TR_Istanbul: new Question(new GoogleMapsImage("41.0339896717834,29.00227760434989", 12, ["esQ7_Zc0gQTuyphlUFPeQddn2Os=","OvoBxJdy15k3xuvlDqFHIwFEuik="]), "İstanbul", ["istanbul","i̇stanbul"]),
 
     // United Arab Emirates: AE
-    AE_AbuDhabi: new Question("Abu Dhabi,AE", 12, "Abu Dhabi", ["abu dhabi", "أبو ظبي"]),
+    AE_AbuDhabi: new Question(new GoogleMapsImage("Abu Dhabi,AE", 12, ["bWDGWH7xlY64c4AgVhMkjVcg5r8=","4D5fk4392Hzl4K0R7I3BawTW7Cs="]), "Abu Dhabi", ["abu dhabi","أبو ظبي"]),
 
     // Yemen: YE
-    YE_Sanaa: new Question("Sana'a,YE", 13, "Sana'a", ["sana'a", "sanaa", "sana a", "صنعاء‎"]),
+    YE_Sanaa: new Question(new GoogleMapsImage("Sana'a,YE", 13, ["4om8lG8mr0SvemyCVncCghkziqM=","eRlc44jvsigDjwDVI5g6sCMCJFI="]), "Sana'a", ["sana'a","sanaa","sana a","صنعاء‎"]),
 
 
     // Eastern Asia
 
     // China: CN
-    CN_Beijing: new Question("Beijing,CN", 12, "Beijing"),
-    CN_HongKong: new Question("Hong Kong", 12, "Hong Kong", ["hong kong", "香港"]),
-    CN_Macau: new Question("Macau", 12, "Macau", ["macau", "澳門", "macao"]),
-    CN_Shanghai: new Question("Shanghai,CN", 11, "Shanghai", ["shanghai", "上海市"]),
-    CN_Chongqing: new Question("29.53041735117703,106.51004857524514", 12, "Chongqing", ["chongqing", "重庆市"]),
-    CN_Tianjin: new Question("39.041176543409094,117.43083312561843", 10, "Tianjin", ["tianjin", "天津市"]),
-    CN_Guangzhou: new Question("23.101688839025908,113.31859275981766", 11, "Guangzhou", ["guangzhou", "广州市"]),
-    CN_Shenzhen: new Question("22.541825057544028,113.99857568695052", 11, "Shenzhen", ["shenzhen", "深圳市"]),
-    CN_Chengdu: new Question("30.658194604748203,104.06538493799329", 11, "Chengdu", ["chengdu", "成都市"]),
-    CN_Nanjing: new Question("32.098471043878575,118.72545595314396", 11, "Nanjing", ["nanjing", "南京市"]),
-    CN_Wuhan: new Question("Wuhan,CN", 12, "Wuhan", ["wuhan", "武汉市"]),
-    CN_Xian: new Question("Xi'an,CN", 11, "Xi'an", ["xi'an", "xian", "xi an", "西安市"]),
-    CN_Dongguan: new Question("Dongguan,CN", 11, "Dongguan", ["dongguan", "东莞市"]),
-    CN_Hangzhou: new Question("Hangzhou,CN", 12, "Hangzhou", ["hangzhou", "杭州市"]),
-    CN_Foshan: new Question("Foshan,CN", 12, "Foshan", ["foshan", "佛山市"]),
-    CN_Shenyang: new Question("Shenyang,CN", 12, "Shenyang", ["shenyang", "沈阳市"]),
-    CN_Suzhou: new Question("Suzhou,CN", 11, "Suzhou", ["suzhou", "苏州市"]),
-    CN_Harbin: new Question("45.75118398404859,126.63503358779869", 12, "Harbin", ["harbin", "哈尔滨市"]),
-    CN_Qingdao: new Question("36.084118270198516,120.26102878838749", 11, "Qingdao", ["qingdao", "青岛市"]),
-    CN_Dalian: new Question("38.99195617233138,121.6879700846968", 11, "Dalian", ["dalian"]),
-    CN_Jinan: new Question("36.683555253546295,117.02622201044134", 12, "Jinan", ["jinan", "济南市"]),
+    CN_Beijing: new Question(new GoogleMapsImage("Beijing,CN", 12, ["XOuppUsghtRRVi4zGFWItih1abk=","jW3zkbd2lipimcZAqFVbQ6rmhMQ="]), "Beijing"),
+    CN_HongKong: new Question(new GoogleMapsImage("Hong Kong", 12, ["qywCe2JMRYJ3DvzjV95fnRgxNyo=","Og1FedHg0c68GNHlzecvWa850DM="]), "Hong Kong", ["hong kong","香港"]),
+    CN_Macau: new Question(new GoogleMapsImage("Macau", 12, ["q0UvStFeXDyTCViHcMQ238s1kSE=","glm5kG2619gyDMpFYcN7gXXcKUU="]), "Macau", ["macau","澳門","macao"]),
+    CN_Shanghai: new Question(new GoogleMapsImage("Shanghai,CN", 11, ["yVZdQDIY8Cm3_MsLfZqlN43h6lE=","OuR_B2QGpKj9aH-xGHoEiRZ8gEI="]), "Shanghai", ["shanghai","上海市"]),
+    CN_Chongqing: new Question(new GoogleMapsImage("29.53041735117703,106.51004857524514", 12, ["qcFjNvvHTD-7aea4gKEBs6yN4JI=","plVpnKWA1nhyuBjNu6wvmKk4GRU="]), "Chongqing", ["chongqing","重庆市"]),
+    CN_Tianjin: new Question(new GoogleMapsImage("39.041176543409094,117.43083312561843", 10, ["O0MqS-vDqq97SvzP34MAIyFg82g=","E9YH57U5oG3lkGQxgQ_V2WVtdMo="]), "Tianjin", ["tianjin","天津市"]),
+    CN_Guangzhou: new Question(new GoogleMapsImage("23.101688839025908,113.31859275981766", 11, ["GuRXJ7Gxi3GCxvqpSE9pa2y4Q0s=","AWDLoCLLqbUCMdx_d7m5jlx2YnU="]), "Guangzhou", ["guangzhou","广州市"]),
+    CN_Shenzhen: new Question(new GoogleMapsImage("22.541825057544028,113.99857568695052", 11, ["llVlxoiD9pnfUEr0-b5DceFUnvY=","KHecL8aR1E9UWKhmiU30KL6ZE7c="]), "Shenzhen", ["shenzhen","深圳市"]),
+    CN_Chengdu: new Question(new GoogleMapsImage("30.658194604748203,104.06538493799329", 11, ["TXc7BfXAb_Ivpals4S7eJF8hD1U=","L58J7yjLZ5vs_L6TPYVoM7lWCPk="]), "Chengdu", ["chengdu","成都市"]),
+    CN_Nanjing: new Question(new GoogleMapsImage("32.098471043878575,118.72545595314396", 11, ["2bbQjfWyu_qBoxmc_h1UjLyR9fk=","7sLhnFiQX8e1klBsaOpG74hxf2A="]), "Nanjing", ["nanjing","南京市"]),
+    CN_Wuhan: new Question(new GoogleMapsImage("Wuhan,CN", 12, ["57ddzDCfwHifL4e7g81iJCGjDxo=","56lKH7H462SDOQ_RPM7yiDKD6Hk="]), "Wuhan", ["wuhan","武汉市"]),
+    CN_Xian: new Question(new GoogleMapsImage("Xi'an,CN", 11, ["7xr4KHbsJGG6DV2qgIP-brVrSww=","Yt2w_uORTmNBkDluQJctOeFfaSc="]), "Xi'an", ["xi'an","xian","xi an","西安市"]),
+    CN_Dongguan: new Question(new GoogleMapsImage("Dongguan,CN", 11, ["05_S1ngYL1cfJo4rT-cMUpRGE6I=","Uq4QUnYrV69VJk_CSaeyxxABa5A="]), "Dongguan", ["dongguan","东莞市"]),
+    CN_Hangzhou: new Question(new GoogleMapsImage("Hangzhou,CN", 12, ["QHBoHELBiiXs2DP-clUiLjesgK8=","RnF5ROAtqx2leg0iWXlZzgDADgw="]), "Hangzhou", ["hangzhou","杭州市"]),
+    CN_Foshan: new Question(new GoogleMapsImage("Foshan,CN", 12, ["s0MOjpxNwYLKSF87wcdH2L3J8Lw=","SsHMZ_4nShtLJrsxE5xzwYaERns="]), "Foshan", ["foshan","佛山市"]),
+    CN_Shenyang: new Question(new GoogleMapsImage("Shenyang,CN", 12, ["0MWWbu59YW3XDmT16REJg16l_gI=","r3tEW-8pVkDFhjfegUi_s6IvIgA="]), "Shenyang", ["shenyang","沈阳市"]),
+    CN_Suzhou: new Question(new GoogleMapsImage("Suzhou,CN", 11, ["M_IB8E1_O5RczUrsJrLfvQsD0nU=","SJCw8ndRrJ9zrVwyyRA6vJLbLTY="]), "Suzhou", ["suzhou","苏州市"]),
+    CN_Harbin: new Question(new GoogleMapsImage("45.75118398404859,126.63503358779869", 12, ["1UuZ_wVdun2oqHx1kUudvnyGWIE=","CjxZLdDxxBA6_MxqSBCaQhMbUgM="]), "Harbin", ["harbin","哈尔滨市"]),
+    CN_Qingdao: new Question(new GoogleMapsImage("36.084118270198516,120.26102878838749", 11, ["mQzAHrr4kDJW7QHIADyYOpJSEVI=","y_WoeVjxJBwP2R0Qz5uZuWVnPCw="]), "Qingdao", ["qingdao","青岛市"]),
+    CN_Dalian: new Question(new GoogleMapsImage("38.99195617233138,121.6879700846968", 11, ["c3A4Am2JDufdCCiHVALUiBWwdGw=","1rTOXf1eRDfBR27W1JnLoaLc91Y="]), "Dalian"),
+    CN_Jinan: new Question(new GoogleMapsImage("36.683555253546295,117.02622201044134", 12, ["94my9_3FSYkfQlVL69-aIbNYw-Q=","Q8kZHVBVFtrSlVJPdmA7SxJ3LBo="]), "Jinan", ["jinan","济南市"]),
 
     // Taiwan is a country for the purpose of this quiz
     // Taiwan: TW
-    TW_Taipei: new Question("Taipei,TW", 12, "Taipei", ["taipei", "台北"]),
+    TW_Taipei: new Question(new GoogleMapsImage("Taipei,TW", 12, ["7Pvog0g5cKtXIAiUwzeTqW1zLSw=","5Q5yzpx6Qero8rWEgDS-Zoj42DY="]), "Taipei", ["taipei","台北"]),
 
     // North Korea: KP
-    KP_Peyongyang: new Question("Peyongyang,KP", 12, "Peyongyang", ["peyongyang", "평양"]),
+    KP_Peyongyang: new Question(new GoogleMapsImage("Peyongyang,KP", 12, ["I2lizbFDmzFjfDz0-l714HfQ5c4=","bKNTavf-kLm7JVKYlukQD-ZN5l8="]), "Peyongyang", ["peyongyang","평양"]),
 
     // Japan: JP
-    JP_Tokyo: new Question("35.65215309344215,139.76374158507505", 12, "Tokyo", ["tokyo", "東京都"]),
-    JP_Osaka: new Question("34.65897638415954,135.46888841841673", 12, "Osaka", ["osaka", "大阪市"]),
-    JP_Nagoya: new Question("35.151009971329515,136.9054820513379", 12, "Nagoya", ["nagoya", "名古屋市"]),
-    JP_Fukuoka: new Question("Fukuoka,JP", 12, "Fukuoka", ["fukoka", "福岡市"]),
+    JP_Tokyo: new Question(new GoogleMapsImage("35.65215309344215,139.76374158507505", 12, ["ZVvyM8hUpuatJ0kvY3AlC2dCrk8=","NEe4z9ewmN41LGo2Ce2daqHMQHc="]), "Tokyo", ["tokyo","東京都"]),
+    JP_Osaka: new Question(new GoogleMapsImage("34.65897638415954,135.46888841841673", 12, ["D-XPA5cAeiD3JHPUx3QlvGX4s7c=","GqWGyzNZyD_-KJAdn8TGJcivar4="]), "Osaka", ["osaka","大阪市"]),
+    JP_Nagoya: new Question(new GoogleMapsImage("35.151009971329515,136.9054820513379", 12, ["k-fIzKrSpztj_dMd9x5X1HulMiE=","q2PyiPqautv7uC7mFSUDofWMxdI="]), "Nagoya", ["nagoya","名古屋市"]),
+    JP_Fukuoka: new Question(new GoogleMapsImage("Fukuoka,JP", 12, ["NGjNYB0RwvMV5ka2umWu8chNQ9o=","K66O56UdPMglA0chslBAjEoxFC4="]), "Fukuoka", ["fukoka","福岡市"]),
 
     // Mongolia: MN
-    MN_Ulaanbaatar: new Question("47.908197953446304,106.91802085541644", 13, "Ulaanbaatar", ["ulaanbaatar", "улаанбаатар"]),
+    MN_Ulaanbaatar: new Question(new GoogleMapsImage("47.908197953446304,106.91802085541644", 13, ["R7OOVZcwVlOpV-_8wCCBweaddbo=","D_4oUCRPcacjhdKOjmamdEjQK2Q="]), "Ulaanbaatar", ["ulaanbaatar","улаанбаатар"]),
 
     // South Korea: KR
-    KR_Seoul: new Question("Seoul,KR", 12, "Seoul", ["seoul", "서울특별시"]),
+    KR_Seoul: new Question(new GoogleMapsImage("Seoul,KR", 12, ["K_mSVYXEmcHnPPuNHRm-e1bb5Vc=","0ZL71faMVeepkvuifB5tKp5_Lw4="]), "Seoul", ["seoul","서울특별시"]),
 
 
     // South-Eastern Asia
 
     // Brunei: BN
-    BN_BandarSeriBegawan: new Question("Bandar Seri Begawan,BN", 13, "Bandar Seri Begawan"),
+    BN_BandarSeriBegawan: new Question(new GoogleMapsImage("Bandar Seri Begawan,BN", 13, ["aMYjEJH8_3mAAR2fJqICNPTHuSM=","NvMPhTHElkbmT3qOVf8YqOg09Bw="]), "Bandar Seri Begawan"),
 
     // Cambodia: KH
-    KH_PhenomPenh: new Question("Phnom Penh,KH", 13, "Phnom Penh", ["phnom penh", "រាជធានី​ភ្នំពេញ"]),
+    KH_PhenomPenh: new Question(new GoogleMapsImage("Phnom Penh,KH", 13, ["aZAL1lqoDSSe7W0L1hLrUx3BwmU=","KldCoIKAR7nrs6ZwiXlF1qXlbqU="]), "Phnom Penh", ["phnom penh","រាជធានី​ភ្នំពេញ"]),
 
     // Indonesia: ID
-    ID_Jakarta: new Question("National%20Monument,Jakarta,ID", 12, "Jakarta"),
+    ID_Jakarta: new Question(new GoogleMapsImage("National%20Monument,Jakarta,ID", 12, ["uevaG2BRWaUUp4oMokQybXZtMHI=","I5MSMDhCUygCbWtCwPxO-FKeSE4="]), "Jakarta"),
 
     // Laos: LA
-    LA_Vientiane: new Question("Vientiane,LA", 13, "Vientiane", ["vientiane", "ວຽງຈັນ"]),
+    LA_Vientiane: new Question(new GoogleMapsImage("Vientiane,LA", 13, ["dJV7tUy605kTy3YXgh0sd0kA_2k=","q5IaMX1FmaR-NvmqyeiyYMqg-VA="]), "Vientiane", ["vientiane","ວຽງຈັນ"]),
 
     // Malaysia: MY
-    MY_KualaLumpur: new Question("3.1543511105192623,101.68496738207166", 12, "Kuala Lumpur"),
+    MY_KualaLumpur: new Question(new GoogleMapsImage("3.1543511105192623,101.68496738207166", 12, ["C_D3FtBF2W-jsyHkjbConVe1NPA=","lDakuMu3mlEdYaq4jF2uISNZZpY="]), "Kuala Lumpur"),
 
     // Myanmar: MM
-    MM_Naypyitaw: new Question("19.749868673641554,96.08540212024712", 13, "Naypyitaw", ["naypyitaw", "နေပြည်တော်"]),
-    MM_Yangon: new Question("Yangon,MM", 12, "Yangon", ["yangon", "ရန်ကုန်"]),
+    MM_Naypyitaw: new Question(new GoogleMapsImage("19.749868673641554,96.08540212024712", 13, ["v4UbiiM93JOZVKBb_eRVwAWMcSA=","Ivlz5YNLVVYwuZ1x9JMRgUx7Ig4="]), "Naypyitaw", ["naypyitaw","နေပြည်တော်"]),
+    MM_Yangon: new Question(new GoogleMapsImage("Yangon,MM", 12, ["XM4KLCndWcXkqG95IpV6tf-ezeo=","fgIz8rQwWPCGL6za_fbOqVFCAMI="]), "Yangon", ["yangon","ရန်ကုန်"]),
 
     // Philippines: PH
-    PH_Manila: new Question("Manila,PH", 12, "Manila"),
+    PH_Manila: new Question(new GoogleMapsImage("Manila,PH", 12, ["Xcs7lvAeh7wlYjtq2WOc1HnrS70=","7Pf_O51dc-Z15J7-gDEsp7JXD0k="]), "Manila"),
 
     // Singapore: SG
-    SG_Singapore: new Question("1.30236765807081,103.84958970443697", 12, "Singapore"),
+    SG_Singapore: new Question(new GoogleMapsImage("1.30236765807081,103.84958970443697", 12, ["RU_ey7wI_S42R8vMG9P1VEmEn_Q=","YEUHM3SUJCsoeGvuQn8Nw_BVa-0="]), "Singapore"),
 
     // Thailand: TH
-    TH_Bangkok: new Question("Bangkok,TH", 12, "Bangkok", ["bangkok", "กรุงเทพมหานคร"]),
+    TH_Bangkok: new Question(new GoogleMapsImage("Bangkok,TH", 12, ["kC9EAo6pI2AyLoF1ynSpOZeu8qA=","tZWTO76svgeLTN-2gcONAo210IE="]), "Bangkok", ["bangkok","กรุงเทพมหานคร"]),
 
     // Timor-Leste: TL
-    TL_Dili: new Question("Dili,TL", 13, "Dili"),
+    TL_Dili: new Question(new GoogleMapsImage("Dili,TL", 13, ["sfoVM_4BSxeSEx7qtGRnnW1a6b4=","x64uVQ1G6UQwcF5th-P_FZD-jgY="]), "Dili"),
 
     // Vietnam: VN
-    VN_Hanoi: new Question("Hanoi,VN", 13, "Hanoi", ["hanoi", "ha noi", "hà nội", "hoàn kiếm", "hoan kiem"]),
-    VM_HoChiMinhCity: new Question("10.784882948074642,106.7123749413786", 13, "Ho Chi Minh City"),
+    VN_Hanoi: new Question(new GoogleMapsImage("Hanoi,VN", 13, ["Zr8l5Ocq9FgWCeSeh_l7Bp0kQ0Q=","HzwGjj2KMl3Ue5Vmd0059c51P3A="]), "Hanoi", ["hanoi","ha noi","hà nội","hoàn kiếm","hoan kiem"]),
+    VM_HoChiMinhCity: new Question(new GoogleMapsImage("10.784882948074642,106.7123749413786", 13, ["csnuZPkakOkdEOaNzJ5BUCZ5vOM=","6X-4J3twRJwfthwsx6WfBJiyE5k="]), "Ho Chi Minh City"),
 
 
     // Southern Asia
 
     // Afghanistan: AF
-    AF_Kabul: new Question("34.53543285351253,69.17978518015983", 13, "Kabul", ["kabul", "کابل"]),
+    AF_Kabul: new Question(new GoogleMapsImage("34.53543285351253,69.17978518015983", 13, ["sh02z-spPRIzDgXhmYF3zkA2Lk0=","sNISH2twCki_cRJyeIsER0UXNSc="]), "Kabul", ["kabul","کابل"]),
 
     // Bangladesh: BD
-    BD_Dhaka: new Question("Dhaka,BD", 12, "Dhaka", ["dhaka", "ঢাকা"]),
+    BD_Dhaka: new Question(new GoogleMapsImage("Dhaka,BD", 12, ["PCxUEGIhvgy1IOVRzlBz6hsr3P0=","kj-EzjGSepayvjC9M9z-vHNbD78="]), "Dhaka", ["dhaka","ঢাকা"]),
 
     // Bhutan: BT
-    BT_Thimphu: new Question("27.465263737348632,89.64388811067192", 14, "Thimphu"),
+    BT_Thimphu: new Question(new GoogleMapsImage("27.465263737348632,89.64388811067192", 14, ["H-9pkihxDcy7o6UQLEizu6JO2UY=","Oc-Io0Lrievh9MX6wG1_touRea8="]), "Thimphu"),
 
     // India: IN
-    IN_NewDelhi: new Question("New Delhi,IN", 12, "New Delhi", ["new delhi", "delhi", "नई दिल्ली"]),
-    IN_Mumbai: new Question("19.018458330154452,72.84737658966236", 11, "Mumbai", ["mumbai", "मुंबई", "bombay"]),
-    IN_Kolkata: new Question("Kolkata,IN", 12, "Kolkata", ["kolkata", "কলকাতা]", "calcutta"]),
-    IN_Bangalore: new Question("Bangalore,IN", 12, "Bangalore", ["bangalore", "bengaluru", "ಬೆಂಗಳೂರು"]),
-    IN_Chennai: new Question("13.056120032397454,80.22524413963409", 12, "Chennai", ["chennai"]),
-    IN_Hyderabad: new Question("17.380947517427618,78.4372193845361", 12, "Hyderabad", ["hyderabad", "హైదరాబాద్"]),
-    IN_Ahmedabad: new Question("Ahmedabad,IN", 12, "Ahmedabad", ["ahmedabad", "અમદાવાદ"]),
-    IN_Surat: new Question("21.187849578147176,72.84349334304075", 12, "Surat"),
-    IN_Pune: new Question("18.518462239367764,73.85518003902651", 13, "Pune", ["pune", "पुणे"]),
+    IN_NewDelhi: new Question(new GoogleMapsImage("New Delhi,IN", 12, ["GlenEzLyNBPC5oP3-o_1km3UKXs=","mBwxZ5LHf2IjtLJxIXIsNRCG-WE="]), "New Delhi", ["new delhi","delhi","नई दिल्ली"]),
+    IN_Mumbai: new Question(new GoogleMapsImage("19.018458330154452,72.84737658966236", 11, ["vtYzcatJo4d44O2D5Pn5Mo_QnXM=","YCLOek_-at3xjgDRS1c6LFV3Uro="]), "Mumbai", ["mumbai","मुंबई","bombay"]),
+    IN_Kolkata: new Question(new GoogleMapsImage("Kolkata,IN", 12, ["qKuKihZmbsvyPc-BtFtH-r-sV8s=","y2qRfcDChjw-Os-jegsNXLWXCvU="]), "Kolkata", ["kolkata","কলকাতা]","calcutta"]),
+    IN_Bangalore: new Question(new GoogleMapsImage("Bangalore,IN", 12, ["j-GHziCuaM3O8FgCO_54bvGCTH4=","PWWbyf7l_EuEWVkHaZmRgcBm1EU="]), "Bangalore", ["bangalore","bengaluru","ಬೆಂಗಳೂರು"]),
+    IN_Chennai: new Question(new GoogleMapsImage("13.056120032397454,80.22524413963409", 12, ["lNlgvs9TuHAA0myne9CwNV9NwSQ=","Eqrwc5pcOzUUTtkyijfvutLD2ww="]), "Chennai"),
+    IN_Hyderabad: new Question(new GoogleMapsImage("17.380947517427618,78.4372193845361", 12, ["hilqZwuXnWurPoChQ5a92ORPDqQ=","WefVPtkFfMdXA2HaRva4oTt6YSw="]), "Hyderabad", ["hyderabad","హైదరాబాద్"]),
+    IN_Ahmedabad: new Question(new GoogleMapsImage("Ahmedabad,IN", 12, ["wzJGezARQbh83fTaGjq_S1ooZ_I=","gLUvh30QHCQzyw6ZK3V72sRqq0A="]), "Ahmedabad", ["ahmedabad","અમદાવાદ"]),
+    IN_Surat: new Question(new GoogleMapsImage("21.187849578147176,72.84349334304075", 12, ["RfhQENg6-ERHwkIYOqGcU9FNajY=","op8yN0VVY5m7kdw-vhZ2XS2lgtQ="]), "Surat"),
+    IN_Pune: new Question(new GoogleMapsImage("18.518462239367764,73.85518003902651", 13, ["yLhepH6zPQIq3zZv3s-ecI7vo_U=","Xp8-Rywgr0SZ76hgKKPw3vuMDWM="]), "Pune", ["pune","पुणे"]),
 
     // Iran: IR
-    IR_Tehran: new Question("Tehran,IR", 12, "Tehran", ["tehran", "تهران"]),
+    IR_Tehran: new Question(new GoogleMapsImage("Tehran,IR", 12, ["xkgs_FBDNdULfxPVCOcPqYgAacs=","78tS652PS33qW4gkVrGkjBKtrEc="]), "Tehran", ["tehran","تهران"]),
 
     // Maldives: MV
-    MV_Male: new Question("Malé,MV", 14, "Malé", ["male", "malé"]),
+    MV_Male: new Question(new GoogleMapsImage("Malé,MV", 14, ["9mVU4vVUpkG-_PRwfxJSc0nPon0=","hE2HKJlYPyFQW0HoMoYA1YYx6_0="]), "Malé", ["male","malé"]),
 
     // Nepal: NP
-    NP_Kathmandu: new Question("Kathmandu,NP", 13, "Kathmandu", ["kathmandu", "काठमाडौँ"]),
+    NP_Kathmandu: new Question(new GoogleMapsImage("Kathmandu,NP", 13, ["E6EuIaS4-9aP3wrO2lUKkmIpaRo=","PO9MXaoGdiZgPb6CbGP598SXZko="]), "Kathmandu", ["kathmandu","काठमाडौँ"]),
 
     // Pakistan: PK
-    PK_Islamabad: new Question("Islamabad,PK", 13, "Islamabad", ["islamabad", "اسلام آباد"]),
-    PK_Karachi: new Question("24.83105445375928,67.01892079364137", 13, "Karachi", ["karachi", "کراچی"]),
-    PK_Lahore: new Question("Lahore,PK", 12, "Lahore", ["lahore", "لاہور"]),
+    PK_Islamabad: new Question(new GoogleMapsImage("Islamabad,PK", 13, ["HnHqE99tuC0gQwsHlcdubj9cvr4=","3S6NBmWzwNiWRCS3_LPA2iT_4GM="]), "Islamabad", ["islamabad","اسلام آباد"]),
+    PK_Karachi: new Question(new GoogleMapsImage("24.83105445375928,67.01892079364137", 13, ["lZG2yTDV4CbRetwxGefEVh8P9uo=","97TqVw-h-Z5wo3E7bhApg7wrYKg="]), "Karachi", ["karachi","کراچی"]),
+    PK_Lahore: new Question(new GoogleMapsImage("Lahore,PK", 12, ["wzV_mBm69Ziqf2PV5224ySQdmWA=","ftspXoWLKtLn5xc25CHSVOgzWMA="]), "Lahore", ["lahore","لاہور"]),
+
 
     // Sri Lanka: LK
     // Sri Jayawardenepura Kotte is the de jure capital.
-    LK_SriJayawardenepuraKotte: new Question("Sri Jayawardenepura Kotte,LK", 13, "Sri Jayawardenepura Kotte"),
-
+    LK_SriJayawardenepuraKotte: new Question(new GoogleMapsImage("Sri Jayawardenepura Kotte,LK", 13, ["-DMWeL-hQnjTKbbIO_DU_G_yyuQ=","Q7l1RatAwo8KP3YP6X7v1Q5SaMQ="]), "Sri Jayawardenepura Kotte"),
     
     // Africa
 
     // Northern Africa
 
     // Algeria: DZ
-    DZ_Algiers: new Question("36.73926126973858,3.1401109631321784", 12, "Algiers", ["algiers", "مدينة الجزائر"]),
+    DZ_Algiers: new Question(new GoogleMapsImage("36.73926126973858,3.1401109631321784", 12, ["FRUK2bm9YX1QkkoB1tMdKYfPkeU=","w4hNmY5H4Z7zHpiov-MqRyFHeiM="]), "Algiers", ["algiers","مدينة الجزائر"]),
 
     // Egypt: EG
-    EG_Cairo: new Question("Cairo,EG", 12, "Cairo", ["cairo", "القاهرة"]),
-    EG_Alexandria: new Question("Alexandria,EG", 12, "Alexandria", ["alexandria", "الإسكندرية"]),
+    EG_Cairo: new Question(new GoogleMapsImage("Cairo,EG", 12, ["nbfMUcCt2bLn6GKPH8PrVgXbbdw=","06ES9299K5NFGROuSjmcqxmJa2A="]), "Cairo", ["cairo","القاهرة"]),
+    EG_Alexandria: new Question(new GoogleMapsImage("Alexandria,EG", 12, ["BVM6bOCoK3ZzGVEr7P21FkTMuIg=","URiZaBpl9nzU8TaNzqp_EeTYU5Q="]), "Alexandria", ["alexandria","الإسكندرية"]),
 
     // Libya: LY
-    LY_Tripoli: new Question("Tripoli,LY", 13, "Tripoli", ["tripoli", "طرابلس"]),
+    LY_Tripoli: new Question(new GoogleMapsImage("Tripoli,LY", 13, ["MwFnJosrUdwrUBGJydk6diD1cJc=","ZwU7EgXE1_9k-N6USN9idjxzf_0="]), "Tripoli", ["tripoli","طرابلس"]),
 
     // Morocco: MA
-    MA_Rabat: new Question("33.9871202227261,-6.851317891285377", 12, "Rabat", ["rabat", "الرباط"]),
+    MA_Rabat: new Question(new GoogleMapsImage("33.9871202227261,-6.851317891285377", 12, ["L0LBlodXYBQb5sTXj6wixfIhW_M=","Mz4asLQ5PZwxJAPBg5VBitY4l_o="]), "Rabat", ["rabat","الرباط"]),
 
     // Sudan: SD
-    SD_Khartoum: new Question("15.55597653510002,32.55369784874869", 12, "Khartoum", ["khartoum", "الخرطوم"]),
+    SD_Khartoum: new Question(new GoogleMapsImage("15.55597653510002,32.55369784874869", 12, ["M7ejZOifIPpVM1HCgG2JjE8iSaI=","nEJcriWLpVtrCY-zSbPhNZ-UcKU="]), "Khartoum", ["khartoum","الخرطوم"]),
 
     // Tunisia: TN
-    TN_Tunis: new Question("Tunis,TN", 12, "Tunis", ["tunis", "تونس"]),
+    TN_Tunis: new Question(new GoogleMapsImage("Tunis,TN", 12, ["YnkRUTlDJCAJXuJsz3Ac5mAN-co=","ocx-Ak7ju84bfF4k307CkhE421U="]), "Tunis", ["tunis","تونس"]),
 
 
     // Western Africa
 
     // Benin: BJ
-    BJ_PortoNovo: new Question("6.48516716689515,2.625304061840653", 13, "Porto-Novo", ["porto-novo", "porto novo"]),
+    BJ_PortoNovo: new Question(new GoogleMapsImage("6.48516716689515,2.625304061840653", 13, ["0YxtVDPtOPRtCEIQlRjmjsj7BSk=","tnVezAWAcEcvxevliuOSw5ouftQ="]), "Porto-Novo", ["porto-novo","porto novo"]),
 
     // Burkina Faso: BF
-    BF_Ouagadougou: new Question("Ouagadougou,BF", 13, "Ouagadougou"),
+    BF_Ouagadougou: new Question(new GoogleMapsImage("Ouagadougou,BF", 13, ["wXczFgZMT56aOOOikqXZbJkXOts=","2mUZo61Ab-dWq8YNnNzMAusIYUY="]), "Ouagadougou"),
 
     // Cabo Verde: CV
-    CV_Praia: new Question("Praia,CV", 13, "Praia"),
+    CV_Praia: new Question(new GoogleMapsImage("Praia,CV", 13, ["0jKYcPmqWRgf__NDNx9jZiY1l4A=","494i7ZX23cSNvMhfKNklDOrM-sM="]), "Praia"),
 
     // Côte d’Ivoire: CI
-    CI_Yamoussoukro: new Question("6.816708147354264,-5.275004023189095", 14, "Yamoussoukro"),
+    CI_Yamoussoukro: new Question(new GoogleMapsImage("6.816708147354264,-5.275004023189095", 14, ["sSToBSTu56JlaaoekaKPQ32WnJ0=","Av6lcgIEGonSYd1ZrNDPRPkgBmY="]), "Yamoussoukro"),
 
     // Gambia: GM
-    GM_Banjul: new Question("Banjul,GM", 14, "Banjul"),
+    GM_Banjul: new Question(new GoogleMapsImage("Banjul,GM", 14, ["n53rkrNuTrc607JgH_Cf0eBefY0=","Kk6HV7alfQQ2DaZAaqj2cbgfpFQ="]), "Banjul"),
 
     // Ghana: GH
-    GH_Accra: new Question("Accra,GH", 12, "Accra"),
+    GH_Accra: new Question(new GoogleMapsImage("Accra,GH", 12, ["hQrwsb40KlnEjBHcg0p096BU1Hw=","LyOIJ_KNFcoygFwf89vrYAAW9Qk="]), "Accra"),
 
     // Guinea: GN
-    GN_Conakry: new Question("Conakry,GN", 11, "Conakry"),
+    GN_Conakry: new Question(new GoogleMapsImage("Conakry,GN", 11, ["T4ihOMk895RscTlrbYcDiTOpfDA=","5UOsq_KwrcCw0sBcv9cMGlU-ScU="]), "Conakry"),
 
     // Guinea-Bissau: GW
-    GW_Bissau: new Question("11.867873053265104, -15.60862036773853", 13, "Bissau"),
+    GW_Bissau: new Question(new GoogleMapsImage("11.867873053265104, -15.60862036773853", 13, ["uQG_0jKy08Hyhv00vSg5PbN2E_8=","ctMU_NOiS3JbtikCEIDZwZOyrdQ="]), "Bissau"),
 
     // Liberia: LR
-    LR_Monrovia: new Question("6.309849823376375,-10.773524344285931", 13, "Monrovia"),
+    LR_Monrovia: new Question(new GoogleMapsImage("6.309849823376375,-10.773524344285931", 13, ["gq5t1KxowMpeZv31l95FdEjlFk0=","tIU4sQ-_T3EqvU9hpa9Tpa5LNnI="]), "Monrovia"),
 
     // Mali: ML
-    ML_Bamako: new Question("Bamako,ML", 13, "Bamako"),
+    ML_Bamako: new Question(new GoogleMapsImage("Bamako,ML", 13, ["NyQjDELL2KqJD33D9XW6tmYXA80=","yY93TuXU-c3MD3g84VM2C3QflDQ="]), "Bamako"),
 
     // Mauritania: MR
-    MR_Nouakchott: new Question("Nouakchott,MR", 12, "Nouakchott", ["nouakchott", "نواكشوط"]),
+    MR_Nouakchott: new Question(new GoogleMapsImage("Nouakchott,MR", 12, ["VKzEbK7JHOrfX7mvzNmp4Hagf3w=","7IVSKwcerNUCuu-LjXMqCIpYcDg="]), "Nouakchott", ["nouakchott","نواكشوط"]),
 
     // Niger: NE
-    NE_Niamey: new Question("Niamey,NE", 12, "Niamey"),
+    NE_Niamey: new Question(new GoogleMapsImage("Niamey,NE", 12, ["_WK1yI5TSrHOQWBxS4G1r0k6ALY=","2-6qD_Pt1fGX6Fzd5VYaPNLQf-o="]), "Niamey"),
 
     // Nigeria: NG
-    NG_Abuja: new Question("Abuja,NG", 12, "Abuja"),
-    NG_Lagos: new Question("6.458513753352044,3.374406061531793", 12, "Lagos"),
+    NG_Abuja: new Question(new GoogleMapsImage("Abuja,NG", 12, ["qI5Vb9_kB701_q70v-nM8nC7f4g=","xoJ63RxmshDbTFRmRHC3Xyj2RQQ="]), "Abuja"),
+    NG_Lagos: new Question(new GoogleMapsImage("6.458513753352044,3.374406061531793", 12, ["pLJGlgmiHLVemfoRm-gRom_cwaI=","F6VyrY7gcdbhSE9KgfuxnWHtUAk="]), "Lagos"),
 
     // Senegal: SN
-    SN_Dakar: new Question("Dakar,SN", 12, "Dakar"),
+    SN_Dakar: new Question(new GoogleMapsImage("Dakar,SN", 12, ["loJBE-y53ycJACGP9WFx43eXof0=","W-sYIBY4_kxMI-ncwJ8c9iT2sp4="]), "Dakar"),
 
     // Sierra Leone: SL
-    SL_Freetown: new Question("Freetown,SL", 13, "Freetown"),
+    SL_Freetown: new Question(new GoogleMapsImage("Freetown,SL", 13, ["964eMYX262GoFxKyL5rGiWw21wg=","le3ckyJ-iAciIOcGFoVPXFjoi1A="]), "Freetown"),
 
     // Togo: TG
-    TG_Lome: new Question("6.1509180174696585,1.2354344368181667", 13, "Lomé", ["lome", "lomé"]),
+    TG_Lome: new Question(new GoogleMapsImage("6.1509180174696585,1.2354344368181667", 13, ["0z6Mbttp7vlhVeR5Rj5vYshFpdA=","gHy4DBXqv5NXNPSRnqTMNc1lqMc="]), "Lomé", ["lome","lomé"]),
 
     
     // Eastern Africa
 
     // Burundi: BI
-    BI_Bujumbura: new Question("-3.373164824280705,29.350021123852834", 13, "Bujumbura"),
+    BI_Bujumbura: new Question(new GoogleMapsImage("-3.373164824280705,29.350021123852834", 13, ["9cllhPLVMLm90-e2nx6flQi0Q1w=","HsDfOqCNEtzAHc1i5JTE6SvYSW4="]), "Bujumbura"),
 
     // Comoros: KM
-    KM_Moroni: new Question("Moroni,KM", 14, "Moroni", ["moroni", "موروني"]),
+    KM_Moroni: new Question(new GoogleMapsImage("Moroni,KM", 14, ["DBArDtnYnT0a4HbhDvhgNAvKPSk=","hBJeoRZziroTzaXheTUcOpcC-Hk="]), "Moroni", ["moroni","موروني"]),
 
     // Djibouti: DJ
-    DJ_Djibouti: new Question("11.575614920149501,43.14547463687727", 13, "Djibouti", ["djibouti", "جيبوتي‎"]),
+    DJ_Djibouti: new Question(new GoogleMapsImage("11.575614920149501,43.14547463687727", 13, ["bPw2xAbSfOi4NuM3scX3yliZGSQ=","izvG5l8CSZ8lvNP0i6lYBXtYJPo="]), "Djibouti", ["djibouti","جيبوتي‎"]),
 
     // Eritrea: ER
-    ER_Asmara: new Question("Asmara,ER", 13, "Asmara", ["asmara", "أسمرة"]),
+    ER_Asmara: new Question(new GoogleMapsImage("Asmara,ER", 13, ["phYCWDdmzsTAdNZvbEOD0U20xeg=","zeH8dKCMRtkIq6uPSuiEiCCnfJQ="]), "Asmara", ["asmara","أسمرة"]),
 
     // Ethiopia: ET
-    ET_AddisAbaba: new Question("8.998090061563595,38.7586823595628", 13, "Addis Ababa", ["addis ababa", "አዲስ አበባ"]),
+    ET_AddisAbaba: new Question(new GoogleMapsImage("8.998090061563595,38.7586823595628", 13, ["KjCtTpVUx9BeK6JkLOOYAjGiNbY=","oeY8pKbgmAs6x6KTsJ5KsS_vOZo="]), "Addis Ababa", ["addis ababa","አዲስ አበባ"]),
 
     // Kenya: KE
-    KE_Nairobi: new Question("-1.296606433683914,36.87531051469906", 13, "Nairobi"),
+    KE_Nairobi: new Question(new GoogleMapsImage("-1.296606433683914,36.87531051469906", 13, ["oORVZg9xuyO6jY4ha9Xh17qHk4g=","lamQLqBiB0nTUZI6uY8Ar60hCBQ="]), "Nairobi"),
 
     // Madagascar: MG
-    MG_Antananarivo: new Question("-18.90602042991008,47.525082943685504", 13, "Antananarivo"),
+    MG_Antananarivo: new Question(new GoogleMapsImage("-18.90602042991008,47.525082943685504", 13, ["2e1ADg4FeDbkLhnxyBL30TgoV2E=","keHpJzXXlefcKCYs5rEfLWUItog="]), "Antananarivo"),
 
     // Malawi: MW
-    MW_Lilongwe: new Question("Lilongwe,MW", 13, "Lilongwe"),
+    MW_Lilongwe: new Question(new GoogleMapsImage("Lilongwe,MW", 13, ["0tE5MI6fe1wg6KV_kVetHtA3glk=","W9yt-QfU4Y6Jij2Qfdyrr_xj0zI="]), "Lilongwe"),
 
     // Mauritius: MU
-    MU_PortLouis: new Question("Port Louis,MU", 13, "Port Louis"),
+    MU_PortLouis: new Question(new GoogleMapsImage("Port Louis,MU", 13, ["fpznAk2D6gH5VJE4BdrrmOfR7fo=","Vm4Mkt1ALU0pw2FaGVRZaB91Rtg="]), "Port Louis"),
 
     // Mozambique: MZ
-    MZ_Maputo: new Question("-25.950029916473373,32.57564584938457", 13, "Maputo"),
+    MZ_Maputo: new Question(new GoogleMapsImage("-25.950029916473373,32.57564584938457", 13, ["J5C4NUHyJOOs0rJFgWsnz6GAVlQ=","XPBa1v2mcldNIQLpE3O_ePBO6f0="]), "Maputo"),
 
     // Rwanda: RW
-    RW_Kigali: new Question("Kigali,RW", 13, "Kigali"),
+    RW_Kigali: new Question(new GoogleMapsImage("Kigali,RW", 13, ["4hEjSICovlPms2EAZfAjwCPPiyM=","4zE9uV00ukDF9Jx8Lr9EkWa_LH4="]), "Kigali"),
 
     // Seychelles: SC
-    SC_Victoria: new Question("-4.621789319609552,55.45221620870077", 14, "Victoria"),
+    SC_Victoria: new Question(new GoogleMapsImage("-4.621789319609552,55.45221620870077", 14, ["sWsHQRKXJU21qsGwArcitKDVaIo=","At36mNmUx2LZaKNzVanK6ko-X58="]), "Victoria"),
 
     // Somalia: SO
-    SO_Mogadishu: new Question("Mogadishu,SO", 13, "Mogadishu", ["mogadishu", "مقديشو‎"]),
+    SO_Mogadishu: new Question(new GoogleMapsImage("Mogadishu,SO", 13, ["kCf_iIz1vM0l7FWdbpta9OZkDTA=","jraeCemoWcSMkSbhgjH2FTsbNfA="]), "Mogadishu", ["mogadishu","مقديشو‎"]),
 
     // South Sudan: SS
-    SS_Juba: new Question("4.845323025795621,31.584501948261114", 13, "Juba"),
+    SS_Juba: new Question(new GoogleMapsImage("4.845323025795621,31.584501948261114", 13, ["89IIK-kFhMJ-btQv-UMQnP9p8Qs=","eo0sruduv5lM8V3HoNXwNhq6PnM="]), "Juba"),
 
     // Uganda: UG
-    UG_Kampala: new Question("Kampala,UG", 12, "Kampala"),
+    UG_Kampala: new Question(new GoogleMapsImage("Kampala,UG", 12, ["P0qxyRP-Vkcliuv92avnZnk9tyY=","8A2MRDmJGDtG0sK-RyplwMaPayE="]), "Kampala"),
 
     // Tanzania: TZ
-    TZ_Dodoma: new Question("Dodoma,TZ", 13, "Dodoma"),
-    TZ_DarEsSalaam: new Question("-6.816848511055588,39.2702996438777", 13, "Dar es Salaam"),
-
+    TZ_Dodoma: new Question(new GoogleMapsImage("Dodoma,TZ", 13, ["_7j7vq2KPVQ_9jRrn3JxbPxAtnA=","2GvbFfKTml7pm_l6r32Mn5f4Qn4="]), "Dodoma"),
+    TZ_DarEsSalaam: new Question(new GoogleMapsImage("-6.816848511055588,39.2702996438777", 13, ["7CimlcD-1a3seEj1DixFEzFDvXo=","EGjnt4Y4_ExG-Xctzi9LKpk0Ww0="]), "Dar es Salaam"),
+    
     // Zambia: ZM
-    ZM_Lusaka: new Question("Lusaka,ZM", 12, "Lusaka"),
+    ZM_Lusaka: new Question(new GoogleMapsImage("Lusaka,ZM", 12, ["mEJBW-TUpm7mZ539sjjElmfpQY4=","QzQmVF7K6_WygKHedYH78-muizc="]), "Lusaka"),
 
     // Zimbabwe: ZW
-    ZW_Harare: new Question("-17.835952868614406,31.047554363505483", 13, "Harare"),
+    ZW_Harare: new Question(new GoogleMapsImage("-17.835952868614406,31.047554363505483", 13, ["lfaSMdikpTULhkITKO8oVuD92kY=","C8z0B4ReIrR3AWLa0t_rFP-VOak="]), "Harare"),
 
 
     // Middle Africa
 
     // Angola: AO
-    AO_Luanda: new Question("Luanda,AO", 12, "Luanda"),
-
+    AO_Luanda: new Question(new GoogleMapsImage("Luanda,AO", 12, ["hjjlMUPsQNzr4_80n8lQxY1wBaE=","HjTBytrlvaS9-PTPIe99W9Ksq-c="]), "Luanda"),
+    
     // Cameroon: CM
-    CM_Yaounde: new Question("Yaounde,CM", 13, "Yaounde"),
+    CM_Yaounde: new Question(new GoogleMapsImage("Yaounde,CM", 13, ["e6LJNfTkeve91H--0ApWUg9SyYU=","G_unu4-VX9Nmnk0Jov-zQ3QrO7U="]), "Yaounde"),
 
     // Central African Republic: CF
-    CF_Bangui: new Question("Bangui,CF", 12, "Bangui"),
+    CF_Bangui: new Question(new GoogleMapsImage("Bangui,CF", 12, ["hnh_MsO3OQIrTr4r3X9vNk-iUnU=","pJxhrtYOJZtlE_4s8SB2I1Qr0aM="]), "Bangui"),
 
     // Chad: TD
-    TD_NDjamena: new Question("N'Djamena,TD", 12, "N'Djamena", ["n'djamena", "n djamena", "ndjamena", "إنجامينا"]),
+    TD_NDjamena: new Question(new GoogleMapsImage("N'Djamena,TD", 12, ["swbGqv-Y7-Lfdfi3wG3N8AakFTE=","_6-ccjjUTg_eZzlEwmEjdFO6HBU="]), "N'Djamena", ["n'djamena","n djamena","ndjamena","إنجامينا"]),
 
     // Congo: CG
-    CG_Brazzaville: new Question("-4.262187511720094,15.263287188216271", 13, "Brazzaville"),
+    CG_Brazzaville: new Question(new GoogleMapsImage("-4.262187511720094,15.263287188216271", 13, ["VzwfTwt2DZK-B8v9hJEzJu5Upyc=","BjwT2IyJESgM8WMZOgzpYzEp5dQ="]), "Brazzaville"),
 
     // Democratic Republic of the Congo: CD
-    CD_Kinshasa: new Question("-4.333698257227162,15.300332974343227", 12, "Kinshasa"),
+    CD_Kinshasa: new Question(new GoogleMapsImage("-4.333698257227162,15.300332974343227", 12, ["fWUEiju8biYek37qwwgUK05Ck6s=","WAFnrlwX_tuFoSyc2segtWt0yf4="]), "Kinshasa"),
 
     // Equatorial Guinea: GQ
-    GQ_Malabo: new Question("3.742103505929251,8.759836697860926", 13, "Malabo"),
+    GQ_Malabo: new Question(new GoogleMapsImage("3.742103505929251,8.759836697860926", 13, ["V7DJxaxMHY5rN8vkkqlu5J2TFAg=","MiXiV9XGSAXPNlGHKnJyKTVfpxg="]), "Malabo"),
 
     // Gabon: GA
-    GA_Libreville: new Question("Libreville,GA", 13, "Libreville"),
+    GA_Libreville: new Question(new GoogleMapsImage("Libreville,GA", 13, ["n_cbVuL9RNSonOfGy6XtmVKr59Q=","Zyt65fP4AdlagxDfmaEXjiUT-Fg="]), "Libreville"),
 
     // Sao Tome and Principe: ST
-    ST_SaoTome: new Question("0.3428586466988996,6.728509430872581", 14, "São Tomé", ["sao tome", "são tomé"]),
+    ST_SaoTome: new Question(new GoogleMapsImage("0.3428586466988996,6.728509430872581", 14, ["4_L10QrzXlyZIenGx55vL8hFJ2M=","xUh3BCMstJ1EJocVpWOKg61MR5o="]), "São Tomé", ["sao tome","são tomé"]),
 
 
     // Southern Africa
 
     // Botswana: BW
-    BW_Gaborone: new Question("-24.654771693952117,25.90730835256741", 12, "Gaborone"),
+    BW_Gaborone: new Question(new GoogleMapsImage("-24.654771693952117,25.90730835256741", 12, ["80MHLcEIlUUiKl3jvAzNdl2VMu8=","dbeiALYbI79GDFwVDG-wsq-r1LQ="]), "Gaborone"),
 
     // Eswatini: SZ
-    SZ_Mbabane: new Question("-26.313610218571366,31.13370586001086", 13, "Mbabane"),
+    SZ_Mbabane: new Question(new GoogleMapsImage("-26.313610218571366,31.13370586001086", 13, ["mAdCQtR2kwrMJFUgOKnrj0ahGT4=","R8rNueZVhV5vc0xphcIQsF7XoYU="]), "Mbabane"),
 
     // Lesotho: LS
-    LS_Maseru: new Question("Maseru,LS", 13, "Maseru"),
+    LS_Maseru: new Question(new GoogleMapsImage("Maseru,LS", 13, ["GMZBJSuIaD6BZ8RBBcBqdk6WEuo=","a5oEL7ZfJrn6vHqS8ZPgHOiyqlU="]), "Maseru"),
 
     // Namibia: NA
-    NA_Windhoek: new Question("Windhoek,NA", 13, "Windhoek"),
+    NA_Windhoek: new Question(new GoogleMapsImage("Windhoek,NA", 13, ["R2Ntj0buqEDlhmsOUbtIn-FfcUM=","lnf90J0834PXJh1C7h5DyYOVrv4="]), "Windhoek"),
 
     // South Africa: ZA
-    ZA_CapeTown: new Question("-33.9444999526873, 18.477117670821627", 12, "Cape Town"),
-    ZA_Pretoria: new Question("Pretoria,ZA", 13, "Pretoria"),
-    ZA_Bloemfontein: new Question("-29.119225501787085,26.218450777331118", 13, "Bloemfontein"),
-    ZA_Johannesburg: new Question("Johannesburg,ZA", 12, "Johannesburg"),
-
+    ZA_CapeTown: new Question(new GoogleMapsImage("-33.9444999526873, 18.477117670821627", 12, ["IwoSccpmlMuoPlhFDcGXpPeu-n4=","JZZDsIPgPAAroqPvldvAgLxCC2M="]), "Cape Town"),
+    ZA_Pretoria: new Question(new GoogleMapsImage("Pretoria,ZA", 13, ["5ZIXCdlN6e6UmOA8n4mWCz-UKB0=","EtNz4jYjO5btszJEtst0lVVDG4w="]), "Pretoria"),
+    ZA_Bloemfontein: new Question(new GoogleMapsImage("-29.119225501787085,26.218450777331118", 13, ["UjFFz4q46uJ1pU4Hq3URbzOOtUo=","SiX26ZKyHQTLWdp7Dzwu2O8YcjE="]), "Bloemfontein"),
+    ZA_Johannesburg: new Question(new GoogleMapsImage("Johannesburg,ZA", 12, ["PfK_WJ5y6d2JXnn4cDtRb4W3_x4=","T3Qf0_dMyQ4dhF3CCb2Wk57LeLQ="]), "Johannesburg"),
 
     // Oceania
 
     // Australia and New Zealand
 
     // Australia: AU
-    AU_Canberra: new Question("-35.29493269593273,149.1265014572204", 13, "Canberra"),
+    AU_Canberra: new Question(new GoogleMapsImage("-35.29493269593273,149.1265014572204", 13, ["2VqFWwvc4vBBrEY8GciuV5Gz9SM=","Esl_AfsR0NJ_f-0VJ-zwcu9BiJY="]), "Canberra"),
 
     // New Zealand: NZ
-    NZ_Wellington: new Question("Wellington,NZ", 12, "Wellington"),
+    NZ_Wellington: new Question(new GoogleMapsImage("Wellington,NZ", 12, ["MhfOlEeXJDuK80bj5IXk0kY8t1M=","Xdm1qJEnSGjAJBVfLFH6sIZDKCU="]), "Wellington"),
 
 
     // Melanesia
 
     // Fiji: FJ
-    FJ_Suva: new Question("Suva,FJ", 13, "Suva"),
+    FJ_Suva: new Question(new GoogleMapsImage("Suva,FJ", 13, ["z10BADxJ_F2_38N8HnitL9QQyx4=","Pnz3hBsB2l5tEb8BI2OYOfC4MMM="]), "Suva"),
 
     // Papua New Guinea: PG
-    PG_PortMoresby: new Question("-9.451710674016937,147.1865826797314", 13, "Port Moresby"),
+    PG_PortMoresby: new Question(new GoogleMapsImage("-9.451710674016937,147.1865826797314", 13, ["FHlfEjE232lRcgMh4k75urPNCuA=","HYdPfHOklHL3uc5Uzry-B-5Lx2g="]), "Port Moresby"),
 
     // Solomon Islands: SB
-    SB_Honiara: new Question("Honiara,SB", 13, "Honiara"),
+    SB_Honiara: new Question(new GoogleMapsImage("Honiara,SB", 13, ["JKZDj-v7za2esKUOCBIBw6JBjdI=","OIhlfwHq4ASDx8hLewcDPYWKLDA="]), "Honiara"),
 
     // Vanuatu: VU
-    VU_PortVila: new Question("-17.741929902441512,168.31900200166007", 13, "Port Vila"),
+    VU_PortVila: new Question(new GoogleMapsImage("-17.741929902441512,168.31900200166007", 13, ["8Ip0OP8ly8kW2XE8lQM7OeEi3KY=","JalDp8iZO3BDzh3--BQlhhGPmjo="]), "Port Vila"),
 
 
     // Micronesia
 
     // Kiribati: KI
-    KI_Tarawa: new Question("1.3296169094142725,172.97830578844227", 15, "Tarawa"),
+    KI_Tarawa: new Question(new GoogleMapsImage("1.3296169094142725,172.97830578844227", 15, ["ftszG-Dy4QwesPxosHt5zLVSp9A=","F3nwSBjh6rnFVS9fCVYzrFqDjpY="]), "Tarawa"),
 
     // Marshall Islands: MH
-    MH_Majuro: new Question("7.101525454351255,171.3286102860227", 13, "Majuro"),
+    MH_Majuro: new Question(new GoogleMapsImage("7.101525454351255,171.3286102860227", 13, ["L56SwS311rmLiJm4r9brfcFzeUA=","15xL6HZGI9z2N6GWci4z3LMIlgQ="]), "Majuro"),
 
     // Micronesia: FM
-    FM_Palikir: new Question("Palikir,FM", 15, "Palikir"),
+    FM_Palikir: new Question(new GoogleMapsImage("Palikir,FM", 15, ["gO59nG3WHxZkm2LBuCOvk78Ewvo=","PSVWiZK6oTMmhaTiv_vlnRUg7x8="]), "Palikir"),
 
     // Nauru: NR
-    NR_Yaren: new Question("Yaren,NR", 15, "Yaren"),
+    NR_Yaren: new Question(new GoogleMapsImage("Yaren,NR", 15, ["5Aa5hJRE-4OLMrNmrzMHcSq2UJc=","r7_4h2RQNDUe4NgjM7q7Tv9pbtg="]), "Yaren"),
 
     // Palau: PW
-    PW_Ngerulmud: new Question("Ngerulmud,PW", 15, "Ngerulmud"),
-
+    PW_Ngerulmud: new Question(new GoogleMapsImage("Ngerulmud,PW", 15, ["hSCoYHvrpF4oZaSctS4LwX01H9I=","azhQTDRq4cwmHg3OQ2LmaaxyQMU="]), "Ngerulmud"),
     
     // Polynesia
 
     // Niue: NU
-    NU_Alofi: new Question("Alofi,NU", 15, "Alofi"),
+    NU_Alofi: new Question(new GoogleMapsImage("Alofi,NU", 15, ["WpuqTFxYCYyBEPQf7g8VWsByOY8=","_S6V2z8ZT48UJfBmZ5aYEe1-ZzM="]), "Alofi"),
 
     // Samoa: WS
-    WS_Apia: new Question("Apia,WS", 14, "Apia"),
+    WS_Apia: new Question(new GoogleMapsImage("Apia,WS", 14, ["LUNKd_bOofOULTo7zdqhUsqym_I=","oLBYx7rHDU_cpe7GfS1CMu0xdTs="]), "Apia"),
 
     // Tokelau: TK
-    TK_Nukunonu: new Question("-9.201201872390989,-171.8478143549439", 16, "Nukunonu"),
+    TK_Nukunonu: new Question(new GoogleMapsImage("-9.201201872390989,-171.8478143549439", 16, ["dX6VGuvQt3KC09MkQu-bhz6Vfh8=","2HL0w-RnpL15JXTUDMnQ0tmn1-s="]), "Nukunonu"),
 
     // Tonga: TO
-    TO_Nukualofa: new Question("-21.140947029865778,-175.19662333758913", 15, "Nuku'alofa", ["nuku'alofa", "nukualofa", "nuku alofa"]),
+    TO_Nukualofa: new Question(new GoogleMapsImage("-21.140947029865778,-175.19662333758913", 15, ["_67_wlIXO5BHlh9EL6_n_rDJ_ls=","ljEoKKqvPyPp-j_68lJS94We0Sc="]), "Nuku'alofa", ["nuku'alofa","nukualofa","nuku alofa"]),
 
     // Tuvalu: TV
-    TV_Funafuti: new Question("Funafuti,TV", 15, "Funafuti"),
+    TV_Funafuti: new Question(new GoogleMapsImage("Funafuti,TV", 15, ["o9ZcO1-W8e3h_T30qmD5i96yISM=","qzkQ-DeR9d5Z3Iyi2RDa71TMr8w="]), "Funafuti"),
 };
 
 // Airports
@@ -874,56 +896,55 @@ let Airports = {
     // Use ICAO code for naming. Do not accept city name if it has multiple airports.
     // Source: https://en.wikipedia.org/wiki/List_of_busiest_airports_by_passenger_traffic, 2019 statistics
 
-    KATL: new Question("KATL", 13, "Hartsfield–Jackson Atlanta International Airport", ["hartsfield–jackson atlanta international airport", "hartsfield jackson atlanta international airport", "hartsfield–jackson", "hartsfield jackson", "hartsfield jackson airport", "hartsfield-jackson airport", "hartsfield jackson atlanta airport", "hartsfield-jackson atlanta airport", "hartsfield jackson international airport", "hartsfield-jackson international airport"]),
-    ZBAA: new Question("ZBAA", 12, "Beijing Capital International Airport", ["beijing capital international airport", "北京首都国际机场", "beijing capital", "beijing capital airport", "beijing capital international"]),
-    KLAX: new Question("KLAX", 13, "Los Angeles International Airport", ["lax", "los angeles international airport", "los angeles", "los angeles airport", "los angeles international"]),
-    OMDB: new Question("25.253563061529135,55.36537276449742", 13, "Dubai International Airport", ["dubai international airport", "dubai international", "مطار دبي الدولي", "maṭār dubayy al-duwalī"]),
-    RJTT: new Question("35.54600449454058,139.78203312880984", 13, "Tokyo Haneda Airport", ["tokyo haneda airport", "tokyo haneda", "haneda", "haneda airport", "tokyo international", "tokyo international airport", "東京国際空港", "tōkyō kokusai kūkō"]),
-    KORD: new Question("ohare", 12, "O'Hare International Airport", ["o'hare international airport", "ohare international airport", "o hare international airport", "chigaco o'hare international airport", "chigaco ohare international airport", "chigaco o hare international airport", "o'hare international", "ohare international", "o hare international", "chigaco o'hare international", "chigaco ohare international", "chigaco o hare international", "o'hare airport", "ohare airport", "o hare airport", "chigaco o'hare airport", "chigaco ohare airport", "chigaco o hare airport", "o'hare", "ohare", "o hare", "chigaco o'hare", "chigaco ohare", "chigaco o hare"]),
-    EGLL: new Question("EGLL", 13, "London Heathrow Airport", ["london heathrow airport", "london heathrow", "heathrow", "heathrow airport"]),
-    ZSPD: new Question("ZSPD", 13, "Shanghai Pudong International Airport", ["shanghai pudong international airport", "上海浦东国际机场", "shanghai pudong", "shanghai pudong airport", "shanghai pudong international", "pudong airport", "pudong international"]),
-    LFPG: new Question("49.00819371756938,2.5525023379342597", 13, "Charles de Gaulle Airport", ["charles de gaulle airport", "paris charles de gaulle airport", "charles de gaulle", "paris charles de gaulle"]),
-    KDFW: new Question("32.89464490686801,-97.03988406385157", 13, "Dallas/Fort Worth International Airport", ["dallas/fort worth international airport", "dallas-fort worth international airport", "dallas fort worth international airport", "dallas/fort worth international", "dallas-fort worth international", "dallas fort worth international", "dallas/fort worth airport", "dallas-fort worth airport", "dallas fort worth airport", "dallas/fort worth", "dallas-fort worth", "dallas fort worth"]),
-    ZGGG: new Question("ZGGG", 13, "Guangzhou Baiyun International Airport", ["guangzhou baiyun international airport", "guangzhou baiyun international", "guangzhou baiyun airport", "guangzhou baiyun", "广州白云国际机场", "baiyun international", "baiyun airport"]),
-    EHAM: new Question("52.320323328309485,4.741811511431359", 12, "Amsterdam Airport Schiphol", ["amsterdam airport schiphol", "amsterdam schiphol airport", "schiphol", "schiphol airport", "koninklijke luchthaven schiphol"]),
-    VHHH: new Question("VHHH", 13, "Hong Kong International Airport", ["hong kong international airport", "hong kong airport", "hong kong international", "香港國際機場", "hēunggóng gwokjai gēichèuhng", "chek lap kok international airport", "chek lap kok international", "chek lap kok airport", "chek lap kok", "hong kong chek lap kok international airport", "hong kong chek lap kok international", "hong kong chek lap kok airport", "hong kong chek lap kok"]),
-    RKSI: new Question("RKSI", 12, "Seoul Incheon International Airport", ["seoul incheon international airport", "seoul incheon airport", "seoul incheon international", "seoul incheon", "seoul-incheon international airport", "seoul-incheon airport", "seoul-incheon international", "seoul-incheon", "incheon airport", "incheon international airport", "incheon", "인천국제공항"]),
-    EDDF: new Question("EDDF", 12, "Frankfurt Airport", ["frankfurt airport", "frankfurt", "flughafen frankfurt am main", "franfurt am main", "frankfurt am main airport", "rhein-main-flughafen", "rhein main flughafen"]),
-    KDEN: new Question("KDEN", 12, "Denver International Airport", ["denver international airport", "denver airport", "denver international", "denver", "dia"]),
-    VIDP: new Question("VIDP", 13, "Indira Gandhi International Airport", ["indira gandhi international airport", "indira gandhi international", "indira gandhi airport", "indira gandhi", "delhi indira gandhi international airport", "delhi indira gandhi international", "delhi indira gandhi airport", "delhi indira gandhi", "delhi international airport"]),
-    WSSS: new Question("1.3467976484563196,103.99807420214171", 13, "Singapore Changi Airport", ["singapore changi airport", "singapore changi", "changi"]),
-    VTBS: new Question("13.679618041051208,100.74727655160284", 13, "Suvarnabhumi Airport", ["suvarnabhumi airport", "bangkok suvarnabhumi airport", "ท่าอากาศยานสุวรรณภูมิ", "tha-akatsayan suwannaphum"]),
-    KJFK: new Question("KFJK Airport", 13, "John F. Kennedy International Airport", ["john f. kennedy international airport", "john f kennedy international airport", "jfk international airport", "john f. kennedy airport", "john f kennedy airport", "jfk airport", "john f. kennedy international", "john f kennedy international", "jfk international", "jfk", "new york john f. kennedy international airport", "new york john f kennedy international airport"]),
-    WMKK: new Question("WMKK", 12, "Kuala Lumpur International Airport", ["kuala lumpur international airport", "kuala lumpur international", "kuala lumpur airport", "kuala lumpur", "lapangan terbang antarabangsa kuala lumpur"]),
-    LEMD: new Question("LEMD", 12, "Adolfo Suárez Madrid–Barajas Airport", ["adolfo suárez madrid–barajas airport", "adolfo suarez madrid–barajas airport", "adolfo suárez madrid barajas airport", "adolfo suarez madrid barajas airport", "madrid barajas airport", "barajas airport", "madrid barajas", "barajas", "aeropuerto adolfo suárez madrid-barajas", "aeropuerto adolfo suárez madrid barajas"]),
-    KSFO: new Question("KSFO", 13, "San Francisco International Airport", ["san francisco international airport", "san francisco international", "san francisco airport", "san francisco"]),
-    ZUUU: new Question("ZUUU", 12, "Chengdu Shuangliu International Airport", ["chengdu shuangliu international airport", "chengdu shuangliu international", "chengdu shuangliu airport", "chengdu shuangliu", "shuangliu international airport", "shuangliu international", "shuangliu airport", "shuangliu", "成都双流国际机场"]),
-    WIII: new Question("-6.125623782040683,106.65491525623737", 13, "Soekarno–Hatta International Airport", ["soekarno–hatta international airport", "soekarno hatta international airport", "soekarno–hatta international", "soekarno hatta international", "soekarno–hatta airport", "soekarno hatta airport", "soekarno–hatta", "soekarno hatta", "jakarta soekarno–hatta international airport", "jakarta soekarno hatta international airport", "jakarta soekarno–hatta international", "jakarta soekarno hatta international", "jakarta soekarno–hatta airport", "jakarta soekarno hatta airport", "jakarta soekarno–hatta", "jakarta soekarno hatta", "bandar udara internasional soekarno–hatta"]),
-    ZGSZ: new Question("ZGSZ", 13, "Shenzhen Bao'an International Airport", ["shenzhen bao'an international airport", "shenzhen baoan international airport", "shenzhen bao an international airport", "shenzhen bao'an international", "shenzhen baoan international", "shenzhen bao an international", "shenzhen bao'an international", "shenzhen baoan international", "shenzhen bao an international", "shenzhen bao'an", "shenzhen baoan", "shenzhen bao an", "bao'an", "baoan", "bao an", "深圳宝安国际机场"]),
-    LEBL: new Question("LEBL,ES", 12, "Josep Tarradellas Barcelona–El Prat Airport", ["josep tarradellas barcelona–el prat airport", "josep tarradellas barcelona–el prat", "josep tarradellas barcelona el prat airport", "josep tarradellas barcelona el prat", "el prat airport", "el prat", "barcelona el prat airport", "barcelona el prat", "aeropuerto josep tarradellas barcelona–el prat", "aeropuerto josep tarradellas barcelona el prat", "aeroport josep tarradellas barcelona–el prat", "aeroport josep tarradellas barcelona el prat"]),
-    LTFM: new Question("LTFM", 12, "Istanbul Airport", ["istanbul airport", "i̇stanbul havalimanı", "i̇stanbul airport", "istanbul", "i̇stanbul"]),
-    KSEA: new Question("KSEA", 13, "Seattle-Tacoma International Airport", ["seattle-tacoma international airport", "seattle tacoma international airport", "seattle-tacoma international", "seattle tacoma international", "seattle-tacoma airport", "seattle tacoma airport", "seattle-tacoma", "seattle tacoma", "sea-tac international airport", "seatac international airport", "sea tac international airport", "sea-tac airport", "seatac airport", "sea tac airport", "sea-tac international", "seatac international", "sea tac international", "sea-tac", "seatac", "sea tac"]),
-    KLAS: new Question("McCarran", 13, "McCarran International Airport", ["mccarran international airport", "mccarran international", "mccarran airport", "mccarran", "las vegas mccarran international airport", "las vegas mccarran international", "las vegas mccarran airport", "las vegas mccarran"]),
-    KMCO: new Question("28.431572676560855,-81.30864646123979", 13, "Orlando International Airport", ["orlando international airport", "orlando international", "orlando airport", "orlando"]),
-    CYYZ: new Question("CYYZ", 13, "Toronto Pearson International Airport", ["toronto pearson international airport", "toronto pearson international", "toronto pearson airport", "toronto pearson", "pearson"]),
-    MMMX: new Question("MMMX", 14, "Benito Juárez International Airport", ["benito juárez international airport", "benito juarez international airport", "benito juárez international", "benito juarez international", "benito juárez airport", "benito juarez airport", "benito juárez", "benito juarez", "mexico city international airport", "mexico city international", "mexico city airport", "mexico city international airport", "aeropuerto internacional de la ciudad de méxico", "aeropuerto internacional de la ciudad de mexico"]),
-    KCLT: new Question("KCLT", 13, "Charlotte Douglas International Airport", ["charlotte douglas international airport", "charlotte douglas international", "charlotte douglas airport", "charlotte douglas", "douglas", "douglas international", "douglas airport", "douglas international airport"]),
-    UUEE: new Question("UUEE", 12, "Sheremetyevo International Airport", ["sheremetyevo international airport", "sheremetyevo alexander s. pushkin international airport", "sheremetyevo alexander s pushkin international airport", "sheremetyevo international", "sheremetyevo airport", "sheremetyevo", "moscow sheremetyevo international airport", "moscow sheremetyevo international", "moscow sheremetyevo airport", "moscow sheremetyevo", "международный аэропорт шереметьево", "mezhdunarodny aeroport sheremetyevo"]),
-    RCTP: new Question("RCTP", 13, "Taiwan Taoyuan International Airport", ["taiwan taoyuan international airport", "taiwan taoyuan international", "taiwan taoyuan airport", "taiwan taoyuan", "taoyuan international airport", "taoyuan international", "taoyuan airport", "taoyuan", "臺灣桃園國際機場"]),
-    ZPPP: new Question("25.111585597478516,102.93677083107897", 13, "Kunming Changshui International Airport", ["kunming changshui international airport", "kunming changshui international", "kunming changshui airport", "kunming changshui", "chanshui", "昆明长水国际机场"]),
-    EDDM: new Question("48.353842749948164,11.777069256843033", 13, "Munich Airport", ["munich airport", "munich", "flughafen münchen"]),
-    RPLL: new Question("RPLL", 14, "Ninoy Aquino International Airport", ["naia", "ninoy aquino international airport", "ninoy aquino international", "ninoy aquino airport", "ninoy aquino", "manila ninoy aquino international airport", "manila ninoy aquino international", "manila ninoy aquino airport", "manila ninoy aquino", "paliparang pandaigdig ng ninoy aquino"]),
-    ZLXY: new Question("ZLXY", 13, "Xi'an Xianyang International Airport", ["xi'an xianyang international airport", "xian xianyang international airport", "xi an xianyang international airport", "xi'an xianyang international", "xian xianyang international", "xi an xianyang international", "xi'an xianyang airport", "xian xianyang airport", "xi an xianyang airport", "xi'an xianyang", "xian xianyang", "xi an xianyang", "xianyang", "西安咸阳国际机场"]),
-    VABB: new Question("19.08917587720558,72.86605945225101", 14, "Chhatrapati Shivaji Maharaj International Airport", ["chhatrapati shivaji maharaj international airport", "chhatrapati shivaji maharaj international", "chhatrapati shivaji maharaj airport", "chhatrapati shivaji maharaj", "chhatrapati shivaji international airport", "chhatrapati shivaji international", "chhatrapati shivaji airport", "chhatrapati shivaji", "mumbai chhatrapati shivaji maharaj international airport", "mumbai chhatrapati shivaji maharaj international", "mumbai chhatrapati shivaji maharaj airport", "mumbai chhatrapati shivaji maharaj", "छ्त्रपती शिवाजी महाराज अंतरराष्ट्रीय विमानतळ"]),
-    EGKK: new Question("EGKK", 13, "London Gatwick Airport", ["london gatwick airport", "london gatwick", "gatwick airport", "gatwick"]),
-    KEWR: new Question("KEWR", 13, "Newark Liberty International Airport", ["newark liberty airport", "newark liberty international airport", "newark liberty airport", "newark liberty international airport", "newark liberty", "newark liberty international"]),
-    KPHX: new Question("KPHX", 14, "Phoenix Sky Harbor International Airport", ["phoenix sky harbor international airport", "phoenix sky harbor international", "phoenix sky harbor airport", "phoenix sky harbor", "sky harbor"]),
-    KMIA: new Question("25.795655579855882,-80.29073522124654", 14, "Miami International Airport", ["miami international airport", "miami airport", "miami international", "miami"]),
-    ZSSS: new Question("ZSSS", 13, "Shanghai Hongqiao International Airport", ["shanghai hongqiao international airport", "shanghai hongqiao international", "shanghai hongqiao airport", "shanghai hongqiao", "hongqiao international airport", "hongqiao international", "hongqiao airport", "hongqiao", "上海虹桥国际机场"]),
-    KIAH: new Question("29.98154995529113,-95.34263809478834", 13, "George Bush Intercontinental Airport", ["george bush intercontinental airport", "george bush intercontinental", "george bush airport", "george bush", "houston george bush intercontinental airport", "houston george bush intercontinental", "houston george bush airport", "houston george bush"]),
-    ZUCK: new Question("29.720503518005977,106.65188254213233", 13, "Chongqing Jiangbei International Airport", ["chongqing jiangbei international airport", "chongqing jiangbei international", "chongqing jiangbei airport", "chongqing jiangbei", "jiangbei international airport", "jiangbei international", "jiangbei airport", "jiangbei", "重庆江北国际机场"]),
-    YSSY: new Question("-33.94817760209671,151.17713012823387", 13, "Sydney Kingsford-Smith Airport", ["sydney kingsford-smith airport", "sydney kingsford smith airport", "sydney kingsford-smith", "sydney kingsford smith", "kingsford-smith airport", "kingsford smith airport", "kingsford-smith", "kingsford smith"]),
-    RJAA: new Question("RJAA", 12, "Narita International Airport", ["narita international airport", "narita international", "narita airport", "narita", "成田国際空港", "narita kokusai kūkō"])
+    KATL: new Question(new GoogleMapsImage("KATL", 13, ["fyufqT-tYrIoMZTHrK8QrLPdLoM=","NsSWGPMkmGeP_ZuokWZPVOCythU="]), "Hartsfield–Jackson Atlanta International Airport", ["hartsfield–jackson atlanta international airport","hartsfield jackson atlanta international airport","hartsfield–jackson","hartsfield jackson","hartsfield jackson airport","hartsfield-jackson airport","hartsfield jackson atlanta airport","hartsfield-jackson atlanta airport","hartsfield jackson international airport","hartsfield-jackson international airport"]),
+    ZBAA: new Question(new GoogleMapsImage("ZBAA", 12, ["YQtMT22NlOgwVVf0cR-9RvqMKSw=","ofDN5N76GvN6KEXvrp86igTSrLw="]), "Beijing Capital International Airport", ["beijing capital international airport","北京首都国际机场","beijing capital","beijing capital airport","beijing capital international"]),
+    KLAX: new Question(new GoogleMapsImage("KLAX", 13, ["5aOThvormw26oUVEd1T67s4Mv50=","qAUyvNVh39HuLieN6ToiLIMK0gQ="]), "Los Angeles International Airport", ["lax","los angeles international airport","los angeles","los angeles airport","los angeles international"]),
+    OMDB: new Question(new GoogleMapsImage("25.253563061529135,55.36537276449742", 13, ["YN-FMfgtdCFl4ueX0L3zVAqiUYU=","Js3IOd2ypC76T8nQt4ipGdJAUaM="]), "Dubai International Airport", ["dubai international airport","dubai international","مطار دبي الدولي","maṭār dubayy al-duwalī"]),
+    RJTT: new Question(new GoogleMapsImage("35.54600449454058,139.78203312880984", 13, ["pfZnDT37hgaxjY-e-tjtgUrVmck=","LdlInwARsBhztLdGBhEH4nvEC2I="]), "Tokyo Haneda Airport", ["tokyo haneda airport","tokyo haneda","haneda","haneda airport","tokyo international","tokyo international airport","東京国際空港","tōkyō kokusai kūkō"]),
+    KORD: new Question(new GoogleMapsImage("ohare", 12, ["-MXSftLAos8IUbgLuuWHBlOmQ3g=","RefpDUuhHeqUXTYyO_DyBacC2Ms="]), "O'Hare International Airport", ["o'hare international airport","ohare international airport","o hare international airport","chigaco o'hare international airport","chigaco ohare international airport","chigaco o hare international airport","o'hare international","ohare international","o hare international","chigaco o'hare international","chigaco ohare international","chigaco o hare international","o'hare airport","ohare airport","o hare airport","chigaco o'hare airport","chigaco ohare airport","chigaco o hare airport","o'hare","ohare","o hare","chigaco o'hare","chigaco ohare","chigaco o hare"]),
+    EGLL: new Question(new GoogleMapsImage("EGLL", 13, ["VUfpncglXypBNiX58meY2LQHgXk=","wUWarv9Qi_hU69dO50S13bKCWRY="]), "London Heathrow Airport", ["london heathrow airport","london heathrow","heathrow","heathrow airport"]),
+    ZSPD: new Question(new GoogleMapsImage("ZSPD", 13, ["XHhr8bCCwLa4AgwmJ8scyJAbul0=","kCqODjkJcYJvJSlL3UtyT3zU1ic="]), "Shanghai Pudong International Airport", ["shanghai pudong international airport","上海浦东国际机场","shanghai pudong","shanghai pudong airport","shanghai pudong international","pudong airport","pudong international"]),
+    LFPG: new Question(new GoogleMapsImage("49.00819371756938,2.5525023379342597", 13, ["ueD-Rg0JoqLmvq6v48yAv43ugxI=","TqyHLYLQWyfpVf_dtl_sR9Xe9Jc="]), "Charles de Gaulle Airport", ["charles de gaulle airport","paris charles de gaulle airport","charles de gaulle","paris charles de gaulle"]),
+    KDFW: new Question(new GoogleMapsImage("32.89464490686801,-97.03988406385157", 13, ["5-bRLv4l5RVJkmBrl_NekFwOAYA=","uqmQppHdETbGtZ4QVmLX8MxtE7Q="]), "Dallas/Fort Worth International Airport", ["dallas/fort worth international airport","dallas-fort worth international airport","dallas fort worth international airport","dallas/fort worth international","dallas-fort worth international","dallas fort worth international","dallas/fort worth airport","dallas-fort worth airport","dallas fort worth airport","dallas/fort worth","dallas-fort worth","dallas fort worth"]),
+    ZGGG: new Question(new GoogleMapsImage("ZGGG", 13, ["BZ4v818pqZfG8ChfSPG6ZZvIrxg=","MrR6BESwygcXIVtxvljZnaNgWK4="]), "Guangzhou Baiyun International Airport", ["guangzhou baiyun international airport","guangzhou baiyun international","guangzhou baiyun airport","guangzhou baiyun","广州白云国际机场","baiyun international","baiyun airport"]),
+    EHAM: new Question(new GoogleMapsImage("52.320323328309485,4.741811511431359", 12, ["oKyRIkaKKTMsBfAtNLYqkqnvlUQ=","fIO3vaOW-0cPYciVucwVInbVZ-A="]), "Amsterdam Airport Schiphol", ["amsterdam airport schiphol","amsterdam schiphol airport","schiphol","schiphol airport","koninklijke luchthaven schiphol"]),
+    VHHH: new Question(new GoogleMapsImage("VHHH", 13, ["ldzKVFTG2CmeJelz9MYrKO70new=","wP0WkJM7TW857vsVPtbBHjiq1ME="]), "Hong Kong International Airport", ["hong kong international airport","hong kong airport","hong kong international","香港國際機場","hēunggóng gwokjai gēichèuhng","chek lap kok international airport","chek lap kok international","chek lap kok airport","chek lap kok","hong kong chek lap kok international airport","hong kong chek lap kok international","hong kong chek lap kok airport","hong kong chek lap kok"]),
+    RKSI: new Question(new GoogleMapsImage("RKSI", 12, ["d5QbgKA7b5dYlAOEylM6Pi7Q9sk=","UDD6j3QFDmvJMukpqQe0mep5moM="]), "Seoul Incheon International Airport", ["seoul incheon international airport","seoul incheon airport","seoul incheon international","seoul incheon","seoul-incheon international airport","seoul-incheon airport","seoul-incheon international","seoul-incheon","incheon airport","incheon international airport","incheon","인천국제공항"]),
+    EDDF: new Question(new GoogleMapsImage("EDDF", 12, ["8uar6LVufx2Ybxt3jo-nDEe7wdo=","kMayhUvMtjvMuurUdmxICt86fEo="]), "Frankfurt Airport", ["frankfurt airport","frankfurt","flughafen frankfurt am main","franfurt am main","frankfurt am main airport","rhein-main-flughafen","rhein main flughafen"]),
+    KDEN: new Question(new GoogleMapsImage("KDEN", 12, ["0TF0FNF49uJEVBGNpxrXQXt8yFo=","mXxUznLNoAqC0pP1hQOvj1WkDOg="]), "Denver International Airport", ["denver international airport","denver airport","denver international","denver","dia"]),
+    VIDP: new Question(new GoogleMapsImage("VIDP", 13, ["W9D2mRzX3OY5YXeeRn4JDO00ey8=","jMxq8jWBPapjG-4eyItNEnnk6xY="]), "Indira Gandhi International Airport", ["indira gandhi international airport","indira gandhi international","indira gandhi airport","indira gandhi","delhi indira gandhi international airport","delhi indira gandhi international","delhi indira gandhi airport","delhi indira gandhi","delhi international airport"]),
+    WSSS: new Question(new GoogleMapsImage("1.3467976484563196,103.99807420214171", 13, ["QiK8ZQOMJ4a7Kyw4Y_gCQ6oM7k8=","h7IkqYygTmIK3IzK4dsttafwpWk="]), "Singapore Changi Airport", ["singapore changi airport","singapore changi","changi"]),VTBS: new Question(new GoogleMapsImage("13.679618041051208,100.74727655160284", 13, ["YJmHI6NtXtfUH8hQ9VeTsGjcVHA=","CQdRrBISAIItmScpodvn_FBqPl8="]), "Suvarnabhumi Airport", ["suvarnabhumi airport","bangkok suvarnabhumi airport","ท่าอากาศยานสุวรรณภูมิ","tha-akatsayan suwannaphum"]),
+    KJFK: new Question(new GoogleMapsImage("KFJK Airport", 13, ["Mcyj1us0Gsik7IA_Q1QMS2i0Mc0=","-H5BDf6O_ZoeKAJuddwIxbwHwLc="]), "John F. Kennedy International Airport", ["john f. kennedy international airport","john f kennedy international airport","jfk international airport","john f. kennedy airport","john f kennedy airport","jfk airport","john f. kennedy international","john f kennedy international","jfk international","jfk","new york john f. kennedy international airport","new york john f kennedy international airport"]),
+    WMKK: new Question(new GoogleMapsImage("WMKK", 12, ["xFMlFJZEUA6pRW2ALDPDld-3IUc=","BevDTh9y0EjHun2FnhlGM5JzTNo="]), "Kuala Lumpur International Airport", ["kuala lumpur international airport","kuala lumpur international","kuala lumpur airport","kuala lumpur","lapangan terbang antarabangsa kuala lumpur"]),
+    LEMD: new Question(new GoogleMapsImage("LEMD", 12, ["Mz2adi8inZnJp5APPjBvt4Y2Nws=","6hNSRMOz-Rg6tSrlINKN7katu0Q="]), "Adolfo Suárez Madrid–Barajas Airport", ["adolfo suárez madrid–barajas airport","adolfo suarez madrid–barajas airport","adolfo suárez madrid barajas airport","adolfo suarez madrid barajas airport","madrid barajas airport","barajas airport","madrid barajas","barajas","aeropuerto adolfo suárez madrid-barajas","aeropuerto adolfo suárez madrid barajas"]),  
+    KSFO: new Question(new GoogleMapsImage("KSFO", 13, ["PeBcQGFV3VV2Sc7sBN6FxOwBXPU=","PbDB-BBJYWXpKQLkISfaLjBssqo="]), "San Francisco International Airport", ["san francisco international airport","san francisco international","san francisco airport","san francisco"]),
+    ZUUU: new Question(new GoogleMapsImage("ZUUU", 12, ["AcnfLsvikkaR9BwwJhiUYZbsI2M=","1Erv5cOSyOnb8DOEtBAvLEt9BG4="]), "Chengdu Shuangliu International Airport", ["chengdu shuangliu international airport","chengdu shuangliu international","chengdu shuangliu airport","chengdu shuangliu","shuangliu international airport","shuangliu international","shuangliu airport","shuangliu","成都双流国际机场"]),
+    WIII: new Question(new GoogleMapsImage("-6.125623782040683,106.65491525623737", 13, ["sp1AVygjRo8Jz58Tmt_mGAjJzXg=","Ou0_4otNKK6cxT4q-bFpKqUSJFQ="]), "Soekarno–Hatta International Airport", ["soekarno–hatta international airport","soekarno hatta international airport","soekarno–hatta international","soekarno hatta international","soekarno–hatta airport","soekarno hatta airport","soekarno–hatta","soekarno hatta","jakarta soekarno–hatta international airport","jakarta soekarno hatta international airport","jakarta soekarno–hatta international","jakarta soekarno hatta international","jakarta soekarno–hatta airport","jakarta soekarno hatta airport","jakarta soekarno–hatta","jakarta soekarno hatta","bandar udara internasional soekarno–hatta"]),
+    ZGSZ: new Question(new GoogleMapsImage("ZGSZ", 13, ["jlnubd8eG6md4RUr8N3XlVqOJOs=","717c5XOMz6Aur-XgHS7VloNmYK4="]), "Shenzhen Bao'an International Airport", ["shenzhen bao'an international airport","shenzhen baoan international airport","shenzhen bao an international airport","shenzhen bao'an international","shenzhen baoan international","shenzhen bao an international","shenzhen bao'an international","shenzhen baoan international","shenzhen bao an international","shenzhen bao'an","shenzhen baoan","shenzhen bao an","bao'an","baoan","bao an","深圳宝安国际机场"]),
+    LEBL: new Question(new GoogleMapsImage("LEBL,ES", 12, ["rwsU8kI1a_o9ur_ePMUGguhs0TQ=","erjCb2fMkSTN8Dc92bQc4mhGxio="]), "Josep Tarradellas Barcelona–El Prat Airport", ["josep tarradellas barcelona–el prat airport","josep tarradellas barcelona–el prat","josep tarradellas barcelona el prat airport","josep tarradellas barcelona el prat","el prat airport","el prat","barcelona el prat airport","barcelona el prat","aeropuerto josep tarradellas barcelona–el prat","aeropuerto josep tarradellas barcelona el prat","aeroport josep tarradellas barcelona–el prat","aeroport josep tarradellas barcelona el prat"]),
+    LTFM: new Question(new GoogleMapsImage("LTFM", 12, ["oQkjDf9T_asACPPbnXKtH0Qs3LA=","jmK2-JxFwBMN7RsUMPeAnXXWXzU="]), "Istanbul Airport", ["istanbul airport","i̇stanbul havalimanı","i̇stanbul airport","istanbul","i̇stanbul"]),
+    KSEA: new Question(new GoogleMapsImage("KSEA", 13, ["6oQXDCW930fT1Z8_haRZR5LW1nw=","ov63TEtDj-qx3VVfbM4PBz2ItgA="]), "Seattle-Tacoma International Airport", ["seattle-tacoma international airport","seattle tacoma international airport","seattle-tacoma international","seattle tacoma international","seattle-tacoma airport","seattle tacoma airport","seattle-tacoma","seattle tacoma","sea-tac international airport","seatac international airport","sea tac international airport","sea-tac airport","seatac airport","sea tac airport","sea-tac international","seatac international","sea tac international","sea-tac","seatac","sea tac"]),
+    KLAS: new Question(new GoogleMapsImage("McCarran", 13, ["q1aASGTUI5OnmN60LsOf8FuoWQo=","L725_Gv6bbdsSa-P2e_k2v8GJx0="]), "McCarran International Airport", ["mccarran international airport","mccarran international","mccarran airport","mccarran","las vegas mccarran international airport","las vegas mccarran international","las vegas mccarran airport","las vegas mccarran"]),
+    KMCO: new Question(new GoogleMapsImage("28.431572676560855,-81.30864646123979", 13, ["7EVqrRSWkmDqBU6bfrMfMnuviJI=","oRZb_gVeN1taS2kvw5zvYAMpsPE="]), "Orlando International Airport", ["orlando international airport","orlando international","orlando airport","orlando"]),
+    CYYZ: new Question(new GoogleMapsImage("CYYZ", 13, ["Xf_Y4Q8tH-sgez3R764g-TKcMF8=","bGHg1Rt-ye3eFYEIBS5FqTTsE4g="]), "Toronto Pearson International Airport", ["toronto pearson international airport","toronto pearson international","toronto pearson airport","toronto pearson","pearson"]),
+    MMMX: new Question(new GoogleMapsImage("MMMX", 14, ["iQmQvQi6VAis-omwVtTLu5ckmfE=","tP_LnAI_5Be8JzUw0Ns4LUVAzxg="]), "Benito Juárez International Airport", ["benito juárez international airport","benito juarez international airport","benito juárez international","benito juarez international","benito juárez airport","benito juarez airport","benito juárez","benito juarez","mexico city international airport","mexico city international","mexico city airport","mexico city international airport","aeropuerto internacional de la ciudad de méxico","aeropuerto internacional de la ciudad de mexico"]),
+    KCLT: new Question(new GoogleMapsImage("KCLT", 13, ["nhsA9UvULh7T8HW1PjT6EuPVL6Y=","mhsV6dgoAKURGeLpKFZE4Kvfjis="]), "Charlotte Douglas International Airport", ["charlotte douglas international airport","charlotte douglas international","charlotte douglas airport","charlotte douglas","douglas","douglas international","douglas airport","douglas international airport"]),
+    UUEE: new Question(new GoogleMapsImage("UUEE", 12, ["wU7GQLz_qilYqQJbZ2mPmeUjri4=","_VTjtNFjdZsnRJlTl6nN2jz1G44="]), "Sheremetyevo International Airport", ["sheremetyevo international airport","sheremetyevo alexander s. pushkin international airport","sheremetyevo alexander s pushkin international airport","sheremetyevo international","sheremetyevo airport","sheremetyevo","moscow sheremetyevo international airport","moscow sheremetyevo international","moscow sheremetyevo airport","moscow sheremetyevo","международный аэропорт шереметьево","mezhdunarodny aeroport sheremetyevo"]),
+    RCTP: new Question(new GoogleMapsImage("RCTP", 13, ["1JCASXMxOoLam0NWCaKJ0oQbFts=","KEPzjqUdH5lX0SVbqEFzXi8J32g="]), "Taiwan Taoyuan International Airport", ["taiwan taoyuan international airport","taiwan taoyuan international","taiwan taoyuan airport","taiwan taoyuan","taoyuan international airport","taoyuan international","taoyuan airport","taoyuan","臺灣桃園國際機場"]),
+    ZPPP: new Question(new GoogleMapsImage("25.111585597478516,102.93677083107897", 13, ["aGWylDB80czXMT7VWUFxpoy_v0M=","C8y6nk21r6pstVENHADYXejZJUo="]), "Kunming Changshui International Airport", ["kunming changshui international airport","kunming changshui international","kunming changshui airport","kunming changshui","chanshui","昆明长水国际机场"]),
+    EDDM: new Question(new GoogleMapsImage("48.353842749948164,11.777069256843033", 13, ["CHi7gnshzwFdqVPs3aBVAZMwTnE=","wUF8fGOXPOu6B8V3a3EPM0iZNF4="]), "Munich Airport", ["munich airport","munich","flughafen münchen"]),
+    RPLL: new Question(new GoogleMapsImage("RPLL", 14, ["BvwTJ33R0CuPciXG3XaqrX-J-6c=","by7lQfmhQ2BNaRJaS7Vto3xMIsI="]), "Ninoy Aquino International Airport", ["naia","ninoy aquino international airport","ninoy aquino international","ninoy aquino airport","ninoy aquino","manila ninoy aquino international airport","manila ninoy aquino international","manila ninoy aquino airport","manila ninoy aquino","paliparang pandaigdig ng ninoy aquino"]),
+    ZLXY: new Question(new GoogleMapsImage("ZLXY", 13, ["VmY9LfjVNby6EN1IbEbeRky0tdk=","rN5jjchpKYHMNCUSInzCXmHXGKU="]), "Xi'an Xianyang International Airport", ["xi'an xianyang international airport","xian xianyang international airport","xi an xianyang international airport","xi'an xianyang international","xian xianyang international","xi an xianyang international","xi'an xianyang airport","xian xianyang airport","xi an xianyang airport","xi'an xianyang","xian xianyang","xi an xianyang","xianyang","西安咸阳国际机场"]),
+    VABB: new Question(new GoogleMapsImage("19.08917587720558,72.86605945225101", 14, ["eXACvZu8b1nQSnlYZ_PNx1AElh0=","qvsdbKTAf1MSg5kFI-vz2hvSy5M="]), "Chhatrapati Shivaji Maharaj International Airport", ["chhatrapati shivaji maharaj international airport","chhatrapati shivaji maharaj international","chhatrapati shivaji maharaj airport","chhatrapati shivaji maharaj","chhatrapati shivaji international airport","chhatrapati shivaji international","chhatrapati shivaji airport","chhatrapati shivaji","mumbai chhatrapati shivaji maharaj international airport","mumbai chhatrapati shivaji maharaj international","mumbai chhatrapati shivaji maharaj airport","mumbai chhatrapati shivaji maharaj","छ्त्रपती शिवाजी महाराज अंतरराष्ट्रीय विमानतळ"]),
+    EGKK: new Question(new GoogleMapsImage("EGKK", 13, ["VBhgJd7EECg99ocVoAMNI7ABNQw=","Z_4JOoscc3_O_3mDVZvFY2bajwc="]), "London Gatwick Airport", ["london gatwick airport","london gatwick","gatwick airport","gatwick"]),
+    KEWR: new Question(new GoogleMapsImage("KEWR", 13, ["k10dHBCV367ZcX59prHLj-WhZLw=","KPTp5zx20CrS-wMKSr9IpQJm11o="]), "Newark Liberty International Airport", ["newark liberty airport","newark liberty international airport","newark liberty airport","newark liberty international airport","newark liberty","newark liberty international"]),
+    KPHX: new Question(new GoogleMapsImage("KPHX", 14, ["fsnWibbT4Nqhc11DjUWpFiFTmoo=","aksKqxNo-Nvn9vvPVDGNb7JPELA="]), "Phoenix Sky Harbor International Airport", ["phoenix sky harbor international airport","phoenix sky harbor international","phoenix sky harbor airport","phoenix sky harbor","sky harbor"]),
+    KMIA: new Question(new GoogleMapsImage("25.795655579855882,-80.29073522124654", 14, ["KDm7picORHCW5qOJXmRuOvlfezw=","a3-3NHTz34JPF_zSBHWe05K6uMM="]), "Miami International Airport", ["miami international airport","miami airport","miami international","miami"]),
+    ZSSS: new Question(new GoogleMapsImage("ZSSS", 13, ["5yczawqE1uQLOFwkxIKmoT1DhxI=","Va9pRdAxfCHqEsMqVQmBO5zv-qY="]), "Shanghai Hongqiao International Airport", ["shanghai hongqiao international airport","shanghai hongqiao international","shanghai hongqiao airport","shanghai hongqiao","hongqiao international airport","hongqiao international","hongqiao airport","hongqiao","上海虹桥国际机场"]),
+    KIAH: new Question(new GoogleMapsImage("29.98154995529113,-95.34263809478834", 13, ["fXMVV18-jkkmFRz-hIP1E4Xdg8E=","txZqTr2SLeWgi47bNTHD6LGu1sE="]), "George Bush Intercontinental Airport", ["george bush intercontinental airport","george bush intercontinental","george bush airport","george bush","houston george bush intercontinental airport","houston george bush intercontinental","houston george bush airport","houston george bush"]),
+    ZUCK: new Question(new GoogleMapsImage("29.720503518005977,106.65188254213233", 13, ["13c-Trl0p9lJI0-iGUW3DW8ZfjA=","NV3SOlcaLx2WUVmqYjbMW5fdytI="]), "Chongqing Jiangbei International Airport", ["chongqing jiangbei international airport","chongqing jiangbei international","chongqing jiangbei airport","chongqing jiangbei","jiangbei international airport","jiangbei international","jiangbei airport","jiangbei","重庆江北国际机场"]),
+    YSSY: new Question(new GoogleMapsImage("-33.94817760209671,151.17713012823387", 13, ["ZTAhelEEiotxJ9YiKgotj2t5SRc=","x1rHX23ZvxNkwXkoUu-HCoMsiCk="]), "Sydney Kingsford-Smith Airport", ["sydney kingsford-smith airport","sydney kingsford smith airport","sydney kingsford-smith","sydney kingsford smith","kingsford-smith airport","kingsford smith airport","kingsford-smith","kingsford smith"]),
+    RJAA: new Question(new GoogleMapsImage("RJAA", 12, ["crKBgCL0paWiODmDO_43s-E8hiM=","tSY1bpH1NIyCGId6kXK4OD92kuU="]), "Narita International Airport", ["narita international airport","narita international","narita airport","narita","成田国際空港","narita kokusai kūkō"]),
 };
 
 // City groups
@@ -1989,7 +2010,7 @@ class Quiz {
         }
 
         // Print applicable image
-        document.getElementById("questionimage").src = `https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[Index].Query}&zoom=${this.QuestionsToAsk[Index].Zoom}&size=640x400&scale=2&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA`;
+        document.getElementById("questionimage").src = this.QuestionsToAsk[Index].Image.getImageURL();
 
         // Check what input method is beeing used
         if (!this.IsMultipleChoice) {
@@ -2190,7 +2211,7 @@ class Quiz {
             if (!this.IsMultipleChoice && this.Attempts > 1) {
                 AttemptCounter = `<br>Attempts: ${this.Log[i].AttemptsUsed} out of ${this.Attempts}`;
             }
-            document.getElementById("SummaryPerRound").innerHTML += `<div class="col-12 col-md-6 col-xxl-4"><h5>Round ${i + 1}</h5><div class="d-flex justify-content-between flex-column flex-md-row"><p>Time spent: ${FormatDateDifference(this.Log[i].EndTime, this.Log[i].StartTime)}<br>Your answer: ${SummaryFormatArray(this.Log[i].Answers, this.Log[i].WasCorrect)}<br>Correct answer: ${this.QuestionsToAsk[i].FormatName}${AttemptCounter}</p><img class="img-fluid" src="https://maps.googleapis.com/maps/api/staticmap?center=${this.QuestionsToAsk[i].Query}&zoom=${this.QuestionsToAsk[i].Zoom}&size=150x150&scale=1&maptype=satellite&key=AIzaSyCuRDcyNsXWxQuXc6Z5sMyVJohxDC3BXtA"></div></div>`;
+            document.getElementById("SummaryPerRound").innerHTML += `<div class="col-12 col-md-6 col-xxl-4"><h5>Round ${i + 1}</h5><div class="d-flex justify-content-between flex-column flex-md-row"><p>Time spent: ${FormatDateDifference(this.Log[i].EndTime, this.Log[i].StartTime)}<br>Your answer: ${SummaryFormatArray(this.Log[i].Answers, this.Log[i].WasCorrect)}<br>Correct answer: ${this.QuestionsToAsk[i].FormatName}${AttemptCounter}</p><img class="img-fluid" src="${this.QuestionsToAsk[i].Image.getThumbnailURL()}"></div></div>`;
         }
 
         // Set href of sharer buttons
