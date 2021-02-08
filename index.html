@@ -284,9 +284,14 @@
                     <!-- Text field -->
                     <div class="form-group">
                         <label for="cityinput" id="cityinput-label">Type the answer.</label>
-                        <input class="form-control" type="text" placeholder="Your answer" id="cityinput" aria-labelledby="cityinput-label">
-                        <div class="invalid-feedback">
-                            Wrong answer. Please try again.
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Your answer" id="cityinput" aria-labelledby="cityinput-label">
+                            <div class="invalid-feedback">
+                                Wrong answer. Please try again.
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" onclick="ActiveQuiz.SubmitAnswer(document.getElementById('cityinput').value)">Answer</button>
+                            </div>
                         </div>
                     </div>
                 </div>
