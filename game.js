@@ -211,8 +211,8 @@ let Cities = {
     NLNH_Amsterdam: new Question(new GoogleMapsImage("Amsterdam,NL", 12, ["xUPiQCSJDxwdtvRk_ZBuHLyAGjE=","O0mZQYRfdXGBi4NrzRelq6GJZok="]), "Amsterdam"),
 
     // Moldova: MD
-    MDCU_Chisinau: new Question(new GoogleMapsImage("Chișinău,MD", 13, ["RkhyA5kyfyQ44qFYNqgLWCcUZGY=","DHlzQbevmL9MHBEIJFHjfiO3zXE="]), "Chișinău", ["chișinău","chisinau"]),
-
+    MDCU_Chisinau: new Question(new GoogleMapsImage("Chi%C8%99in%C4%83u,MD", 13, ["tOBWlu5qQnahtxRYWNw_8-NsRpA=","Qhbmhp2M6fHN7JbxYUW2gAs3HUA="]), "Chișinău", ["chișinău","chisinau"]),
+    
     // Belgium: BE
     BEBRU_Brussels: new Question(new GoogleMapsImage("Brussels,BE", 13, ["grkPWLYH1UoWGtnZqmwsbNYZRqE=","DuCs7jbmvBMgqBOD9L_w9KTe7lg="]), "Brussels", ["brussels","bruxelles"]),
 
