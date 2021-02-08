@@ -792,8 +792,8 @@ let Cities = {
     CF_Bangui: new Question(new GoogleMapsImage("Bangui,CF", 12, ["hnh_MsO3OQIrTr4r3X9vNk-iUnU=","pJxhrtYOJZtlE_4s8SB2I1Qr0aM="]), "Bangui"),
 
     // Chad: TD
-    TD_NDjamena: new Question(new GoogleMapsImage("N'Djamena,TD", 12, ["swbGqv-Y7-Lfdfi3wG3N8AakFTE=","_6-ccjjUTg_eZzlEwmEjdFO6HBU="]), "N'Djamena", ["n'djamena","n djamena","ndjamena","إنجامينا"]),
-
+    TD_NDjamena: new Question(new GoogleMapsImage("N%27Djamena,TD", 12, ["xp1Vi0zg9QJPLS1NHGqxBdBmf4M=","IXiGIdGJgb205DJfBhdKQ0tp8VI="]), "N'Djamena", ["n'djamena","n djamena","ndjamena","إنجامينا"]),
+    
     // Congo: CG
     CG_Brazzaville: new Question(new GoogleMapsImage("-4.262187511720094,15.263287188216271", 13, ["VzwfTwt2DZK-B8v9hJEzJu5Upyc=","BjwT2IyJESgM8WMZOgzpYzEp5dQ="]), "Brazzaville"),
 
