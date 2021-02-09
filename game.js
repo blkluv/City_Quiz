@@ -519,8 +519,8 @@ let Cities = {
     AE_AbuDhabi: new Question(new GoogleMapsImage("Abu Dhabi,AE", 12, ["bWDGWH7xlY64c4AgVhMkjVcg5r8=","4D5fk4392Hzl4K0R7I3BawTW7Cs="]), "Abu Dhabi", ["abu dhabi","أبو ظبي"]),
 
     // Yemen: YE
-    YE_Sanaa: new Question(new GoogleMapsImage("Sana'a,YE", 13, ["4om8lG8mr0SvemyCVncCghkziqM=","eRlc44jvsigDjwDVI5g6sCMCJFI="]), "Sana'a", ["sana'a","sanaa","sana a","صنعاء‎"]),
-
+    YE_Sanaa: new Question(new GoogleMapsImage("Sana%27a,YE", 13, ["9Qn76lWHbEsh-P3GFw3VFcFmgxE=","TIwuCmnBGCDqN-oMbJh2Z1c-ApQ="]), "Sana'a", ["sana'a","sanaa","sana a","صنعاء‎"]),
+    
 
     // Eastern Asia
 
