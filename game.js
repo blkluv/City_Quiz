@@ -726,6 +726,7 @@ let Cities = {
 
     // Burundi: BI
     BI_Bujumbura: new Question(new GoogleMapsImage("-3.373164824280705,29.350021123852834", 13, ["9cllhPLVMLm90-e2nx6flQi0Q1w=","HsDfOqCNEtzAHc1i5JTE6SvYSW4="]), "Bujumbura"),
+    BI_Gitega: new Question(new GoogleMapsImage("Gitega,BI", 14, ["KOsJ3x6v4S2uVruHZcHbELYtl8A=","sCAsdroevoHUpLm4cRWCCBWBKfU="]), "Gitega"),
 
     // Comoros: KM
     KM_Moroni: new Question(new GoogleMapsImage("Moroni,KM", 14, ["DBArDtnYnT0a4HbhDvhgNAvKPSk=","hBJeoRZziroTzaXheTUcOpcC-Hk="]), "Moroni", ["moroni","موروني"]),
@@ -1483,7 +1484,7 @@ let CityGroups = {
             Cities.SR_Paramaribo,
             Cities.UY_Montevideo,
             Cities.VE_Caracas,
-            Cities.BI_Bujumbura,
+            Cities.BI_Gitega,
             Cities.KM_Moroni,
             Cities.DJ_Djibouti,
             Cities.ER_Asmara,
@@ -1700,7 +1701,7 @@ let CityGroups = {
     "eastmiddlesouthafrica": {
         FormatName: "Capitals of Eastern, Middle and Southern Africa",
         Cities: [
-            Cities.BI_Bujumbura,
+            Cities.BI_Gitega,
             Cities.KM_Moroni,
             Cities.DJ_Djibouti,
             Cities.ER_Asmara,
@@ -1739,7 +1740,7 @@ let CityGroups = {
     "africa": {
         FormatName: "Capitals of Africa",
         Cities: [
-            Cities.BI_Bujumbura,
+            Cities.BI_Gitega,
             Cities.KM_Moroni,
             Cities.DJ_Djibouti,
             Cities.ER_Asmara,
