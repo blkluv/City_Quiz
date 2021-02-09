@@ -520,7 +520,7 @@ let Cities = {
 
     // Yemen: YE
     YE_Sanaa: new Question(new GoogleMapsImage("Sana%27a,YE", 13, ["9Qn76lWHbEsh-P3GFw3VFcFmgxE=","TIwuCmnBGCDqN-oMbJh2Z1c-ApQ="]), "Sana'a", ["sana'a","sanaa","sana a","صنعاء‎"]),
-    
+
 
     // Eastern Asia
 
@@ -631,8 +631,8 @@ let Cities = {
     IR_Tehran: new Question(new GoogleMapsImage("Tehran,IR", 12, ["xkgs_FBDNdULfxPVCOcPqYgAacs=","78tS652PS33qW4gkVrGkjBKtrEc="]), "Tehran", ["tehran","تهران"]),
 
     // Maldives: MV
-    MV_Male: new Question(new GoogleMapsImage("Malé,MV", 14, ["9mVU4vVUpkG-_PRwfxJSc0nPon0=","hE2HKJlYPyFQW0HoMoYA1YYx6_0="]), "Malé", ["male","malé"]),
-
+    MV_Male: new Question(new GoogleMapsImage("Mal%C3%A9,MV", 14, ["IwI5UBE4QK4AAInwTgCBjZVh2xc=","ZvPevvs1FY9bt_tHZ46kEx1cnSM="]), "Malé", ["male","malé"]),
+    
     // Nepal: NP
     NP_Kathmandu: new Question(new GoogleMapsImage("Kathmandu,NP", 13, ["E6EuIaS4-9aP3wrO2lUKkmIpaRo=","PO9MXaoGdiZgPb6CbGP598SXZko="]), "Kathmandu", ["kathmandu","काठमाडौँ"]),
 
