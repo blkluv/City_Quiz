@@ -728,8 +728,8 @@ let Cities = {
     BI_Gitega: new Question(new GoogleMapsImage("Gitega,BI", 14, ["KOsJ3x6v4S2uVruHZcHbELYtl8A=","sCAsdroevoHUpLm4cRWCCBWBKfU="]), "Gitega"),
 
     // Comoros: KM
-    KM_Moroni: new Question(new GoogleMapsImage("Moroni,KM", 14, ["DBArDtnYnT0a4HbhDvhgNAvKPSk=","hBJeoRZziroTzaXheTUcOpcC-Hk="]), "Moroni", ["moroni","موروني"]),
-
+    KM_Moroni: new Question(new GoogleMapsImage("Moroni,Comoros", 14, ["IbimUz9CqabZFXYySWC5bsRKP7I=","7sdGjrkjARDkW2MDt6l6u8OwRog="]), "Moroni", ["moroni","موروني"]),
+    
     // Djibouti: DJ
     DJ_Djibouti: new Question(new GoogleMapsImage("11.575614920149501,43.14547463687727", 13, ["bPw2xAbSfOi4NuM3scX3yliZGSQ=","izvG5l8CSZ8lvNP0i6lYBXtYJPo="]), "Djibouti", ["djibouti","جيبوتي‎"]),
 
