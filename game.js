@@ -1549,7 +1549,6 @@ let CityGroups = {
             Cities.FM_Palikir,
             Cities.NR_Yaren,
             Cities.PW_Ngerulmud,
-            Cities.NU_Alofi,
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
             Cities.BT_Thimphu,
@@ -1810,7 +1809,6 @@ let CityGroups = {
             Cities.FM_Palikir,
             Cities.NR_Yaren,
             Cities.PW_Ngerulmud,
-            Cities.NU_Alofi,
             Cities.WS_Apia,
             Cities.TO_Nukualofa,
             Cities.TV_Funafuti
