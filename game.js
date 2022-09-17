@@ -451,7 +451,7 @@ let Cities = {
     // Central Asia
     
     // Kazakhstan: KZ
-    KZ_NurSultan: new Question(new GoogleMapsImage("Nur-Sultan,KZ", 13, ["3OKUNmS_hI45Kspz7lsEfmeirzU=","d47sK6z9b_STb2l0rgypPq_zm-U="]), "Nur-Sultan", ["nur-sultan","nur sultan","нұр-сұлтан","нұр сұлтан"]),
+    KZ_NurSultan: new Question(new GoogleMapsImage("Nur-Sultan,KZ", 13, ["3OKUNmS_hI45Kspz7lsEfmeirzU=","d47sK6z9b_STb2l0rgypPq_zm-U="]), "Astana", ["astana","nur-sultan","nur sultan","нұр-сұлтан","нұр сұлтан"]),
 
     // Kyrgyzstan: KG
     KG_Bishkek: new Question(new GoogleMapsImage("Bishkek,KG", 13, ["4AnHV7LdN1nuG7RmMFcswFSYtCM=","BCLRv6wFS5VphZ1yK3heozQr0iw="]), "Bishkek", ["bishkek","бишкек"]),
